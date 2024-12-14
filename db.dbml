@@ -3,27 +3,27 @@
 
 
 Table utilisateur {
-  id int [pk]
-  nom_utilisateur varchar2 
-  role varchar2 
-  mot_de_passe varchar2
+  id uuid [pk]
+  nom_utilisateur varchar [unique]
+  role varchar 
+  mot_de_passe varchar
   // utilisateur, producteur, admin
 
 }
 
 Table ingredient_produit{
-  id_producteur int [pk, ref: > utilisateur.id]
+  id_producteur uuid [pk, ref: > utilisateur.id]
   id_ingredient int [pk, ref: > ingredient.id]
 }
 
 Table producteur_utilisateur{
-  id_producteur int [pk, ref: > utilisateur.id]
-  id_utilisateur int [pk, ref: > utilisateur.id]
+  id_producteur uuid [pk, ref: > utilisateur.id]
+  id_utilisateur uuid [pk, ref: > utilisateur.id]
 }
 
 Table panier{
-  id int [pk]
-  id_producteur int [ref: > utilisateur.id]
+  id serial [pk]
+  id_producteur uuid [ref: > utilisateur.id]
   date date
 
 }
@@ -31,34 +31,34 @@ Table panier{
 Table ingredient_panier{
   id_panier int [pk, ref: >panier.id]
   id_ingredient int [pk, ref: > ingredient.id]
-  quantite varchar2
+  quantite varchar
 }
 
 Ref: panier.id <> utilisateur.id
 // Table abonnement_panier{
-//   id_utilisateur int [pk, ref: > utilisateur.id]
+//   id_utilisateur uuid [pk, ref: > utilisateur.id]
 //   id_panier int [pk, ref: > panier.id]
 // }
 
 Table recette{
-  id int [pk]
-  nom varchar2
+  id serial [pk]
+  nom varchar
   temps_preparation int
   //temps en min
   complexite int
-  id_createur int [ref: > utilisateur.id]
+  id_createur uuid [ref: > utilisateur.id]
   description text
   id_recette_parente int [ref: > recette.id]
   //recette parente si c'est une variante
   type type_plat
-  url_photo varchar2
+  url_photo varchar
 
 }
 Ref: tag.id <> recette.id
 
 Table tag{
-  id int [pk]
-  labelle varchar2
+  id serial [pk]
+  labelle varchar [unique]
 }
 enum type_plat{
   "Entrée"
@@ -70,49 +70,49 @@ enum type_plat{
 }
 
 Table commentaire{
-  id int [pk]
-  id_utilisateur int [ref: > utilisateur.id]
+  id serial [pk]
+  id_utilisateur uuid [ref: > utilisateur.id]
   id_recette int [ref: > recette.id]
   contenu text
 }
 
 Table favoris{
-  id_utilisateur int [pk,ref:>utilisateur.id]
+  id_utilisateur uuid [pk,ref:>utilisateur.id]
   id_recette int [pk,ref:>recette.id]
 }
 
 Table ustensile{
-  id int [pk]
-  nom varchar2
+  id serial [pk]
+  nom varchar [unique]
 }
 
 
 Table ingredient{
-  id int [pk]
-  nom varchar2
+  id serial [pk]
+  nom varchar [unique]
   debut_saison date
   fin_saison date
-  url_photo varchar2
+  url_photo varchar
 }
 Table note_recette{
-  id_utilisateur int [pk,ref:>utilisateur.id]
+  id_utilisateur uuid [pk,ref:>utilisateur.id]
   id_recette int [pk,ref:>recette.id]
   note int
 }
 
 Table allergene{
-  id int [pk]
-  labelle varchar2
+  id serial [pk]
+  labelle varchar [unique]
 
 }
 
 Table frigo{
-  id_utilisateur integer [pk, ref: > utilisateur.id]
-  id_ingredient integer [pk, ref: > ingredient.id]
+  id_utilisateur uuid [pk, ref: > utilisateur.id]
+  id_ingredient int [pk, ref: > ingredient.id]
   date_ajout date [pk]
   //les ingredients ajouté à differents moments sont 
   //différencié pour les faires apparaitres différements.
-  quantite varchar2
+  quantite varchar
 
 }
 // enum unite{
@@ -128,7 +128,7 @@ Table frigo{
 Table ingredient_recette{
   id_recette int [pk, ref: > recette.id]
   id_ingredient int [pk, ref: > ingredient.id]
-  quantite varchar2
+  quantite varchar
  }
  
 Ref allergene_ingredient: ingredient.id <> allergene.id
@@ -138,11 +138,11 @@ Ref allergie_utilisateur: allergene.id <> utilisateur.id
 //Table au lieu de ref sinon le nom par défaut est pas évident
 Table ingredient_exclu{
   id_ingredient int [pk, ref: > ingredient.id ]
-  id_utilisateur int [pk, ref: > utilisateur.id]
+  id_utilisateur uuid [pk, ref: > utilisateur.id]
 }
 
 Table ustensile_exclu{
  id_ustensile int [pk, ref: > ustensile.id]
- id_utilisateur int [pk, ref: > utilisateur.id]
+ id_utilisateur uuid [pk, ref: > utilisateur.id]
 }
 
