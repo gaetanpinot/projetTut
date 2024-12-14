@@ -1,0 +1,148 @@
+// Use DBML to define your database structure
+// Docs: https://dbml.dbdiagram.io/docs
+
+
+Table utilisateur {
+  id int [pk]
+  nom_utilisateur varchar2 
+  role varchar2 
+  mot_de_passe varchar2
+  // utilisateur, producteur, admin
+
+}
+
+Table ingredient_produit{
+  id_producteur int [pk, ref: > utilisateur.id]
+  id_ingredient int [pk, ref: > ingredient.id]
+}
+
+Table producteur_utilisateur{
+  id_producteur int [pk, ref: > utilisateur.id]
+  id_utilisateur int [pk, ref: > utilisateur.id]
+}
+
+Table panier{
+  id int [pk]
+  id_producteur int [ref: > utilisateur.id]
+  date date
+
+}
+
+Table ingredient_panier{
+  id_panier int [pk, ref: >panier.id]
+  id_ingredient int [pk, ref: > ingredient.id]
+  quantite varchar2
+}
+
+Ref: panier.id <> utilisateur.id
+// Table abonnement_panier{
+//   id_utilisateur int [pk, ref: > utilisateur.id]
+//   id_panier int [pk, ref: > panier.id]
+// }
+
+Table recette{
+  id int [pk]
+  nom varchar2
+  temps_preparation int
+  //temps en min
+  complexite int
+  id_createur int [ref: > utilisateur.id]
+  description text
+  id_recette_parente int [ref: > recette.id]
+  //recette parente si c'est une variante
+  type type_plat
+  url_photo varchar2
+
+}
+Ref: tag.id <> recette.id
+
+Table tag{
+  id int [pk]
+  labelle varchar2
+}
+enum type_plat{
+  "Entrée"
+  "Plat"
+  "Dessert"
+  "Apéretif"
+  "Accompagnement"
+  "Ingredient"
+}
+
+Table commentaire{
+  id int [pk]
+  id_utilisateur int [ref: > utilisateur.id]
+  id_recette int [ref: > recette.id]
+  contenu text
+}
+
+Table favoris{
+  id_utilisateur int [pk,ref:>utilisateur.id]
+  id_recette int [pk,ref:>recette.id]
+}
+
+Table ustensile{
+  id int [pk]
+  nom varchar2
+}
+
+
+Table ingredient{
+  id int [pk]
+  nom varchar2
+  debut_saison date
+  fin_saison date
+  url_photo varchar2
+}
+Table note_recette{
+  id_utilisateur int [pk,ref:>utilisateur.id]
+  id_recette int [pk,ref:>recette.id]
+  note int
+}
+
+Table allergene{
+  id int [pk]
+  labelle varchar2
+
+}
+
+Table frigo{
+  id_utilisateur integer [pk, ref: > utilisateur.id]
+  id_ingredient integer [pk, ref: > ingredient.id]
+  date_ajout date [pk]
+  //les ingredients ajouté à differents moments sont 
+  //différencié pour les faires apparaitres différements.
+  quantite varchar2
+
+}
+// enum unite{
+//   l
+//   cl
+//   ml
+//   g
+//   Kg
+//   U
+//   //U pour unité, quand dénombre l'objet qu'on compte (5 oeufs)
+// }
+
+Table ingredient_recette{
+  id_recette int [pk, ref: > recette.id]
+  id_ingredient int [pk, ref: > ingredient.id]
+  quantite varchar2
+ }
+ 
+Ref allergene_ingredient: ingredient.id <> allergene.id
+Ref ustensile_recette: recette.id <> ustensile.id
+Ref allergie_utilisateur: allergene.id <> utilisateur.id
+
+//Table au lieu de ref sinon le nom par défaut est pas évident
+Table ingredient_exclu{
+  id_ingredient int [pk, ref: > ingredient.id ]
+  id_utilisateur int [pk, ref: > utilisateur.id]
+}
+
+Table ustensile_exclu{
+ id_ustensile int [pk, ref: > ustensile.id]
+ id_utilisateur int [pk, ref: > utilisateur.id]
+}
+
