@@ -45,7 +45,7 @@ CREATE TABLE "recette" (
 
 CREATE TABLE "tag" (
   "id" serial PRIMARY KEY,
-  "labelle" varchar UNIQUE
+  "label" varchar UNIQUE
 );
 
 CREATE TABLE "commentaire" (
@@ -83,7 +83,7 @@ CREATE TABLE "note_recette" (
 
 CREATE TABLE "allergene" (
   "id" serial PRIMARY KEY,
-  "labelle" varchar UNIQUE
+  "label" varchar UNIQUE
 );
 
 CREATE TABLE "frigo" (

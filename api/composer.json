@@ -1,0 +1,23 @@
+{
+    "require": {
+        "opis/json-schema": "^1.1",
+        "php-di/php-di": "^7.0",
+        "slim/psr7": "^1.7",
+        "slim/slim": "^4.14",
+        "tuupola/cors-middleware": "^1.4",
+        "psr/container": "*",
+        "ramsey/uuid": "^4.7",
+        "firebase/php-jwt": "^6.10",
+        "monolog/monolog": "^3.7",
+        "php-di/php-di": "^7.0",
+        "php-di/slim-bridge": "^3.4",
+        "doctrine/orm": "*",
+        "doctrine/dbal": "*"
+    },
+    "autoload": {
+        "psr-4" : {
+            "amap\\" : "./src"
+        }
+    }
+}
+
