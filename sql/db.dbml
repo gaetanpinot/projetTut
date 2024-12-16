@@ -5,7 +5,7 @@
 Table utilisateur {
   id uuid [pk]
   nom_utilisateur varchar [unique]
-  role varchar 
+  role int 
   mot_de_passe varchar
   // utilisateur, producteur, admin
 
@@ -48,9 +48,10 @@ Table recette{
   complexite int
   id_createur uuid [ref: > utilisateur.id]
   description text
+  debut_saison date
+  fin_saison date
   id_recette_parente int [ref: > recette.id]
   //recette parente si c'est une variante
-  type type_plat
   url_photo varchar
 
 }
@@ -60,14 +61,7 @@ Table tag{
   id serial [pk]
   labelle varchar [unique]
 }
-enum type_plat{
-  "Entrée"
-  "Plat"
-  "Dessert"
-  "Apéretif"
-  "Accompagnement"
-  "Ingredient"
-}
+
 
 Table commentaire{
   id serial [pk]
