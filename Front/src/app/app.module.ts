@@ -15,13 +15,23 @@ import { provideHttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
 import { MatSelectModule } from '@angular/material/select';
+import { HeaderComponent } from './Components/header/header.component';
+import { FooterComponent } from './Components/footer/footer.component';
+import { RecetteRechercheComponent } from './Components/Main/recette-recherche/recette-recherche.component';
+import { FrigoComponent } from './Components/Main/frigo/frigo.component';
+import { PanierComponent } from './Components/Main/panier/panier.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     DialogComponent,
-    NextPageComponent
+    NextPageComponent,
+    HeaderComponent,
+    FooterComponent,
+    RecetteRechercheComponent,
+    FrigoComponent,
+    PanierComponent
   ],
   imports: [
     BrowserModule,
