@@ -3,7 +3,21 @@ networks:
     driver: bridge
 
 services:
-  
+
+  php:
+    image: canals/php:8.3
+    container_name: amap_php
+    ports:
+      - '1000:80'
+    networks:
+      - amap.net
+    restart: unless-stopped
+    volumes:
+      - ./api:/var/www/html
+    depends_on:
+      pgsql:
+        condition: service_healthy
+
   adminer:
     image: 'adminer'
     container_name: amap_adminer
