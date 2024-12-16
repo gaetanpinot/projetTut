@@ -142,9 +142,23 @@ RsBody:
 $Tag
 ```
 
+GET
+/recettes/{id}/commentaires
+Obtenir les commentaires d'une recette
+RsBody:
+```json
+[$Commentaire]
+```
+
 POST
 /recettes/{id}/commentaires
 Ajouter un commentaire à une recette
+RqBody:
+```json
+{
+    "contenu": "string"
+}
+```
 
 PUT
 /recettes/{id}/notes
@@ -196,43 +210,169 @@ $Panier
 
 GET
 /ingredients
-Obtenir la liste des ingrédients
+Chercher la liste des ingrédients
+Query:
+```
+/ingredients?nom=Citrouille
+```
+
+RsBody:
+```json
+[$Ingredients]
+```
 
 POST
 /ingredients
 Créer un nouvel ingrédient
+RqBody:
+```json
+{
+    "id_allergene": [ 
+        "int",
+    ],
+    "nom" : "string",
+    "debut_saison": "date",
+    "fin_saison" : "date",
+
+}
+```
 
 GET
-/frigo
+/utilisateurs/{id}/frigo
 Obtenir le contenu du frigo
 
+PUT
+/utilisateurs/{id}/frigo/ingredient/{id_ingredient}
+Ajouter un ingrédient au frigo
+RqBody:
+```json
+{
+    "quantite": "string",
+    "date_ajout": "date",
+}
+```
+
+RsBody:
+```json
+$Frigo
+```
+
 PATCH
-/frigo
-Ajouter/Enlever un ingrédient au frigo
+/utilisateurs/{id}/frigo/ingredient/{id_ingredient}
+Modifier un ingrédient au frigo
+RqBody:
+```json
+{
+    "quantite": "string",
+    "date_ajout": "date",
+}
+```
+
+RsBody:
+```json
+$Frigo
+```
+
+
+DELETE
+/utilisateurs/{id}/frigo/ingredient/{id_ingredient}
+Enlever un ingrédient au frigo
+RqBody:
+```json
+{
+    "date_ajout": "date",
+}
+```
+
+RsBody:
+```json
+$Frigo
+```
 
 GET
 /utilisateurs/{id}/allergenes
 Obtenir la liste d'allergènes 
 
+RsBody:
+```json
+[$Allergene]
+```
+
 POST
 /utilisateurs/{id}/allergenes
 Ajouter un allergène à l'utilisateur
+
+RqBody:
+```json
+{
+    "id_allergene" : "int",
+}
+```
 
 DELETE
 /utilisateurs/{id}/allergenes
 Supprimer un allergène de l'utilisateur l'utilisateur
 
+RqBody:
+```json
+{
+    "id_allergene" : "int",
+}
+```
+
 GET
 /utilisateurs/{id}/ustensiles
 Obtenir la liste des ustensiles exclus
+
+RsBody:
+```json
+[$Allergene]
+```
 
 POST
 /utilisateurs/{id}/ustensiles
 Ajouter un ustensile à la liste d'exclusion
 
+RqBody:
+```json
+{
+    "id_ustensile" : "id",
+}
+```
+
 DELETE
 /utilisateurs/{id}/ustensiles
 Supprimer un ustensile de la liste d'exclusion
+
+RqBody:
+```json
+{
+    "id_ustensile" : "id",
+}
+```
+
+GET
+/ustensiles
+Rechercher des ustensiles
+Query:
+```
+/ustensiles?nom=batteur
+```
+
+RsBody:
+```json
+[$Ustensiles]
+```
+
+POST
+/ustensiles
+Créer un ustensile
+RqBody:
+```json
+{
+    "nom": "string",
+}
+```
 
 POST
 /paniers
@@ -246,6 +386,8 @@ POST
 /paniers/{id}
 Envoyer un panier
 
+### References
+Les template de ce que doit renvoyer l'api  
 $Tag :
 ```json
 {
@@ -270,14 +412,12 @@ $Recette:
         $Tag
     ],
     "ingredients": [
-        $Ingredient
+    {"ingredient": $Ingredient,
+    "quantite" :"string"}
     ],
-    "ustensiles": [
-        {
-            "id_ustensile": 0,
-            "quantite" : "int"
-        }
-    ]
+"ustensiles": [
+    $Ustensiles
+]
 }
 ```
 
@@ -285,12 +425,12 @@ $Ingredient:
 ```json
 {
     "id": "int",
-    "quantite": "string",
-    "allergene": [ 
-        {
-            "id": "int",
-            "label": "string"
-        }
+    "nom": "string",
+    "debut_saison": "date",
+    "fin_saison": "date",
+    "url_photo": "string",
+    "allergenes": [ 
+        $Allergene
     ]
 }
 ```
@@ -302,7 +442,8 @@ $Panier:
     "id_producteur": "int",
     "date": "12/12/2001",
     "ingredients": [
-        $Ingredient + {"quantite": "int"}
+    {"ingredient" : $Ingredient ,
+    "quantite": "string"}
     ],
 }
 ```
@@ -321,7 +462,9 @@ $Frigo:
 {
     "id_utilisateur": "uuid",
     "ingredients": [
-        $Ingredient + {"quantite": "int", "date_ajout":"date"}
+    {"ingredient": $Ingredient,
+    "quantite": "int",
+    "date_ajout":"date"}
     ],
 }
 ```
@@ -335,3 +478,27 @@ $Preference:
 }
 ```
 
+$Commentaire:
+```json
+{
+    "nom_utilisateur": "string",
+    "contenu": "string",
+    "id_recette": "int",
+}
+```
+
+$Allergene:
+```json
+{
+    "id": "int",
+    "label" : "string",
+}
+```
+
+$Ustensile:
+```json
+{
+    "id": "int",
+    "nom": "string",
+}
+```
