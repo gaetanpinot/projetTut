@@ -4,13 +4,13 @@ import { Router } from '@angular/router';
 import { DialogComponent } from './dialog/dialog.component';
 
 @Component({
-  selector: 'app-home',
+  selector: 'app-test-home',
   standalone: false,
   
-  templateUrl: './home.component.html',
-  styleUrl: './home.component.scss'
+  templateUrl: './test-home.component.html',
+  styleUrl: './test-home.component.scss'
 })
-export class HomeComponent {
+export class TestHomeComponent {
   constructor(private dialog: MatDialog, private router: Router) {}
 
   openDialog() {

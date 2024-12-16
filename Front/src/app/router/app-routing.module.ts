@@ -1,13 +1,17 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { HomeComponent } from '../Components/TEST/home/home.component';
-import { NextPageComponent } from '../Components/TEST/home/next-page/next-page.component';
+import { TestHomeComponent } from '../Components/TEST/test-home/test-home.component';
+import { NextPageComponent } from '../Components/TEST/test-home/next-page/next-page.component';
+import { ConnexionInscripComponent } from '../Components/Main/connexion-inscrip/connexion-inscrip.component';
+import { HomeComponent } from '../Components/Main/home/home.component';
 
 
 const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full'},
-  { path: 'Home', component: HomeComponent }, 
-  { path: 'next', component: NextPageComponent }
+  { path: 'TEST', component: TestHomeComponent },
+  { path: 'Home', component: HomeComponent },
+  { path: 'next', component: NextPageComponent },
+  { path: 'Connexion', component: ConnexionInscripComponent }
 ];
 
 @NgModule({

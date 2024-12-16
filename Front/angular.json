@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "test_project": {
+    "amap": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -18,7 +18,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/test_project",
+            "outputPath": "dist/amap",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": [
@@ -66,10 +66,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "test_project:build:production"
+              "buildTarget": "amap:build:production"
             },
             "development": {
-              "buildTarget": "test_project:build:development"
+              "buildTarget": "amap:build:development"
             }
           },
           "defaultConfiguration": "development"
