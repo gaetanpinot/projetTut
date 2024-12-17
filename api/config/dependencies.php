@@ -1,15 +1,31 @@
 <?php
 
+use Doctrine\DBAL\Connection;
+use Doctrine\DBAL\DriverManager;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\ORMSetup;
 use Monolog\Logger;
+use Monolog\Level;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
+use Psr\Container\ContainerInterface;
 use Tuupola\Middleware\CorsMiddleware;
+
+use function DI\get;
 
 return [
 
+    //doctrine:
+    'doctrine.config' => function (ContainerInterface $c) {
+        return ORMSetup::createAttributeMetadataConfiguration([$c->get('doctrine.entities')], true);
+    } ,
+    Connection::class => function (ContainerInterface $c) {
+        return DriverManager::getConnection($c->get('db.config'), $c->get('doctrine.config'));
+    },
+    EntityManager::class => DI\autowire()->constructor(get(Connection::class), get('doctrine.config')),
 
     StreamHandler::class => DI\create(StreamHandler::class)
-        ->constructor(DI\get('logs.dir'), Logger::DEBUG)
+        ->constructor(DI\get('logs.dir'), Level::Debug)
         ->method('setFormatter', DI\get(LineFormatter::class)),
 
 
