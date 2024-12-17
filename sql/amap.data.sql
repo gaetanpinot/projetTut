@@ -8,14 +8,14 @@
 -- georges  : 047b6cae-6140-49f7-8c66-ef6b66cbb441
 
 INSERT INTO "utilisateur" (id, nom_utilisateur, role, mot_de_passe) VALUES
-('f47ac10b-58cc-4372-a567-0e02b2c3d479','alice',0,'passwordAlice'),
-('c9bf9e57-1685-4c89-bafb-ff5af830be8a','bob',0,'passwordBob'),
-('6618f3e4-c492-474c-b925-1f4f1a0774c3','charlie',1,'passwordCharlie'),
-('9cbe2ee3-45eb-46ef-9ea1-59a01d6b4ff2','admin',2,'passwordAdmin'),
-('2a0a11b7-a68c-4e21-92b4-7f7af6ffcd33','diane',0,'passwordDiane'),
-('50526064-7e17-4afe-9f21-f7100ab6fe62','eric',0,'passwordEric'),
-('84be57c6-4ef4-4381-bf05-a52139a50911','fanny',0,'passwordFanny'),
-('047b6cae-6140-49f7-8c66-ef6b66cbb441','georges',1,'passwordGeorges'); -- Georges est aussi producteur par ex
+('f47ac10b-58cc-4372-a567-0e02b2c3d479','alice',0,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('c9bf9e57-1685-4c89-bafb-ff5af830be8a','bob',0,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('6618f3e4-c492-474c-b925-1f4f1a0774c3','charlie',1,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('9cbe2ee3-45eb-46ef-9ea1-59a01d6b4ff2','admin',2,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('2a0a11b7-a68c-4e21-92b4-7f7af6ffcd33','diane',0,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('50526064-7e17-4afe-9f21-f7100ab6fe62','eric',0,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('84be57c6-4ef4-4381-bf05-a52139a50911','fanny',0,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'),
+('047b6cae-6140-49f7-8c66-ef6b66cbb441','georges',1,'$2y$10$uyYfJLlBRVN/ta3q15sLtuiT96gxzZe8XgXFwNmnpamWyjoqknggG'); -- Georges est aussi producteur par ex
 
 INSERT INTO "public"."ingredient" 
 ("nom", "debut_saison", "fin_saison", "url_photo") VALUES
