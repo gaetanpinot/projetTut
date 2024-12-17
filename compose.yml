@@ -15,7 +15,7 @@ services:
     volumes:
       - ./api:/var/www/html
     depends_on:
-      pgsql:
+      amap.db:
         condition: service_healthy
 
   adminer:
@@ -28,12 +28,12 @@ services:
     command: php -S 0.0.0.0:8080 -t /var/www/html
     restart: unless-stopped
     depends_on:
-      pgsql:
+      amap.db:
         condition: service_healthy
 
-  pgsql:
+  amap.db:
     image: postgres:alpine
-    container_name: amap_pgsql
+    # container_name: amap_pgsql
     ports:
       - "1002:5432"
     volumes:
