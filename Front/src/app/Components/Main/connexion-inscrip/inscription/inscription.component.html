@@ -24,8 +24,18 @@
                    type="password">
         </mat-form-field>
 
-        <button mat-raised-button
+        <button mat-flat-button
                 color="primary"
                 class="signup-button">Créer un compte</button>
+        <mat-slider class="example-margin"
+                    [disabled]="false"
+                    [max]="100"
+                    [min]="0"
+                    [step]="1"
+                    [discrete]="false"
+                    [showTickMarks]="false">
+            <input matSliderThumb
+                   #slider>
+        </mat-slider>
     </form>
 </div>

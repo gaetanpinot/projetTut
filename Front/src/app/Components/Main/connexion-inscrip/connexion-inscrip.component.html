@@ -6,6 +6,7 @@
         <button class="tab-button"
                 [class.active]="activeTab === 'signup'"
                 (click)="switchTab('signup')">Inscription</button>
+        
     </div>
     <div class="auth-content">
         <app-connexion *ngIf="activeTab === 'login'"></app-connexion>

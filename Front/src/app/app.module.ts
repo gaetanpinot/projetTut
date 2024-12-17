@@ -27,6 +27,7 @@ import {MatIconModule} from '@angular/material/icon';
 import {MatInputModule} from '@angular/material/input';
 import { ConnexionComponent } from './Components/Main/connexion-inscrip/connexion/connexion.component';
 import { InscriptionComponent } from './Components/Main/connexion-inscrip/inscription/inscription.component';
+import {MatSliderModule} from '@angular/material/slider';
 
 @NgModule({
   declarations: [
@@ -56,7 +57,8 @@ import { InscriptionComponent } from './Components/Main/connexion-inscrip/inscri
     MatDialogModule,
     MatFormFieldModule,
     MatInputModule,
-    MatIconModule
+    MatIconModule,
+    MatSliderModule
   ],
   providers: [
     provideAnimationsAsync(),
