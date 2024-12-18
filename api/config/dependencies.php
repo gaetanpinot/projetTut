@@ -11,6 +11,8 @@ use Monolog\Formatter\LineFormatter;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
+use amap\core\service\ServiceUtilisateur;
+use amap\core\service\ServiceUtilisateurInterface;
 use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\UtilisateurRepository;
 use amap\infrastructure\repository\UtilisateurRepositoryInterface;
@@ -28,10 +30,12 @@ return [
     },
     EntityManager::class => DI\autowire()->constructor(get(Connection::class), get('doctrine.config')),
 
+    //repository
     UtilisateurRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
         return $em->getRepository(Utilisateur::class);
     },
+    ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)

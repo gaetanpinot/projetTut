@@ -31,8 +31,8 @@ return function (\Slim\App $app): \Slim\App {
     $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);
     $app->get('/utilisateurs/{id}/favoris', GetFavoritesAction::class);
 
-    $app->post('/utilisateurs/{id}/producteurs/{id}', SubscribeProducteurAction::class);
-    $app->delete('/utilisateurs/{id}/producteurs/{id}', UnsubscribeProducteurAction::class);
+    $app->post('/utilisateurs/{id}/producteurs/{id_producteur}', SubscribeProducteurAction::class);
+    $app->delete('/utilisateurs/{id}/producteurs/{id_producteur}', UnsubscribeProducteurAction::class);
 
     $app->get('/producteurs/{id}/ingredients', GetProducteurIngredientsAction::class);
     $app->get('/producteurs/{id}/panier', GetProducteurBasketAction::class);

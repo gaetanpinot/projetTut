@@ -12,6 +12,7 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
 {
     public function getUtilisateurById(string $id): Utilisateur
     {
+        return $this->findOneBy(['id' => $id]);
     }
     public function getUtilisateurByNom(string $nomUtilisateur): Utilisateur
     {
