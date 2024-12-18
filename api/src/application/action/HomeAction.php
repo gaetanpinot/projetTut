@@ -2,6 +2,7 @@
 
 namespace amap\application\action;
 
+use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -12,10 +13,10 @@ use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 class HomeAction extends AbstractAction
 {
     public UtilisateurRepositoryInterface $t;
-    public function __construct(UtilisateurRepositoryInterface $u, LoggerInterface $l)
+    public function __construct(ContainerInterface $cont)
     {
-        $this->t = $u;
-        parent::__construct($l);
+        parent::__construct($cont);
+        $this->t = $cont->get(UtilisateurRepositoryInterface::class);
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
@@ -27,7 +28,6 @@ class HomeAction extends AbstractAction
         /*    echo $r->getCreateur()->getId();*/
         /*}*/
         $this->loger->info("Home action");
-        return $rs;
         return JsonRenderer::render($rs, 200, ["message" => "Bienvenue sur l'api amap"]);
     }
 }
