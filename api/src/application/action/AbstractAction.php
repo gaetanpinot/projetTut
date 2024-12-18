@@ -6,6 +6,7 @@ use DI\Container;
 use Monolog\Logger;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
+use Psr\Log\LoggerInterface;
 
 abstract class AbstractAction
 {
@@ -15,11 +16,9 @@ abstract class AbstractAction
      * @param ServicePraticienInterface $sprt
      * @param string $formatDate
      */
-    public function __construct(Container $cont)
+    public function __construct(LoggerInterface $l)
     {
-        $this->loger = $cont->get(Logger::class)->withName(get_class($this));
-
-
+        $this->loger = $l;
     }
 
     /**
