@@ -11,6 +11,7 @@ services:
       - '1000:80'
     networks:
       - amap.net
+    env_file: ./secret.env
     restart: unless-stopped
     volumes:
       - ./api:/var/www/html

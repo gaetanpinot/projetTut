@@ -18,7 +18,7 @@ class HomeAction extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $retour = $this->serviceUtilisateur->getUtilisateurByNom("alice");
+        $retour = $this->serviceUtilisateur->getUtilisateurByNom("alicebb");
         /*$this->loger->info("Home action");*/
         /*return $rs;*/
         return JsonRenderer::render($rs, 200, [$retour]);
