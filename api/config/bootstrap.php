@@ -4,6 +4,7 @@ require_once __DIR__ . "/../vendor/autoload.php";
 
 
 use DI\ContainerBuilder;
+use Doctrine\ORM\EntityManager;
 use Slim\Factory\AppFactory;
 
 $builder = new ContainerBuilder();
@@ -14,6 +15,7 @@ $builder->addDefinitions(__DIR__ . '/actions.php');
 $c = $builder->build();
 $app = AppFactory::createFromContainer($c);
 
+$e = $c->get(EntityManager::class);
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();

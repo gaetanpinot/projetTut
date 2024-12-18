@@ -1,5 +1,6 @@
 ## Routes  
-  
+Liste ingredients, allergenes, ustensiles au lieu de recherche,
+
 POST  
 /inscription  
 Inscription d'un nouvel utilisateur  
@@ -97,7 +98,13 @@ Query:
   
 RsBody:  
 ```json  
-[$Recette]  
+{
+"recettes": [$Recette]  ,
+"links" : {
+        "next" : "/recettes?recherche + page=2",
+        "prev" : "/recettes?recherche + page=0"
+    }
+}
 ```  
   
 GET  
@@ -210,15 +217,11 @@ $Panier
   
 GET  
 /ingredients  
-Chercher la liste des ingrédients  
-Query:  
-```  
-/ingredients?nom=Citrouille  
-```  
+Obtenir la liste des ingrédients  
   
 RsBody:  
 ```json  
-[$Ingredients]  
+[$Ingredient]  
 ```  
   
 POST  
@@ -353,15 +356,11 @@ RqBody:
   
 GET  
 /ustensiles  
-Rechercher des ustensiles  
-Query:  
-```  
-/ustensiles?nom=batteur  
-```  
+Obtenir les ustensiles  
   
 RsBody:  
 ```json  
-[$Ustensiles]  
+[$Ustensile]  
 ```  
   
 POST  
@@ -416,7 +415,7 @@ $Recette:
     "quantite" :"string"}  
     ],  
 "ustensiles": [  
-    $Ustensiles  
+    $Ustensile  
 ]  
 }  
 ```  
