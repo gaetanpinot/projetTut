@@ -15,7 +15,6 @@ $builder->addDefinitions(__DIR__ . '/actions.php');
 $c = $builder->build();
 $app = AppFactory::createFromContainer($c);
 
-$e = $c->get(EntityManager::class);
 
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();

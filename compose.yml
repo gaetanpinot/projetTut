@@ -33,7 +33,7 @@ services:
 
   amap.db:
     image: postgres:alpine
-    # container_name: amap_pgsql
+    container_name: amap_pgsql
     ports:
       - "1002:5432"
     volumes:

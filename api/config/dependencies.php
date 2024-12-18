@@ -9,7 +9,11 @@ use Monolog\Level;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
 use Psr\Container\ContainerInterface;
+use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
+use amap\infrastructure\entities\Utilisateur;
+use amap\infrastructure\repository\UtilisateurRepository;
+use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 
 use function DI\get;
 
@@ -24,6 +28,11 @@ return [
     },
     EntityManager::class => DI\autowire()->constructor(get(Connection::class), get('doctrine.config')),
 
+    UtilisateurRepositoryInterface::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        return $em->getRepository(Utilisateur::class);
+    },
+
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)
         ->method('setFormatter', DI\get(LineFormatter::class)),
@@ -35,7 +44,7 @@ return [
         return new LineFormatter($output, $dateFormat);
     },
 
-    Logger::class => DI\create(Logger::class)->constructor('Toubeelib_logger', [DI\get(StreamHandler::class)]),
+    LoggerInterface::class => DI\create(Logger::class)->constructor('Toubeelib_logger', [DI\get(StreamHandler::class)]),
 
 
     //midleware
