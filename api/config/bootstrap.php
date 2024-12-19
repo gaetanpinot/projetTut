@@ -15,7 +15,6 @@ $builder->addDefinitions(__DIR__ . '/actions.php');
 $c = $builder->build();
 $app = AppFactory::createFromContainer($c);
 
-
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);
