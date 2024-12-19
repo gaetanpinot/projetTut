@@ -24,7 +24,7 @@ class UtilisateurDTO extends DTO
         $utilisateur->id = $u->getId();
         $utilisateur->nomUtilisateur = $u->getNomUtilisateur();
         $utilisateur->role = $u->getRole();
-        $utilisateur->recettes = $u->getRecettes()->map(fn ($r) => $r->getId())->toArray();
+        /*$utilisateur->recettes = $u->getRecettes()->map(fn ($r) => $r->getId())->toArray();*/
         return $utilisateur;
 
     }

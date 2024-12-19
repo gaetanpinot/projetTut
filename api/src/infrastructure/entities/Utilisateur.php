@@ -34,16 +34,16 @@ class Utilisateur
     private ?string $motDePasse;
     public function getMotDePasse()
     {
-        return $this->getMotDePasse();
+        return $this->motDePasse;
     }
 
-    #[ORM\OneToMany(mappedBy: "createur", targetEntity: Recette::class)]
-    private Collection $recettes;
-
-    public function getRecettes(): Collection
-    {
-        return $this->recettes;
-    }
+    /*#[ORM\OneToMany(mappedBy: "createur", targetEntity: Recette::class)]*/
+    /*private Collection $recettes;*/
+    /**/
+    /*public function getRecettes(): Collection*/
+    /*{*/
+    /*    return $this->recettes;*/
+    /*}*/
 
     #[ORM\ManyToMany(targetEntity: Panier::class, inversedBy: "utilisateurs")]
     #[ORM\JoinTable(name: "panier_utilisateur")]
