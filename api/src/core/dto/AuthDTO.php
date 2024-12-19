@@ -2,13 +2,14 @@
 
 namespace amap\core\dto;
 
-use App\Entity\Utilisateur;
+use amap\infrastructure\entities\Utilisateur;
 
 class AuthDTO extends DTO
 {
     protected string $id;
+    protected UtilisateurDTO $utilisateur;
     protected int $role;
-    protected string $atoken;
+    protected string $token;
     protected string $refreshToken;
 
     public function __construct(string $id, int $role)
@@ -17,9 +18,13 @@ class AuthDTO extends DTO
         $this->role = $role;
     }
 
+    public function setUtilisateur(UtilisateurDTO $utilisateur): void
+    {
+        $this->utilisateur = $utilisateur;
+    }
     public function setAtoken(string $tok): void
     {
-        $this->atoken = $tok;
+        $this->token = $tok;
     }
 
     public function setId(string $id)
@@ -33,8 +38,17 @@ class AuthDTO extends DTO
 
     public static function fromUser(Utilisateur $user)
     {
-        $this->id = $user->getId();
-        $this->role = $user->getRole();
+        $retour = new AuthDTO($user->getId(), $user->getRole());
+        $retour->setUtilisateur(UtilisateurDTO::fromUtilisateur($user));
+        return $retour;
+    }
+
+    public function jsonSerialize(): array
+    {
+        $retour = parent::jsonSerialize();
+        unset($retour['id']);
+        unset($retour['role']);
+        return $retour;
     }
 
 }

@@ -18,8 +18,16 @@ class JWTAuthnProvider implements AuthnProviderInterface
         $this->jwtManager = $jwtManager;
     }
 
-    public function register(CredentialsDTO $credentials): void
+    public function inscription(CredentialsDTO $credentials): AuthDTO
     {
+        try {
+            $password = $credentials->password;
+            $this->serviceAuth->createUtilisateur($credentials);
+            $credentials->password = $password;
+            return $this->signin($credentials);
+        } catch (BadInputException $e) {
+            throw new AuthInvalidException($e->getMessage());
+        }
     }
 
     public function signin(CredentialsDTO $credentials): AuthDTO
@@ -31,6 +39,7 @@ class JWTAuthnProvider implements AuthnProviderInterface
         }
         $token = $this->jwtManager->createAcessToken($user);
         $authdto = new AuthDTO($user->id, $user->role);
+        $authdto->setUtilisateur($user->utilisateur);
         $authdto->setAtoken($token);
         return $authdto;
 
