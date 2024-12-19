@@ -1,9 +1,16 @@
 <?php
 
+
 use amap\core\service\ServiceIngredient;
 use amap\core\service\ServiceIngredientInterface;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\repository\IngredientRepositoryInterface;
+
+use amap\core\service\ServiceRecettes;
+use amap\core\service\ServiceRecettesInterface;
+use amap\infrastructure\entities\Recette;
+use amap\infrastructure\repository\RecetteRepositoryInterface;
+
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
@@ -12,6 +19,7 @@ use Monolog\Logger;
 use Monolog\Level;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
+use Opis\JsonSchema\Validator;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
@@ -20,7 +28,6 @@ use amap\core\service\ServiceAuthInterface;
 use amap\core\service\ServiceUtilisateur;
 use amap\core\service\ServiceUtilisateurInterface;
 use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\UtilisateurRepository;
 use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 use amap\providers\auth\AuthnProviderInterface;
 use amap\providers\auth\JWTAuthnProvider;
@@ -58,6 +65,15 @@ return [
     //provider
     AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
     JWTManager::class => DI\autowire(JWTManager::class),
+
+    //validator
+    Validator::class => DI\create(Validator::class),
+
+    RecetteRepositoryInterface::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        return $em->getRepository(Recette::class);
+    },
+    ServiceRecettesInterface::class => DI\autowire(ServiceRecettes::class),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)
