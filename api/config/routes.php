@@ -7,6 +7,7 @@ use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
 use amap\application\action\ConnexionAction;
 use amap\application\action\HomeAction;
+use amap\application\action\InscriptionAction;
 
 return function (\Slim\App $app): \Slim\App {
 
