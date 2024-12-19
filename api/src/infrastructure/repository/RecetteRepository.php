@@ -10,58 +10,44 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
 
     public function getRecettes($args): array
     {
-        $recettes = $this->findAll();
+        $qb = $this->createQueryBuilder('r');
 
-        if(isset($args["nom"])) {
-            $nom = $args['nom'];
-            $recettes = array_filter($recettes, function ($recette) use ($nom) {
-                return stripos($recette->getNom(), $nom) !== false;
-            });
+        if (isset($args['nom'])) {
+            $qb->andWhere('r.nom LIKE :nom')
+                ->setParameter('nom', '%' . $args['nom'] . '%');
         }
 
-        if(isset($args["temps_preparation_gt"])) {
-            $temps_preparation_gt = $args['temps_preparation_gt'];
-            $recettes = array_filter($recettes, function ($recette) use ($temps_preparation_gt) {
-                return $recette->getTempsPreparation() >= $temps_preparation_gt;
-            });
+        if (isset($args['temps_preparation_gt'])) {
+            $qb->andWhere('r.tempsPreparation >= :temps_preparation_gt')
+                ->setParameter('temps_preparation_gt', $args['temps_preparation_gt']);
         }
 
-        if(isset($args["temps_preparation_lt"])) {
-            $temps_preparation_lt = $args['temps_preparation_lt'];
-            $recettes = array_filter($recettes, function ($recette) use ($temps_preparation_lt) {
-                return $recette->getTempsPreparation() <= $temps_preparation_lt;
-            });
+        if (isset($args['temps_preparation_lt'])) {
+            $qb->andWhere('r.tempsPreparation <= :temps_preparation_lt')
+                ->setParameter('temps_preparation_lt', $args['temps_preparation_lt']);
         }
 
-        if(isset($args["complexite_gt"])) {
-            $complexite_gt = $args['complexite_gt'];
-            $recettes = array_filter($recettes, function ($recette) use ($complexite_gt) {
-                return $recette->getComplexite() >= $complexite_gt;
-            });
+        if (isset($args['complexite_gt'])) {
+            $qb->andWhere('r.complexite >= :complexite_gt')
+                ->setParameter('complexite_gt', $args['complexite_gt']);
         }
 
-        if(isset($args["complexite_lt"])) {
-            $complexite_lt = $args['complexite_lt'];
-            $recettes = array_filter($recettes, function ($recette) use ($complexite_lt) {
-                return $recette->getComplexite() <= $complexite_lt;
-            });
+        if (isset($args['complexite_lt'])) {
+            $qb->andWhere('r.complexite <= :complexite_lt')
+                ->setParameter('complexite_lt', $args['complexite_lt']);
         }
 
-        if(isset($args["debut_saison"])) {
-            $debut_saison = $args['debut_saison'];
-            $recettes = array_filter($recettes, function ($recette) use ($debut_saison) {
-                return $recette->getDebutSaison() === $debut_saison;
-            });
+        if (isset($args['debut_saison'])) {
+            $qb->andWhere('r.debutSaison = :debut_saison')
+                ->setParameter('debut_saison', $args['debut_saison']);
         }
 
-        if(isset($args["fin_saison"])) {
-            $fin_saison = $args['debut_saison'];
-            $recettes = array_filter($recettes, function ($recette) use ($fin_saison) {
-                return $recette->getFinSaison() === $fin_saison;
-            });
+        if (isset($args['fin_saison'])) {
+            $qb->andWhere('r.finSaison = :fin_saison')
+                ->setParameter('fin_saison', $args['fin_saison']);
         }
 
-        return $recettes;
+        return $qb->getQuery()->getResult();
     }
 
     public function getRecetteById($id): Recette

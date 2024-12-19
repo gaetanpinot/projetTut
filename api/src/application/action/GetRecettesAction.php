@@ -2,6 +2,10 @@
 
 namespace amap\application\action;
 
+use amap\core\service\ServiceRecettes;
+use amap\core\service\ServiceRecettesInterface;
+use amap\infrastructure\repository\RecetteRepository;
+use amap\infrastructure\repository\RecetteRepositoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -11,15 +15,15 @@ use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 
 class GetRecettesAction extends AbstractAction
 {
-    public UtilisateurRepositoryInterface $t;
-    public function __construct(UtilisateurRepositoryInterface $u, LoggerInterface $l)
+    public ServiceRecettesInterface $t;
+    public function __construct(ServiceRecettesInterface $u, LoggerInterface $l)
     {
         $this->t = $u;
         parent::__construct($l);
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        return $rs;
-        return JsonRenderer::render($rs, 200, ["message" => "Bienvenue sur l'api amap"]);
+        return JsonRenderer::render($rs,200, $this->t->getRecettes($rq->getQueryParams()));
+        //return $rs;
     }
 }
