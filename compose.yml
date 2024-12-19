@@ -15,6 +15,7 @@ services:
     restart: unless-stopped
     volumes:
       - ./api:/var/www/html
+    working_dir: /var/www/html
     depends_on:
       amap.db:
         condition: service_healthy

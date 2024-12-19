@@ -2,14 +2,16 @@
 
 declare(strict_types=1);
 
+
+use amap\application\action\GetRecettesAction;
+use Slim\Exception\HttpNotFoundException;
+use amap\application\action\GetFavoritesAction;
+
 use amap\application\action\ConnexionAction;
 use amap\application\action\CreateIngredientAction;
-use amap\application\action\CreateRecettesAction;
-use amap\application\action\GetFavoritesAction;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
-use Slim\Exception\HttpNotFoundException;
 
 return function (\Slim\App $app): \Slim\App {
 
