@@ -8,4 +8,5 @@ interface UtilisateurRepositoryInterface
 {
     public function getUtilisateurById(string $id): Utilisateur;
     public function getUtilisateurByNom(string $nomUtilisateur): Utilisateur;
+    public function createUtilisateur(Utilisateur $utilisateur): Utilisateur;
 }
