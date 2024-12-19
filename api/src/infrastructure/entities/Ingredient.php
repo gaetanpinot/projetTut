@@ -2,11 +2,12 @@
 
 namespace amap\infrastructure\entities;
 
+use amap\infrastructure\repository\IngredientRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: IngredientRepository::class)]
 #[ORM\Table(name: "ingredient")]
 class Ingredient
 {
@@ -18,13 +19,13 @@ class Ingredient
     #[ORM\Column(type: "string", unique: true, nullable: true)]
     private ?string $nom;
 
-    #[ORM\Column(type: "integer", nullable: true)]
+    #[ORM\Column(name: "debut_saison", type: "integer", nullable: true)]
     private ?int $debutSaison;
 
-    #[ORM\Column(type: "integer", nullable: true)]
+    #[ORM\Column(name: "fin_saison", type: "integer", nullable: true)]
     private ?int $finSaison;
 
-    #[ORM\Column(type: "string", nullable: true)]
+    #[ORM\Column(name: "url_photo", type: "string", nullable: true)]
     private ?string $urlPhoto;
 
     #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: "ingredients")]
@@ -44,5 +45,47 @@ class Ingredient
         $this->utilisateursExclus = new ArrayCollection();
     }
 
-    // Getters and setters omitted for brevity
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function getDebutSaison(): ?int
+    {
+        return $this->debutSaison;
+    }
+
+    public function getFinSaison(): ?int
+    {
+        return $this->finSaison;
+    }
+
+    public function getUrlPhoto(): ?string
+    {
+        return $this->urlPhoto;
+    }
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function setDebutSaison(?int $debutSaison): void
+    {
+        $this->debutSaison = $debutSaison;
+    }
+
+    public function setFinSaison(?int $finSaison): void
+    {
+        $this->finSaison = $finSaison;
+    }
+
+    public function setUrlPhoto(?string $urlPhoto): void
+    {
+        $this->urlPhoto = $urlPhoto;
+    }
 }

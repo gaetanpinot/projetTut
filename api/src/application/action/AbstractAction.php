@@ -2,9 +2,7 @@
 
 namespace amap\application\action;
 
-use DI\Container;
 use Monolog\Logger;
-use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -17,9 +15,9 @@ abstract class AbstractAction
      * @param ServicePraticienInterface $sprt
      * @param string $formatDate
      */
-    public function __construct(ContainerInterface $cont)
+    public function __construct(LoggerInterface $l)
     {
-        $this->loger = $cont->get(LoggerInterface::class)->withName(get_class($this));
+        $this->loger = $l;
     }
 
     /**
