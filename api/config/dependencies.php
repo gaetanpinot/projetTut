@@ -8,6 +8,7 @@ use Monolog\Logger;
 use Monolog\Level;
 use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
+use Opis\JsonSchema\Validator;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
@@ -48,6 +49,9 @@ return [
     //provider
     AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
     JWTManager::class => DI\autowire(JWTManager::class),
+
+    //validator
+    Validator::class => DI\create(Validator::class),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)
