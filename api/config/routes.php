@@ -2,11 +2,13 @@
 
 declare(strict_types=1);
 
-use amap\application\action\ConnexionAction;
 use amap\application\action\CreateRecettesAction;
+use Slim\Exception\HttpNotFoundException;
+use amap\application\action\GetFavoritesAction;
+use amap\application\action\ConnexionAction;
+
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
-use Slim\Exception\HttpNotFoundException;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -34,8 +36,8 @@ return function (\Slim\App $app): \Slim\App {
     $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);
     $app->get('/utilisateurs/{id}/favoris', GetFavoritesAction::class);
 
-    $app->post('/utilisateurs/{id}/producteurs/{id}', SubscribeProducteurAction::class);
-    $app->delete('/utilisateurs/{id}/producteurs/{id}', UnsubscribeProducteurAction::class);
+    $app->post('/utilisateurs/{id}/producteurs/{id_producteur}', SubscribeProducteurAction::class);
+    $app->delete('/utilisateurs/{id}/producteurs/{id_producteur}', UnsubscribeProducteurAction::class);
 
     $app->get('/producteurs/{id}/ingredients', GetProducteurIngredientsAction::class);
     $app->get('/producteurs/{id}/panier', GetProducteurBasketAction::class);

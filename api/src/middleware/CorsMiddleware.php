@@ -1,6 +1,6 @@
 <?php
 
-namespace amap\application\middleware;
+namespace amap\middleware;
 
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

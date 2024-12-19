@@ -2,8 +2,7 @@
 
 namespace amap\application\action;
 use amap\application\renderer\JsonRenderer;
-use amap\infrastructure\service\interfaces\RecetteServiceInterface;
-use DI\Container;
+use amap\core\service\RecetteServiceInterface;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

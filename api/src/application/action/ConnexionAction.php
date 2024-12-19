@@ -1,51 +1,37 @@
 <?php
 
 namespace amap\application\action;
-use amap\application\renderer\JsonRenderer;
-use amap\infrastructure\service\interfaces\UserServiceInterface;
-use Psr\Container\ContainerInterface;
+
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Respect\Validation\Exceptions\ValidatorException;
-use Respect\Validation\Validator;
+use Psr\Log\LoggerInterface;
+use Slim\Exception\HttpBadRequestException;
+use amap\application\action\AbstractAction;
+use amap\application\renderer\JsonRenderer;
+use amap\core\dto\CredentialsDTO;
+use amap\providers\auth\AuthInvalidException;
+use amap\providers\auth\AuthnProviderInterface;
 
 class ConnexionAction extends AbstractAction
 {
-    private UserServiceInterface $userService;
-
-    public function __construct(ContainerInterface $cont)
+    private AuthnProviderInterface $authnProvider;
+    public function __construct(AuthnProviderInterface $authnProvider, LoggerInterface $logger)
     {
-        parent::__construct($cont);
-        $this->userService = $cont->get(UserServiceInterface::class);
+        $this->authnProvider = $authnProvider;
+        parent::__construct($logger);
     }
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $data = $rq->getParsedBody();
 
-        if (empty($data['nom_utilisateur']) || empty($data['mot_de_passe'])) {
-            return JsonRenderer::render($rs, 400, ['error' => 'Missing username or password']);
-        }
-
-        $nom_utilisateur = $data['nom_utilisateur'];
-        $password = $data['mot_de_passe'];
-
-        Validator::email()->assert($nom_utilisateur);
-        Validator::stringType()->assert($password);
-
+        $body = $rq->getParsedBody();
+        $credentials = new CredentialsDTO('', $body['mot_de_passe'], $body['nom_utilisateur']);
         try {
-            $jwt = $this->userService->authenticateUser($nom_utilisateur, $password);
-            return JsonRenderer::render($rs, 200, ['token' => $jwt]);
-        }catch (ValidatorException $e) {
-            return JsonRenderer::render($rs, 400, ['error' => $e->getMessage()]);
-//        } catch (NoDataFoundException){
-//            return JsonRenderer::render($rs, 404, ['error' => 'Utilisateur non trouvé.']);
-//        }
-//        catch (\PDOException $e) {
-//            return JsonRenderer::render($rs, 500, ['error' => $e->getMessage()]);
+            $authDTO = $this->authnProvider->signin($credentials);
+        } catch (AuthInvalidException $e) {
+            return JsonRenderer::render($rs, 400, ['message' => $e->getMessage()]);
         }
-        catch (\Exception $e) {
-            return JsonRenderer::render($rs, 500, ['error' => $e->getMessage()]);
-        }
+        return JsonRenderer::render($rs, 201, $authDTO);
     }
+
 }

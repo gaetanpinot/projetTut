@@ -12,7 +12,7 @@ RqBody:
     "role": "utilisateur"  
 }  
 ```  
-  
+
 RsBody:  
 ```json  
 {  
@@ -21,19 +21,18 @@ RsBody:
     "id_utilisateur": "uuid",  
 }  
 ```  
-  
-  
+
 POST  
 /connexion  
 Connexion d'un utilisateur  
-  
+
 RqBody:  
 ```json  
 {  
     "nom_utilisateur": "string",  
     "mot_de_passe": "string",  
 }```  
-  
+
 RsBody:  
 ```json  
 {  
