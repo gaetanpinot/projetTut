@@ -32,9 +32,7 @@ class ConnexionAction extends AbstractAction
             'type' => 'object',
             'properties' => (object)[
                 'nom_utilisateur' => (object)[
-                    'type' => 'string',
-                    'minLength' => 4,
-                    'maxLength' => 100,
+                    '$ref' => 'http://amap.fr/nom_utilisateur_schema#'
                 ],
                 'mot_de_passe' => (object)[
                     'type' => 'string',
