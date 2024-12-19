@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use amap\application\action\GetRecettesAction;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
 use amap\application\action\ConnexionAction;
