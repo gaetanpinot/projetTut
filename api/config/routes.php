@@ -3,6 +3,8 @@
 declare(strict_types=1);
 
 use Slim\Exception\HttpNotFoundException;
+use amap\application\action\GetFavoritesAction;
+use amap\application\action\ConnexionAction;
 use amap\application\action\HomeAction;
 
 return function (\Slim\App $app): \Slim\App {
