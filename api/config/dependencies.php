@@ -1,5 +1,8 @@
 <?php
 
+use DI\Container;
+use Opis\JsonSchema\Schema;
+use Opis\JsonSchema\SchemaLoader;
 use amap\core\service\ServiceRecettes;
 use amap\core\service\ServiceRecettesInterface;
 use amap\infrastructure\entities\Recette;
@@ -54,7 +57,17 @@ return [
     JWTManager::class => DI\autowire(JWTManager::class),
 
     //validator
-    Validator::class => DI\create(Validator::class),
+    'validator.schema' => (object) [
+        '$id' => 'http://amap.fr/nom_utilisateur_schema#',
+        'type' => 'string',
+        'minLength' => 4,
+        'maxLength' => 100,
+    ],
+    Validator::class => function (ContainerInterface $c) {
+        $validator = new Validator();
+        $validator->resolver()->registerRaw($c->get('validator.schema'));
+        return $validator;
+    },
 
     RecetteRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
