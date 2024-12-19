@@ -11,9 +11,16 @@ use Monolog\Formatter\LineFormatter;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
+use amap\core\service\ServiceAuth;
+use amap\core\service\ServiceAuthInterface;
+use amap\core\service\ServiceUtilisateur;
+use amap\core\service\ServiceUtilisateurInterface;
 use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\UtilisateurRepository;
 use amap\infrastructure\repository\UtilisateurRepositoryInterface;
+use amap\providers\auth\AuthnProviderInterface;
+use amap\providers\auth\JWTAuthnProvider;
+use amap\providers\auth\JWTManager;
 
 use function DI\get;
 
@@ -28,10 +35,19 @@ return [
     },
     EntityManager::class => DI\autowire()->constructor(get(Connection::class), get('doctrine.config')),
 
+    //repository
     UtilisateurRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
         return $em->getRepository(Utilisateur::class);
     },
+
+    //service
+    ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
+    ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
+
+    //provider
+    AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
+    JWTManager::class => DI\autowire(JWTManager::class),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)

@@ -1,6 +1,6 @@
 <?php
 
-namespace amap\application\middleware;
+namespace amap\middleware;
 
 use Firebase\JWT\JWT;
 use Firebase\JWT\Key;
