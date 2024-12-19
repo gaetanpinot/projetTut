@@ -1,4 +1,3 @@
-#!/bin/bash
 source ./db.env;
 docker compose up -d;
 docker exec amap_php bash -c "composer install && composer upgrade"
