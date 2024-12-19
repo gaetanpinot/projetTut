@@ -1,5 +1,9 @@
 <?php
 
+use amap\core\service\ServiceRecettes;
+use amap\core\service\ServiceRecettesInterface;
+use amap\infrastructure\entities\Recette;
+use amap\infrastructure\repository\RecetteRepositoryInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
@@ -14,7 +18,6 @@ use Tuupola\Middleware\CorsMiddleware;
 use amap\core\service\ServiceUtilisateur;
 use amap\core\service\ServiceUtilisateurInterface;
 use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\UtilisateurRepository;
 use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 
 use function DI\get;
@@ -36,6 +39,12 @@ return [
         return $em->getRepository(Utilisateur::class);
     },
     ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
+
+    RecetteRepositoryInterface::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        return $em->getRepository(Recette::class);
+    },
+    ServiceRecettesInterface::class => DI\autowire(ServiceRecettes::class),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)
