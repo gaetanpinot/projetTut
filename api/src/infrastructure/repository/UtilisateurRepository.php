@@ -2,6 +2,8 @@
 
 namespace amap\infrastructure\repository;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
+use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use amap\infrastructure\entities\Utilisateur;
 
@@ -22,5 +24,18 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
             throw new EntityNotFoundException("Utilisateur non trouvé");
         }
         return $retour;
+    }
+
+    public function createUtilisateur(Utilisateur $utilisateur): Utilisateur
+    {
+        $em = $this->getEntityManager();
+        try {
+            $em->persist($utilisateur);
+            $em->flush();
+        } catch (UniqueConstraintViolationException $e) {
+            $name = $utilisateur->getNomUtilisateur();
+            throw new EntityConstraintViolation("Utilisateur $name déjà existant");
+        }
+        return $utilisateur;
     }
 }

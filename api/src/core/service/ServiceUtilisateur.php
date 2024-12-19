@@ -2,12 +2,16 @@
 
 namespace amap\core\service;
 
+use amap\core\dto\AuthDTO;
 use amap\core\dto\UtilisateurDTO;
+use amap\core\dto\UtilisateurInputDTO;
+use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 
 class ServiceUtilisateur implements ServiceUtilisateurInterface
 {
     private UtilisateurRepositoryInterface $utilisateurRepository;
+
     public function __construct(UtilisateurRepositoryInterface $u)
     {
         $this->utilisateurRepository = $u;
@@ -23,4 +27,5 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
     {
         return UtilisateurDTO::fromUtilisateur($this->utilisateurRepository->getUtilisateurByNom($nom));
     }
+
 }

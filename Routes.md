@@ -9,7 +9,7 @@ RqBody:
 {  
     "nom_utilisateur": "string",  
     "mot_de_passe": "string",  
-    "role": "utilisateur"  
+    "role": "int"  
 }  
 ```  
 
@@ -17,8 +17,7 @@ RsBody:
 ```json  
 {  
     "token": "XXXX",  
-    "nom_utilisateur": "string",  
-    "id_utilisateur": "uuid",  
+    "utilisateur": $Utilisateur,
 }  
 ```  
 

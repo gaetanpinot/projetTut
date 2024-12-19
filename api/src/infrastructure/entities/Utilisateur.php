@@ -5,6 +5,9 @@ namespace amap\infrastructure\entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Ramsey\Uuid\Rfc4122\UuidV4;
+use amap\core\dto\CredentialsDTO;
+use amap\core\dto\UtilisateurInputDTO;
 use amap\infrastructure\repository\UtilisateurRepository;
 
 #[ORM\Entity(repositoryClass: UtilisateurRepository::class)]
@@ -37,13 +40,13 @@ class Utilisateur
         return $this->motDePasse;
     }
 
-    /*#[ORM\OneToMany(mappedBy: "createur", targetEntity: Recette::class)]*/
-    /*private Collection $recettes;*/
-    /**/
-    /*public function getRecettes(): Collection*/
-    /*{*/
-    /*    return $this->recettes;*/
-    /*}*/
+    #[ORM\OneToMany(mappedBy: "createur", targetEntity: Recette::class)]
+    private Collection $recettes;
+
+    public function getRecettes(): Collection
+    {
+        return $this->recettes;
+    }
 
     #[ORM\ManyToMany(targetEntity: Panier::class, inversedBy: "utilisateurs")]
     #[ORM\JoinTable(name: "panier_utilisateur")]
@@ -70,6 +73,7 @@ class Utilisateur
 
     public function __construct()
     {
+        $this->id = UuidV4::uuid4();
         $this->recettes = new ArrayCollection();
         $this->paniers = new ArrayCollection();
         $this->allergies = new ArrayCollection();
@@ -77,6 +81,15 @@ class Utilisateur
         $this->ustensilesExclus = new ArrayCollection();
         $this->frigo = new ArrayCollection();
         $this->recettesFavorites = new ArrayCollection();
+    }
+
+    public static function fromCredentialsDTO(CredentialsDTO $utilisateur): Utilisateur
+    {
+        $u = new Utilisateur();
+        $u->nomUtilisateur = $utilisateur->nomUtilisateur;
+        $u->role = $utilisateur->role;
+        $u->motDePasse = $utilisateur->password;
+        return $u;
     }
 
     // Getters and setters omitted for brevity

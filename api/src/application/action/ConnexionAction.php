@@ -53,8 +53,7 @@ class ConnexionAction extends AbstractAction
             return $checkValidite;
         }
 
-        $body = $rq->getParsedBody();
-        $credentials = new CredentialsDTO('', $body['mot_de_passe'], $body['nom_utilisateur']);
+        $credentials = new CredentialsDTO('', $data->mot_de_passe, $data->nom_utilisateur);
         try {
             $authDTO = $this->authnProvider->signin($credentials);
         } catch (AuthInvalidException $e) {
