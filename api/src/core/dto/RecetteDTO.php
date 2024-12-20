@@ -32,7 +32,9 @@ class RecetteDTO extends DTO
         $recetteDTO->debutSaison = $recette->getDebutSaison();
         $recetteDTO->finSaison = $recette->getFinSaison();
         $recetteDTO->tags = TagDTO::fromArrayToDTO($recette->getTags());
-        $recetteDTO->ingredients = IngredientDTO::fromArrayToDTO($recette->getIngredients());
+        /*$recetteDTO->ingredients = IngredientDTO::fromArrayToDTO($recette->getIngredients());*/
+        $recetteDTO->ingredients = IngredientRecetteDTO::fromArrayToDTO($recette->getIngredientsRecette());
+
         //$recetteDTO->idRecetteParente = $recette->getRecetteParente()->getId();
         $recetteDTO->urlPhoto = $recette->getUrlPhoto();
 
