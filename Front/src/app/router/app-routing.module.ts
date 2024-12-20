@@ -5,6 +5,7 @@ import { NextPageComponent } from '../Components/TEST/test-home/next-page/next-p
 import { ConnexionInscripComponent } from '../Components/Main/connexion-inscrip/connexion-inscrip.component';
 import { HomeComponent } from '../Components/Main/home/home.component';
 import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
+import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
 
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'Home', component: HomeComponent },
   { path: 'next', component: NextPageComponent },
   { path: 'Connexion', component: ConnexionInscripComponent },  
-  { path: 'Deconnexion', component: DeconnexionComponent }
+  { path: 'Deconnexion', component: DeconnexionComponent },
+  { path: 'Recette', component: RecetteRechercheComponent },
 ];
 
 @NgModule({

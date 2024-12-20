@@ -23,12 +23,15 @@ import { PanierComponent } from './Components/Main/panier/panier.component';
 import { ConnexionInscripComponent } from './Components/Main/connexion-inscrip/connexion-inscrip.component';
 import { TestHomeComponent } from './Components/TEST/test-home/test-home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import {MatIconModule} from '@angular/material/icon';
-import {MatInputModule} from '@angular/material/input';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { ConnexionComponent } from './Components/Main/connexion-inscrip/connexion/connexion.component';
 import { InscriptionComponent } from './Components/Main/connexion-inscrip/inscription/inscription.component';
-import {MatSliderModule} from '@angular/material/slider';
+import { MatSliderModule } from '@angular/material/slider';
 import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [
@@ -62,7 +65,9 @@ import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconn
     MatInputModule,
     MatIconModule,
     MatSliderModule,
-
+    MatRadioModule, 
+    MatCheckboxModule, 
+    MatSlideToggleModule
   ],
   providers: [
     provideAnimationsAsync(),
