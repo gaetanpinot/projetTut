@@ -50,10 +50,14 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         }
 
         if (isset($args['id_tag'])) {
+            $nbTag = count($args['id_tag']);
             $qb->join('r.tags', 't');
             $i = 0;
             $qb->andWhere("t.id IN (:id_tags)")
-            ->setParameter("id_tags", $args['id_tag'], ArrayParameterType::INTEGER);
+                ->setParameter("id_tags", $args['id_tag'], ArrayParameterType::INTEGER)
+                ->groupBy('r.id')
+                ->having('COUNT(DISTINCT t.id) = :nbTag')
+            ->setParameter('nbTag', $nbTag);
             /*foreach ($args['id_tag'] as $tag) {*/
             /*    $qb->andWhere("t.id IN (:id_tag$i)")*/
             /*    ->setParameter("id_tag$i", $tag);*/
