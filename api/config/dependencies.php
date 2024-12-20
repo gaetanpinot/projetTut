@@ -58,14 +58,25 @@ return [
 
     //validator
     'validator.schema' => (object) [
+ (object)       [
         '$id' => 'http://amap.fr/nom_utilisateur_schema#',
         'type' => 'string',
         'minLength' => 4,
         'maxLength' => 100,
     ],
+        (object)[
+            '$id' => 'http://amap.fr/mot_de_passe_schema#',
+            'type' => 'string',
+            'minLength' => 4,
+            'maxLength' => 100,
+        ]
+    ],
     Validator::class => function (ContainerInterface $c) {
         $validator = new Validator();
-        $validator->resolver()->registerRaw($c->get('validator.schema'));
+        foreach ($c->get('validator.schema') as $schema) {
+            $validator->resolver()->registerRaw($schema);
+        }
+        /*$validator->resolver()->registerRaw($c->get('validator.schema'));*/
         return $validator;
     },
 
