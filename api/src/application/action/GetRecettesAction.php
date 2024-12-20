@@ -23,7 +23,11 @@ class GetRecettesAction extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        return JsonRenderer::render($rs,200, $this->t->getRecettes($rq->getQueryParams()));
+        try {
+            return JsonRenderer::render($rs, 200, $this->t->getRecettes($rq->getQueryParams()));
+        } catch (\Error $e) {
+            return JsonRenderer::render($rs, 500, $e->getMessage());
+        }
         //return $rs;
     }
 }

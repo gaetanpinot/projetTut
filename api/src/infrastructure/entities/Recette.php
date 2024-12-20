@@ -11,6 +11,34 @@ use amap\infrastructure\repository\RecetteRepository;
 #[ORM\Table(name: "recette")]
 class Recette
 {
+    public function getIngredientsRecette(): Collection
+    {
+        return $this->ingredients_recette;
+    }
+
+    public function setIngredientsRecette(Collection $ingredients_recette): void
+    {
+        $this->ingredients_recette = $ingredients_recette;
+    }
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    /*public function setIngredients(Collection $ingredients): void*/
+    /*{*/
+    /*    $this->ingredients = $ingredients;*/
+    /*}*/
+
+    public function getUstensiles(): Collection
+    {
+        return $this->ustensiles;
+    }
+
+    public function setUstensiles(Collection $ustensiles): void
+    {
+        $this->ustensiles = $ustensiles;
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -19,6 +47,7 @@ class Recette
     {
         return $this->id;
     }
+
     #[ORM\Column(type: "string", nullable: true)]
     private ?string $nom;
     public function getNom(): ?string
@@ -36,12 +65,13 @@ class Recette
     #[ORM\Column(type: "integer", nullable: true)]
     private ?int $complexite;
 
-    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "recettes")]
-    #[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id")]
-    private ?Utilisateur $createur;
-    public function getCreateur(): ?Utilisateur
+    /*#[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "recettes")]*/
+    /*#[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id")]*/
+    #[ORM\Column(type: "string", nullable: true, name: 'id_createur')]
+    private string $id_createur;
+    public function getCreateur(): string
     {
-        return $this->createur;
+        return $this->id_createur;
     }
 
     #[ORM\Column(type: "text", nullable: true)]
@@ -64,46 +94,63 @@ class Recette
     #[ORM\Column(type: "string", nullable: true, name: 'url_photo')]
     private ?string $urlPhoto;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: "recettes")]
+    #
     #[ORM\JoinTable(name: "tag_recette")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "id_tag", referencedColumnName: "id")]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: "recettes")]
     private Collection $tags;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]
-    #[ORM\JoinTable(name: "ingredient_recette")]
-    private Collection $ingredients;
+    /*#[ORM\JoinTable(name: "ingredient_recette")]*/
+    /*#[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]*/
+    /*#[ORM\InverseJoinColumn(name: "id_ingredient", referencedColumnName: "id")]*/
+    /*#[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]*/
+    /*private Collection $ingredients;*/
 
-    #[ORM\ManyToMany(targetEntity: Ustensile::class, inversedBy: "recettes")]
+
+    #[ORM\OneToMany(targetEntity: IngredientRecette::class, mappedBy: "recette")]
+    private Collection $ingredients_recette;
+
     #[ORM\JoinTable(name: "ustensile_recette")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "id_ustensile", referencedColumnName: "id")]
+    #[ORM\ManyToMany(targetEntity: Ustensile::class, inversedBy: "recette")]
     private Collection $ustensiles;
 
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->ingredients = new ArrayCollection();
+        /*$this->ingredients = new ArrayCollection();*/
+        $this->ingredients_recette = new ArrayCollection();
         $this->ustensiles = new ArrayCollection();
     }
 
-    public function getComplexite()
+    public function getTags(): Collection
+    {
+        return $this->tags;
+    }
+
+    public function getComplexite(): ?int
     {
         return $this->complexite;
     }
 
-    public function getDescription()
+    public function getDescription(): ?string
     {
         return $this->description;
     }
 
-    public function getDebutSaison()
+    public function getDebutSaison(): ?int
     {
         return $this->debutSaison;
     }
 
-    public function getFinSaison()
+    public function getFinSaison(): ?int
     {
         return $this->finSaison;
     }
 
-    public function getUrlPhoto()
+    public function getUrlPhoto(): ?string
     {
         return $this->urlPhoto;
     }

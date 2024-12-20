@@ -1,16 +1,13 @@
 <?php
 
-
+use amap\core\service\ServiceRecettes;
 use amap\core\service\ServiceIngredient;
+use amap\core\service\ServiceRecettesInterface;
 use amap\core\service\ServiceIngredientInterface;
 use amap\infrastructure\entities\Ingredient;
-use amap\infrastructure\repository\IngredientRepositoryInterface;
-
-use amap\core\service\ServiceRecettes;
-use amap\core\service\ServiceRecettesInterface;
 use amap\infrastructure\entities\Recette;
 use amap\infrastructure\repository\RecetteRepositoryInterface;
-
+use amap\infrastructure\repository\IngredientRepositoryInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
@@ -67,7 +64,28 @@ return [
     JWTManager::class => DI\autowire(JWTManager::class),
 
     //validator
-    Validator::class => DI\create(Validator::class),
+    'validator.schema' => (object) [
+ (object)       [
+        '$id' => 'http://amap.fr/nom_utilisateur_schema#',
+        'type' => 'string',
+        'minLength' => 4,
+        'maxLength' => 100,
+    ],
+        (object)[
+            '$id' => 'http://amap.fr/mot_de_passe_schema#',
+            'type' => 'string',
+            'minLength' => 4,
+            'maxLength' => 100,
+        ]
+    ],
+    Validator::class => function (ContainerInterface $c) {
+        $validator = new Validator();
+        foreach ($c->get('validator.schema') as $schema) {
+            $validator->resolver()->registerRaw($schema);
+        }
+        /*$validator->resolver()->registerRaw($c->get('validator.schema'));*/
+        return $validator;
+    },
 
     RecetteRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
