@@ -8,17 +8,17 @@ class IngredientDTO extends DTO
 {
     protected int $id;
     protected string $nom;
-    protected int $debutSaison;
-    protected int $finSaison;
-    protected ?string $urlPhoto;
+    protected int $debut_saison;
+    protected int $fin_saison;
+    protected ?string $url_photo;
     public static function fromIngredient(Ingredient $ingredient): IngredientDTO
     {
         $dto = new self();
         $dto->id = $ingredient->getId();
         $dto->nom = $ingredient->getNom();
-        $dto->debutSaison = $ingredient->getDebutSaison();
-        $dto->finSaison = $ingredient->getFinSaison();
-        $dto->urlPhoto = $ingredient->getUrlPhoto();
+        $dto->debut_saison = $ingredient->getDebutSaison();
+        $dto->fin_saison = $ingredient->getFinSaison();
+        $dto->url_photo = $ingredient->getUrlPhoto();
         return $dto;
     }
 
