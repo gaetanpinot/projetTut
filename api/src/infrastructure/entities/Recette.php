@@ -64,8 +64,11 @@ class Recette
     #[ORM\Column(type: "string", nullable: true, name: 'url_photo')]
     private ?string $urlPhoto;
 
-    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: "recettes")]
+    #
     #[ORM\JoinTable(name: "tag_recette")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "id_tag", referencedColumnName: "id")]
+    #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: "recettes")]
     private Collection $tags;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]
@@ -81,6 +84,11 @@ class Recette
         $this->tags = new ArrayCollection();
         $this->ingredients = new ArrayCollection();
         $this->ustensiles = new ArrayCollection();
+    }
+
+    public function getTags(): Collection
+    {
+        return $this->tags;
     }
 
     public function getComplexite()
