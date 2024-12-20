@@ -38,6 +38,7 @@ export class InscriptionComponent {
       {
         next: (data) => {
           console.log(data);
+          localStorage.setItem("token", data.token);
         },
         error: (err) => {
           console.error(err);

@@ -34,11 +34,14 @@ export class ConnexionComponent implements OnInit {
     };
 
     console.log(body)
-    
+
     this.connectServ.logIn(body).subscribe(
       {
         next: (data) => {
           console.log(data);
+
+          localStorage.setItem("token", data.token);
+          
         },
         error: (err) => {
           console.error(err);

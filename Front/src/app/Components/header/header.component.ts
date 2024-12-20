@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { isAuth } from '../../shared/functions/isAuth';
 
 @Component({
   selector: 'header-component',
@@ -8,5 +9,7 @@ import { Component } from '@angular/core';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent {
-
+  isAuthenticated(): boolean{
+    return isAuth();
+  }
 }
