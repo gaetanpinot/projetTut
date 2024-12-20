@@ -31,4 +31,8 @@ class ServiceRecettes implements ServiceRecettesInterface
         $this->recetteRepository->deleteRecette($id);
     }
 
+    public function createRecette($recetteInputDTO) {
+        // InputDTO to entity
+    }
+
 }
