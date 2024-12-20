@@ -2,21 +2,16 @@
 
 declare(strict_types=1);
 
-
 use amap\application\action\GetRecettesAction;
-use amap\middleware\CorsMiddleware;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
-
 use amap\application\action\ConnexionAction;
-use amap\application\action\CreateIngredientAction;
-use amap\application\action\GetIngredientsAction;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
 
 return function (\Slim\App $app): \Slim\App {
 
-    $app->add(CorsMiddleware::class);
+
     $app->get('[/]', HomeAction::class);
 
     $app->post('/inscription[/]', InscriptionAction::class);

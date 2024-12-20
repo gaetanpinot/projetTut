@@ -23,4 +23,12 @@ class ServiceRecettes implements ServiceRecettesInterface
         return $recettes;
     }
 
+    public function getRecetteById($id) {
+        return RecetteDTO::fromRecette($this->recetteRepository->getRecetteById($id));
+    }
+
+    public function deleteRecette($id) {
+        $this->recetteRepository->deleteRecette($id);
+    }
+
 }
