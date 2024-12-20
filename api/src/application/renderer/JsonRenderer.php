@@ -2,11 +2,11 @@
 
 namespace amap\application\renderer;
 
-use Psr\Http\Message\ResponseInterface as Response;
+use Psr\Http\Message\ResponseInterface;
 
 class JsonRenderer
 {
-    public static function render(Response $rs, int $code, mixed $data = null): Response
+    public static function render(ResponseInterface $rs, int $code, mixed $data = null): ResponseInterface
     {
 
         $rs = $rs->withStatus($code)

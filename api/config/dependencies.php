@@ -1,12 +1,13 @@
 <?php
 
-use DI\Container;
-use Opis\JsonSchema\Schema;
-use Opis\JsonSchema\SchemaLoader;
 use amap\core\service\ServiceRecettes;
+use amap\core\service\ServiceIngredient;
 use amap\core\service\ServiceRecettesInterface;
+use amap\core\service\ServiceIngredientInterface;
+use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\Recette;
 use amap\infrastructure\repository\RecetteRepositoryInterface;
+use amap\infrastructure\repository\IngredientRepositoryInterface;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
@@ -48,9 +49,15 @@ return [
         return $em->getRepository(Utilisateur::class);
     },
 
+    IngredientRepositoryInterface::class => function (ContainerInterface $c) {
+        $em = $c->get(\Doctrine\ORM\EntityManager::class);
+        return $em->getRepository(Ingredient::class);
+    },
+
     //service
     ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
     ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
+    ServiceIngredientInterface::class => DI\autowire(ServiceIngredient::class),
 
     //provider
     AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
