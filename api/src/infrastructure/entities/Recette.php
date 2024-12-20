@@ -155,4 +155,44 @@ class Recette
         return $this->urlPhoto;
     }
 
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function setTempsPreparation(?int $tempsPreparation): void
+    {
+        $this->tempsPreparation = $tempsPreparation;
+    }
+
+    public function setComplexite(?int $complexite): void
+    {
+        $this->complexite = $complexite;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setDebutSaison(?int $debutSaison): void
+    {
+        $this->debutSaison = $debutSaison;
+    }
+
+    public function setFinSaison(?int $finSaison): void
+    {
+        $this->finSaison = $finSaison;
+    }
+
+    public function setUrlPhoto(?string $urlPhoto): void
+    {
+        $this->urlPhoto = $urlPhoto;
+    }
+
+    public function setCreateur(?Utilisateur $createur): void
+    {
+        $this->createur = $createur;
+    }
+
 }
