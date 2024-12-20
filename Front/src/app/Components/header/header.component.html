@@ -3,7 +3,10 @@
         <li class="nav-item"><a href="/">Amap</a></li>
         <li class="nav-item"><a href="/Home">Home</a></li>
         <li class="nav-item"><a>Recherche recettes</a></li>
-        <li class="nav-item"><a href="/Connexion">Connexion/Inscription</a></li>
+        <li *ngIf="!isAuthenticated()"
+            class="nav-item"><a href="/Connexion">Connexion</a></li>
+        <li *ngIf="isAuthenticated()"
+            class="nav-item"><a href="/Deconnexion">Deconnexion</a></li>
         <li class="nav-item"><a href="/TEST">TEST</a></li>
     </ul>
 </nav>
