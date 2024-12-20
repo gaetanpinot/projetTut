@@ -11,6 +11,15 @@ use amap\infrastructure\repository\RecetteRepository;
 #[ORM\Table(name: "recette")]
 class Recette
 {
+    public function getIngredientsRecette(): Collection
+    {
+        return $this->ingredients_recette;
+    }
+
+    public function setIngredientsRecette(Collection $ingredients_recette): void
+    {
+        $this->ingredients_recette = $ingredients_recette;
+    }
     public function getIngredients(): Collection
     {
         return $this->ingredients;
@@ -38,6 +47,7 @@ class Recette
     {
         return $this->id;
     }
+
     #[ORM\Column(type: "string", nullable: true)]
     private ?string $nom;
     public function getNom(): ?string
@@ -90,11 +100,15 @@ class Recette
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: "recettes")]
     private Collection $tags;
 
-    #[ORM\JoinTable(name: "ingredient_recette")]
-    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
-    #[ORM\InverseJoinColumn(name: "id_ingredient", referencedColumnName: "id")]
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]
-    private Collection $ingredients;
+    /*#[ORM\JoinTable(name: "ingredient_recette")]*/
+    /*#[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]*/
+    /*#[ORM\InverseJoinColumn(name: "id_ingredient", referencedColumnName: "id")]*/
+    /*#[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]*/
+    /*private Collection $ingredients;*/
+
+
+    #[ORM\OneToMany(targetEntity: IngredientRecette::class, mappedBy: "recette")]
+    private Collection $ingredients_recette;
 
     #[ORM\ManyToMany(targetEntity: Ustensile::class, inversedBy: "recettes")]
     #[ORM\JoinTable(name: "ustensile_recette")]
@@ -103,7 +117,8 @@ class Recette
     public function __construct()
     {
         $this->tags = new ArrayCollection();
-        $this->ingredients = new ArrayCollection();
+        /*$this->ingredients = new ArrayCollection();*/
+        $this->ingredients_recette = new ArrayCollection();
         $this->ustensiles = new ArrayCollection();
     }
 
