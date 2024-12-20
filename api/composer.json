@@ -13,7 +13,7 @@
         "doctrine/orm": "*",
         "doctrine/dbal": "*",
         "symfony/cache": "^7",
-        "respect/validation": "^2.3.7"
+        "respect/validation": "^2.3.7",
         "symfony/polyfill-iconv": "^1.31",
         "opis/json-schema": "^2.3"
     },

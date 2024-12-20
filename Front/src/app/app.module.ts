@@ -12,7 +12,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { NextPageComponent } from './Components/TEST/test-home/next-page/next-page.component';
 import { TestService } from './Services/test.service';
 import { provideHttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
 import { MatSelectModule } from '@angular/material/select';
 import { HeaderComponent } from './Components/header/header.component';
@@ -47,6 +47,7 @@ import {MatSliderModule} from '@angular/material/slider';
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
     MatDialogModule, 
@@ -58,7 +59,8 @@ import {MatSliderModule} from '@angular/material/slider';
     MatFormFieldModule,
     MatInputModule,
     MatIconModule,
-    MatSliderModule
+    MatSliderModule,
+
   ],
   providers: [
     provideAnimationsAsync(),
