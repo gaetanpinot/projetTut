@@ -1,4 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormControl, FormGroup } from '@angular/forms';
+import { ConnexionService } from '../../../../Services/connexion.service';
+import { LogInRequestBody } from '../../../../Interfaces/connexion-user.interface';
 
 @Component({
   selector: 'app-connexion',
@@ -7,6 +10,40 @@ import { Component } from '@angular/core';
   templateUrl: './connexion.component.html',
   styleUrl: './connexion.component.scss'
 })
-export class ConnexionComponent {
+export class ConnexionComponent implements OnInit {
+
+  connectForm = new FormGroup({
+    nom_utilisateur: new FormControl(''),
+    mot_de_passe: new FormControl('')
+  })
+
+  constructor(private connectServ: ConnexionService){
+
+  }
+
+
+  ngOnInit(): void {
+    
+  }
+  
+
+  onSubmit() {
+    console.log("ok")
+    const body = this.connectForm.value;
+    console.log(body)
+
+
+    this.connectServ.logIn(body).subscribe(
+      {
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      }
+    );
+  }
+
 
 }

@@ -33,7 +33,7 @@
               }
             ],
             "styles": [
-              "src/themes/theme.scss",
+              "src/themes/mat-theme.scss",
               "src/styles.scss"
             ],
             "scripts": []
