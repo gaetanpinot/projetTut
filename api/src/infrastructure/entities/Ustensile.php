@@ -10,6 +10,45 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "ustensile")]
 class Ustensile
 {
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function getRecettes(): Collection
+    {
+        return $this->recettes;
+    }
+
+    public function setRecettes(Collection $recettes): void
+    {
+        $this->recettes = $recettes;
+    }
+
+    public function getUtilisateursExclus(): Collection
+    {
+        return $this->utilisateursExclus;
+    }
+
+    public function setUtilisateursExclus(Collection $utilisateursExclus): void
+    {
+        $this->utilisateursExclus = $utilisateursExclus;
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
