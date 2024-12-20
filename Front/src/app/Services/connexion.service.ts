@@ -17,7 +17,7 @@ export class ConnexionService {
     return this.http.post<LogSignInResponse>(this.apiServerUrl + '/inscription', body);
   }
 
-  logIn(body: any): Observable<LogSignInResponse>{
+  logIn(body: LogInRequestBody): Observable<LogSignInResponse>{
     return this.http.post<LogSignInResponse>(this.apiServerUrl + '/connexion', body);
   }
 }

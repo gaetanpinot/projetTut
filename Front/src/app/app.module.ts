@@ -28,6 +28,7 @@ import {MatInputModule} from '@angular/material/input';
 import { ConnexionComponent } from './Components/Main/connexion-inscrip/connexion/connexion.component';
 import { InscriptionComponent } from './Components/Main/connexion-inscrip/inscription/inscription.component';
 import {MatSliderModule} from '@angular/material/slider';
+import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
 
 @NgModule({
   declarations: [
@@ -42,7 +43,8 @@ import {MatSliderModule} from '@angular/material/slider';
     PanierComponent,
     ConnexionInscripComponent,
     ConnexionComponent,
-    InscriptionComponent
+    InscriptionComponent,
+    DeconnexionComponent
   ],
   imports: [
     BrowserModule,
