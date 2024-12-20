@@ -59,3 +59,4 @@ class ConnexionAction extends AbstractAction
     }
 
 }
+
