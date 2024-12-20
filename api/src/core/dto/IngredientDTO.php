@@ -22,7 +22,7 @@ class IngredientDTO extends DTO
         return $dto;
     }
 
-    public static function fromArrayToDTO(array $data): array
+    public static function fromArrayToDTO($data): array
     {
         $res = [];
         foreach ($data as $ingredient) {
@@ -31,3 +31,4 @@ class IngredientDTO extends DTO
         return $res;
     }
 }
+

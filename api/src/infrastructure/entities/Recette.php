@@ -11,6 +11,25 @@ use amap\infrastructure\repository\RecetteRepository;
 #[ORM\Table(name: "recette")]
 class Recette
 {
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function setIngredients(Collection $ingredients): void
+    {
+        $this->ingredients = $ingredients;
+    }
+
+    public function getUstensiles(): Collection
+    {
+        return $this->ustensiles;
+    }
+
+    public function setUstensiles(Collection $ustensiles): void
+    {
+        $this->ustensiles = $ustensiles;
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -71,8 +90,10 @@ class Recette
     #[ORM\ManyToMany(targetEntity: Tag::class, inversedBy: "recettes")]
     private Collection $tags;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]
     #[ORM\JoinTable(name: "ingredient_recette")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "id_ingredient", referencedColumnName: "id")]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]
     private Collection $ingredients;
 
     #[ORM\ManyToMany(targetEntity: Ustensile::class, inversedBy: "recettes")]

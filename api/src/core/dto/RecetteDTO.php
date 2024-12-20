@@ -18,6 +18,7 @@ class RecetteDTO extends DTO
     protected ?int $idRecetteParente;
     protected ?string $urlPhoto;
     protected ?array $tags;
+    protected ?array $ingredients;
 
     public static function fromRecette(Recette $recette): RecetteDTO
     {
@@ -31,6 +32,7 @@ class RecetteDTO extends DTO
         $recetteDTO->debutSaison = $recette->getDebutSaison();
         $recetteDTO->finSaison = $recette->getFinSaison();
         $recetteDTO->tags = TagDTO::fromArrayToDTO($recette->getTags());
+        $recetteDTO->ingredients = IngredientDTO::fromArrayToDTO($recette->getIngredients());
         //$recetteDTO->idRecetteParente = $recette->getRecetteParente()->getId();
         $recetteDTO->urlPhoto = $recette->getUrlPhoto();
 
