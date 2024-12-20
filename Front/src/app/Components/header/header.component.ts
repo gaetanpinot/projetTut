@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { isAuth } from '../../shared/functions/isAuth';
+import { switchTheme } from '../../shared/functions/switchTheme';
+
 
 @Component({
   selector: 'header-component',
@@ -11,5 +13,10 @@ import { isAuth } from '../../shared/functions/isAuth';
 export class HeaderComponent {
   isAuthenticated(): boolean{
     return isAuth();
+  }
+
+  switchTheme(event: any){
+    console.log(event)
+    switchTheme();
   }
 }

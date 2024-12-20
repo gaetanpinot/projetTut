@@ -1,1 +1,14 @@
-<p>recette-recherche works!</p>
+<mat-table [dataSource]="dataSource">
+    <ng-container matColumnDef="NOM">
+        <mat-header-cell *matHeaderCellDef> NOM </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.nom}} </mat-cell>
+    </ng-container>
+
+    <ng-container matColumnDef="DESCR">
+        <mat-header-cell *matHeaderCellDef> DESCR </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+    </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
