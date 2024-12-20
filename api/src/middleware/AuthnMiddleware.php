@@ -2,6 +2,8 @@
 
 namespace amap\middleware;
 
+use amap\providers\auth\AuthInvalidException;
+use amap\providers\auth\AuthnProviderInterface;
 use DI\Container;
 use Exception;
 use Monolog\Logger;
@@ -10,8 +12,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpUnauthorizedException;
-use toubeelib\providers\auth\AuthInvalidException;
-use toubeelib\providers\auth\AuthnProviderInterface;
+
 
 class AuthnMiddleware implements MiddlewareInterface
 {

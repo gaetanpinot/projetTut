@@ -1,3 +1,7 @@
+.auth-wrapper{
+  display: flex;
+} 
+
 .auth-container {
   display: flex;
   flex-direction: column;
@@ -7,6 +11,8 @@
   width: fit-content;
   box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;
   justify-content: center;
+  margin-inline: auto;
+  margin-top: 5%;
 }
 
 .auth-tabs {
@@ -26,8 +32,8 @@
 }
 
 .tab-button.active {
-  background-color: #007bff;
-  color: white;
+  background-color: var(--dark);
+  color: var(--white);
 }
 
 .auth-content {
