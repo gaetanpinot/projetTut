@@ -11,6 +11,7 @@ class RecetteDTO extends DTO
     protected int $id;
     protected ?string $nom;
     protected ?int $temps_preparation;
+    protected ?float $note;
     protected ?int $complexite;
     protected ?string $id_createur;
     protected ?string $description;
@@ -36,6 +37,18 @@ class RecetteDTO extends DTO
         $recetteDTO->tags = TagDTO::fromArrayToDTO($recette->getTags());
         $recetteDTO->ingredients = IngredientRecetteDTO::fromArrayToDTO($recette->getIngredientsRecette());
         $recetteDTO->ustensiles = UstensileDTO::fromArrayToDTO($recette->getUstensiles());
+        $notes = $recette->getNotes()->toArray();
+        if (count($notes) > 0) {
+            $recetteDTO->note = array_sum(array_map(function ($note) {
+                return $note->getNote();
+            }, $notes)) / count($notes);
+        } else {
+            $recetteDTO->note = 0;
+        }
+
+        /*$recetteDTO->note = array_sum(array_map(function ($note) {*/
+        /*    return $note->getNote();*/
+        /*}, $recette->getNotes()->toArray())) / count($recette->getNotes());*/
 
         //$recetteDTO->idRecetteParente = $recette->getRecetteParente()->getId();
         $recetteDTO->url_photo = $recette->getUrlPhoto();
@@ -43,4 +56,3 @@ class RecetteDTO extends DTO
         return $recetteDTO;
     }
 }
-

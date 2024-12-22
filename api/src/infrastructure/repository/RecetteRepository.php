@@ -79,8 +79,10 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         }
         /*var_dump($args);*/
 
-        $having = join(' AND ', $having);
-        $qb->having($having);
+        if (count($having) > 0) {
+            $having = join(' AND ', $having);
+            $qb->having($having);
+        }
         $ret = $qb->getQuery();
         /*echo $ret->getSQL();*/
         /*echo $qb->getParameter("id_tag1")->getValue();*/

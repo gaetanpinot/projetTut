@@ -4,8 +4,12 @@ networks:
 
 services:
 
+
   php:
     image: canals/php:8.3
+    # build:
+    #   context: ./dockerfile
+    #   dockerfile: php8.3.Dockerfile
     container_name: amap_php
     ports:
       - '1000:80'
