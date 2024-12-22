@@ -5,6 +5,7 @@ namespace amap\infrastructure\entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Query\Lexer;
 use amap\infrastructure\repository\RecetteRepository;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
@@ -109,7 +110,7 @@ class Recette
     /*private Collection $ingredients;*/
 
     #[ORM\OneToMany(targetEntity: Note::class, mappedBy: "recette")]
-    private ?Collection $notes;
+    private Collection|null $notes;
 
     public function getNotes(): ?Collection
     {
@@ -128,6 +129,7 @@ class Recette
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->notes = new ArrayCollection();
         /*$this->ingredients = new ArrayCollection();*/
         $this->ingredients_recette = new ArrayCollection();
         $this->ustensiles = new ArrayCollection();

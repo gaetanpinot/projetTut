@@ -17,9 +17,9 @@ class Note
 
     #[ORM\Id]
     #[ORM\Column(type: "guid")]
-    private int $id_utilisateur;
+    private string $id_utilisateur;
 
-    #[ORM\Column(type: "int")]
+    #[ORM\Column(type: "integer", nullable: true)]
     private int $note;
 
     public function getNote(): int
@@ -28,10 +28,10 @@ class Note
     }
 
     #[ORM\ManyToOne(targetEntity: Recette::class, inversedBy: "ingredient_recette")]
-    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id", nullable: true)]
     private Recette $recette;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "utilisateur")]
-    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id", nullable:true)]
     private Utilisateur $utilisateur;
 }
