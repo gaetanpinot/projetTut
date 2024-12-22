@@ -14,6 +14,8 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
     {
         $qb = $this->createQueryBuilder('r');
 
+        $qb->groupBy('r.id');
+
         if (isset($args['nom'])) {
             $qb->andWhere('r.nom LIKE :nom')
                 ->setParameter('nom', '%' . $args['nom'] . '%');
@@ -40,12 +42,12 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         }
 
         if (isset($args['debut_saison'])) {
-            $qb->andWhere('r.debutSaison = :debut_saison')
+            $qb->andWhere('r.debutSaison >= :debut_saison')
                 ->setParameter('debut_saison', $args['debut_saison']);
         }
 
         if (isset($args['fin_saison'])) {
-            $qb->andWhere('r.finSaison = :fin_saison')
+            $qb->andWhere('r.finSaison <= :fin_saison')
                 ->setParameter('fin_saison', $args['fin_saison']);
         }
 
@@ -55,14 +57,19 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $i = 0;
             $qb->andWhere("t.id IN (:id_tags)")
                 ->setParameter("id_tags", $args['id_tag'], ArrayParameterType::INTEGER)
-                ->groupBy('r.id')
                 ->having('COUNT(DISTINCT t.id) = :nbTag')
             ->setParameter('nbTag', $nbTag);
-            /*foreach ($args['id_tag'] as $tag) {*/
-            /*    $qb->andWhere("t.id IN (:id_tag$i)")*/
-            /*    ->setParameter("id_tag$i", $tag);*/
-            /*    $i++;*/
-            /*}*/
+        }
+
+        if (isset($args['id_ingredients_principaux'])) {
+            $idIngredient = $args['id_ingredients_principaux'];
+            $nbIngredient = count($idIngredient);
+            $qb->join('r.ingredients_recette', 'i');
+            $i = 0;
+            $qb->andWhere("i.id_ingredient IN (:id_ingredient)")
+                ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER)
+                ->having('COUNT(DISTINCT i.id_ingredient) = :nbIngredient')
+                ->setParameter('nbIngredient', $nbIngredient);
         }
 
         $ret = $qb->getQuery();

@@ -51,7 +51,7 @@ class GetRecettesAction extends AbstractAction
                     "type" => "integer"
                 ]
                 ],
-                "id_ingredient" => (object)[
+                "id_ingredients_principaux" => (object)[
                     "type" => 'array',
                     "minLength" => 0,
                     "contains" => (object)[
