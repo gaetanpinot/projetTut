@@ -51,28 +51,38 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
                 ->setParameter('fin_saison', $args['fin_saison']);
         }
 
+        //on ne peut avoir qu'un seul ->having sur la requê
+        //on ajoute les having à une array et on join plus tard avec AND comme séparateur
+        $having = [];
+
         if (isset($args['id_tag'])) {
             $nbTag = count($args['id_tag']);
-            $qb->join('r.tags', 't');
+            $qb->leftJoin('r.tags', 't');
             $i = 0;
             $qb->andWhere("t.id IN (:id_tags)")
                 ->setParameter("id_tags", $args['id_tag'], ArrayParameterType::INTEGER)
-                ->having('COUNT(DISTINCT t.id) = :nbTag')
-            ->setParameter('nbTag', $nbTag);
+                /*->having('COUNT(DISTINCT t.id) = :nbTag')*/
+                ->setParameter('nbTag', $nbTag);
+            $having[] = "COUNT(DISTINCT t.id) = :nbTag";
         }
 
         if (isset($args['id_ingredients_principaux'])) {
             $idIngredient = $args['id_ingredients_principaux'];
             $nbIngredient = count($idIngredient);
-            $qb->join('r.ingredients_recette', 'i');
+            $qb->leftJoin('r.ingredients_recette', 'i');
             $i = 0;
             $qb->andWhere("i.id_ingredient IN (:id_ingredient)")
                 ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER)
-                ->having('COUNT(DISTINCT i.id_ingredient) = :nbIngredient')
+                /*->having('COUNT(DISTINCT i.id_ingredient) = :nbIngredient')*/
                 ->setParameter('nbIngredient', $nbIngredient);
+            $having[] = " COUNT(DISTINCT i.id_ingredient) = :nbIngredient";
         }
+        /*var_dump($args);*/
 
+        $having = join(' AND ', $having);
+        $qb->having($having);
         $ret = $qb->getQuery();
+        /*echo $ret->getSQL();*/
         /*echo $qb->getParameter("id_tag1")->getValue();*/
         /*echo $qb->getDQL();*/
         return $ret->getResult();

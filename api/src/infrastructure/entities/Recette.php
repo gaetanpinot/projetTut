@@ -57,6 +57,7 @@ class Recette
     #[ORM\Column(type: "integer", nullable: true, name: 'temps_preparation')]
     private ?int $tempsPreparation;
 
+
     public function getTempsPreparation(): ?int
     {
         return $this->tempsPreparation;
@@ -107,6 +108,13 @@ class Recette
     /*#[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]*/
     /*private Collection $ingredients;*/
 
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: "recette")]
+    private ?Collection $notes;
+
+    public function getNotes(): ?Collection
+    {
+        return $this->notes;
+    }
 
     #[ORM\OneToMany(targetEntity: IngredientRecette::class, mappedBy: "recette")]
     private Collection $ingredients_recette;
