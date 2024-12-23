@@ -5,20 +5,20 @@ meta {
 }
 
 get {
-  url: http://localhost:1000/recettes
+  url: http://localhost:1000/recettes?nom=Salade
   body: none
   auth: none
 }
 
 params:query {
+  nom: Salade
   ~id_ingredients_principaux: [1]
   ~id_tag: [2]
-  ~nom: Salade
   ~temps_preparation_gt: 12
   ~temps_preparation_lt: 25
   ~complexite_gt: 0
   ~complexite_lt: 5
-  ~debut_saison: 10
+  ~debut_saison: 12
   ~fin_saison: 8
   ~note_gt: 0
   ~note_lt: 5

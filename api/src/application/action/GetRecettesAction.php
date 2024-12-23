@@ -49,7 +49,6 @@ class GetRecettesAction extends AbstractAction
                 "id_ingredients_principaux" => (object)[
                     '$ref' =>'http://amap.fr/liste_id_int#'
                 ],
-
                 "temps_preparation_gt" => (object)[
                     '$ref' => 'http://amap.fr/temps#'
                 ],
@@ -65,6 +64,7 @@ class GetRecettesAction extends AbstractAction
                 "debut_saison" => (object)[
                     '$ref' => 'http://amap.fr/saison#'
                 ],
+
                 "fin_saison" => (object)[
                     '$ref' => 'http://amap.fr/saison#'
                 ],
