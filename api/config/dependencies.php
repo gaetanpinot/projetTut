@@ -64,6 +64,7 @@ return [
     JWTManager::class => DI\autowire(JWTManager::class),
 
     //validator
+    //références de schémas de validation
     'validator.schema' => (object) [
         (object)       [
             '$id' => 'http://amap.fr/nom_utilisateur_schema#',
@@ -71,17 +72,20 @@ return [
             'minLength' => 4,
             'maxLength' => 100,
         ],
+
         (object)[
             '$id' => 'http://amap.fr/mot_de_passe_schema#',
             'type' => 'string',
             'minLength' => 4,
             'maxLength' => 100,
         ],
+
         (object)[
             '$id' => 'http://amap.fr/nom_recherche_schema#',
             "type" => 'string',
             "minLength" => 1
         ],
+
         (object)[
             '$id' => 'http://amap.fr/liste_id_int#',
             "type" => 'array',
@@ -89,14 +93,15 @@ return [
             "contains" => (object)[
                 "type" => "integer"
             ],
-
         ],
+
         (object)[
             '$id' => 'http://amap.fr/complexite#',
             "type" => 'integer',
             "minimum" => 0,
             "maximum" => 5
         ],
+
         (object)[
             '$id' => 'http://amap.fr/note#',
             '$ref' => 'http://amap.fr/complexite#'
@@ -115,6 +120,7 @@ return [
             "minimum" => 0
         ],
     ],
+
     Validator::class => function (ContainerInterface $c) {
         $validator = new Validator();
         foreach ($c->get('validator.schema') as $schema) {
