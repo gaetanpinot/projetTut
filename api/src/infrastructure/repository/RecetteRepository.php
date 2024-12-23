@@ -50,6 +50,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $qb->andWhere('r.finSaison <= :fin_saison')
                 ->setParameter('fin_saison', $args['fin_saison']);
         }
+        
 
         //on ne peut avoir qu'un seul ->having sur la requê
         //on ajoute les having à une array et on join plus tard avec AND comme séparateur
@@ -77,6 +78,9 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
                 ->setParameter('nbIngredient', $nbIngredient);
             $having[] = " COUNT(DISTINCT i.id_ingredient) = :nbIngredient";
         }
+
+        $qb->leftJoin('i.ingredient', 'ing');
+        $qb->leftJoin('ing.allergenes', 'a');
         /*var_dump($args);*/
 
         if (count($having) > 0) {

@@ -30,6 +30,8 @@ class Ingredient
 
     #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: "ingredients")]
     #[ORM\JoinTable(name: "allergene_ingredient")]
+    #[ORM\JoinColumn(name: "id_ingredient", referencedColumnName: "id")]
+    #[ORM\InverseJoinColumn(name: "id_allergene", referencedColumnName: "id")]
     private Collection $allergenes;
 
     #[ORM\ManyToMany(targetEntity: Recette::class, mappedBy: "ingredients")]
