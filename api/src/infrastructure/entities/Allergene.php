@@ -18,7 +18,9 @@ class Allergene
     #[ORM\Column(type: "string", unique: true, nullable: true)]
     private ?string $label;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, mappedBy: "allergenes")]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "allergenes")]
+    #[ORM\JoinTable(name: "allergene_ingredient")]
+    #[ORM\JoinColumn(name: "id_allergene", referencedColumnName: "id")]
     private Collection $ingredients;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: "allergies")]
