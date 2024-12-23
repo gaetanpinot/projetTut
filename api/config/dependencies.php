@@ -65,18 +65,55 @@ return [
 
     //validator
     'validator.schema' => (object) [
- (object)       [
-        '$id' => 'http://amap.fr/nom_utilisateur_schema#',
-        'type' => 'string',
-        'minLength' => 4,
-        'maxLength' => 100,
-    ],
+        (object)       [
+            '$id' => 'http://amap.fr/nom_utilisateur_schema#',
+            'type' => 'string',
+            'minLength' => 4,
+            'maxLength' => 100,
+        ],
         (object)[
             '$id' => 'http://amap.fr/mot_de_passe_schema#',
             'type' => 'string',
             'minLength' => 4,
             'maxLength' => 100,
-        ]
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/nom_recherche_schema#',
+            "type" => 'string',
+            "minLength" => 1
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/liste_id_int#',
+            "type" => 'array',
+            "minLength" => 1,
+            "contains" => (object)[
+                "type" => "integer"
+            ],
+
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/complexite#',
+            "type" => 'integer',
+            "minimum" => 0,
+            "maximum" => 5
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/note#',
+            '$ref' => 'http://amap.fr/complexite#'
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/saison#',
+            "type" => 'integer',
+            "minimum" => 1,
+            "maximum" => 12
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/temps#',
+            "type" => 'integer',
+            "minimum" => 0
+        ],
     ],
     Validator::class => function (ContainerInterface $c) {
         $validator = new Validator();

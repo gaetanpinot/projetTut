@@ -32,31 +32,56 @@ class GetRecettesAction extends AbstractAction
         $data = $rq->getQueryParams();
         // on transforme les arguments qui commence par [ en tableau pour les valider
         $data =  array_map(function ($item) {
-            if ($item[0] == '[') {
-                return json_decode($item);
-            }
-            return $item;
+            $itemDecodee = json_decode($item);
+            // si l'item qu'on à décodée est null, on retourne l'item tel quel
+            return $itemDecodee === null ? $item : $itemDecodee;
         }, $data);
+
         $validationSchema = (object)[
             "type" => 'object',
             "properties" => (object)[
                 "nom" => (object)[
-                    "type" => 'string',
-                    "minLength" => 1
+                    '$ref' => 'http://amap.fr/nom_recherche_schema#'
                 ],
                 "id_tag" => (object)[
-                    "type" => 'array',
-                    "minLength" => 0,
-                    "contains" => (object)[
-                    "type" => "integer"
-                ]
+                    '$ref' =>'http://amap.fr/liste_id_int#'
                 ],
                 "id_ingredients_principaux" => (object)[
-                    "type" => 'array',
-                    "minLength" => 0,
-                    "contains" => (object)[
-                    "type" => "integer"
-                ]
+                    '$ref' =>'http://amap.fr/liste_id_int#'
+                ],
+
+                "temps_preparation_gt" => (object)[
+                    '$ref' => 'http://amap.fr/temps#'
+                ],
+                "temps_preparation_lt" => (object)[
+                    '$ref' => 'http://amap.fr/temps#'
+                ],
+                "complexite_gt" => (object)[
+                    '$ref' => 'http://amap.fr/complexite#'
+                ],
+                "complexite_lt" => (object)[
+                    '$ref' => 'http://amap.fr/complexite#'
+                ],
+                "debut_saison" => (object)[
+                    '$ref' => 'http://amap.fr/saison#'
+                ],
+                "fin_saison" => (object)[
+                    '$ref' => 'http://amap.fr/saison#'
+                ],
+                "note_gt" => (object)[
+                    '$ref' => 'http://amap.fr/note#'
+                ],
+                "note_lt" => (object)[
+                    '$ref' => 'http://amap.fr/note#'
+                ],
+                'id_ustensiles_exclus' => (object)[
+                    '$ref' => 'http://amap.fr/liste_id_int#'
+                ],
+                'id_ingredients_exclus' => (object)[
+                    '$ref' => 'http://amap.fr/liste_id_int#'
+                ],
+                'id_allergenes' => (object)[
+                    '$ref' => 'http://amap.fr/liste_id_int#'
                 ],
             ],
         ];
