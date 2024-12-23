@@ -67,10 +67,12 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $having[] = "COUNT(DISTINCT t.id) = :nbTag";
         }
 
+        // on join les ingredients car on peut les utiliser dans les deux cas et on ne peut le faire qu'une fois
+        $qb->leftJoin('r.ingredients_recette', 'i');
+
         if (isset($args['id_ingredients_principaux'])) {
             $idIngredient = $args['id_ingredients_principaux'];
             $nbIngredient = count($idIngredient);
-            $qb->leftJoin('r.ingredients_recette', 'i');
             $i = 0;
             $qb->andWhere("i.id_ingredient IN (:id_ingredient)")
                 ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER)
@@ -79,19 +81,26 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $having[] = " COUNT(DISTINCT i.id_ingredient) = :nbIngredient";
         }
 
-        $qb->leftJoin('i.ingredient', 'ing');
-        $qb->leftJoin('ing.allergenes', 'a');
-        /*var_dump($args);*/
+        if( isset($args['id_allergenes']) ){
+            $qb->leftJoin('i.ingredient', 'ing')
+            ->leftJoin('ing.allergenes', 'a')
+            ->setParameter('id_allergene', $args['id_allergenes'], ArrayParameterType::INTEGER );
+            // si il y a des allergenes dans la liste à exclure ça fait une somme plus grande que 0 et la recette est exclue
+            $having[] = "SUM(CASE WHEN a.id IN (:id_allergene) THEN 1 ELSE 0 END) = 0";
+        }
 
+        //on concatene les clauses having
         if (count($having) > 0) {
             $having = join(' AND ', $having);
             $qb->having($having);
         }
+
         $ret = $qb->getQuery();
         /*echo $ret->getSQL();*/
         /*echo $qb->getParameter("id_tag1")->getValue();*/
         /*echo $qb->getDQL();*/
         return $ret->getResult();
+
     }
 
     public function getRecetteById($id): Recette

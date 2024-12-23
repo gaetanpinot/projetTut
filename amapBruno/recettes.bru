@@ -5,14 +5,15 @@ meta {
 }
 
 get {
-  url: http://localhost:1000/recettes?nom=Salade
+  url: http://localhost:1000/recettes?id_allergenes=[4]
   body: none
   auth: none
 }
 
 params:query {
-  nom: Salade
+  id_allergenes: [4]
   ~id_ingredients_principaux: [1]
+  ~nom: Salade
   ~id_tag: [2]
   ~temps_preparation_gt: 12
   ~temps_preparation_lt: 25
@@ -24,5 +25,4 @@ params:query {
   ~note_lt: 5
   ~id_ustensiles_exclus: [12,1]
   ~id_ingredients_exclus: [4,9]
-  ~id_allergenes: [5]
 }
