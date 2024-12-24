@@ -9,6 +9,8 @@ use amap\infrastructure\entities\Utilisateur;
 
 interface RecetteRepositoryInterface
 {
+    public function setPagination(int $nb): void;
+
     public function getRecettes($args): array;
 
     public function getRecetteById($id): Recette;

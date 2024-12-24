@@ -2,6 +2,7 @@
 
 namespace amap\application\action;
 
+use Opis\JsonSchema\Uri;
 use Opis\JsonSchema\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -30,30 +31,29 @@ class InscriptionAction extends AbstractAction
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
         $data = (object) $rq->getParsedBody();
+
         $schema = (object) [
             'type' => 'object',
             'properties' => (object)[
                 'nom_utilisateur' => (object)[
-                    'type' => 'string',
-                    'minLength' => 4,
-                    'maxLength' => 100,
+                    '$ref' => 'http://amap.fr/nom_utilisateur_schema#'
                 ],
                 'mot_de_passe' => (object)[
-                    'type' => 'string',
-                    'minLength' => 4,
-                    'maxLength' => 100,
+                    '$ref' => 'http://amap.fr/mot_de_passe_schema#'
                 ],
                 'role' => (object)[
-                    'type' => 'integer',
-                    'minimum' => 0,
-                    'maximum' => 1,
-                    'default' => 0,
-                ]
+                    '$ref' => 'http://amap.fr/role_input#'
+                    /*'type' => 'integer',*/
+                    /*'default' => 0,*/
+                ],
             ],
-            'required' => ['nom_utilisateur', 'mot_de_passe']
+            'required' => ['nom_utilisateur','mot_de_passe']
         ];
 
+
+        var_dump($data);
         $resultValidation = $this->validator->validate($data, $schema);
+        var_dump($data);
         $checkValidite = ValidationErrorRenderer::render($rs, $resultValidation);
         if ($checkValidite != false) {
             return $checkValidite;

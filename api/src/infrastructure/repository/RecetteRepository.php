@@ -10,6 +10,8 @@ use amap\infrastructure\entities\Recette;
 
 class RecetteRepository extends EntityRepository implements RecetteRepositoryInterface
 {
+    private int $nbPagination = 20;
+
     public function getRecettes($args): array
     {
         $qb = $this->createQueryBuilder('r');
@@ -50,7 +52,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $qb->andWhere('r.finSaison <= :fin_saison')
                 ->setParameter('fin_saison', $args['fin_saison']);
         }
-        
+
 
         //on ne peut avoir qu'un seul ->having sur la requê
         //on ajoute les having à une array et on join plus tard avec AND comme séparateur
@@ -81,22 +83,22 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         }
 
         //on exclus les ustensiles
-        if( isset($args['id_ustensiles_exclus']) ){
+        if(isset($args['id_ustensiles_exclus'])) {
             $qb->leftJoin('r.ustensiles', 'u')
-            ->setParameter('id_ustensiles_exclus', $args['id_ustensiles_exclus'], ArrayParameterType::INTEGER );
+            ->setParameter('id_ustensiles_exclus', $args['id_ustensiles_exclus'], ArrayParameterType::INTEGER);
             $having[] = "SUM(CASE WHEN u.id IN (:id_ustensiles_exclus) THEN 1 ELSE 0 END) = 0";
         }
 
         //on exclus les ingredients
-        if( isset($args['id_ingredients_exclus']) ){
-            $qb->setParameter('id_ingredients_exclus', $args['id_ingredients_exclus'], ArrayParameterType::INTEGER );
+        if(isset($args['id_ingredients_exclus'])) {
+            $qb->setParameter('id_ingredients_exclus', $args['id_ingredients_exclus'], ArrayParameterType::INTEGER);
             $having[] = "SUM(CASE WHEN i.id_ingredient IN (:id_ingredients_exclus) THEN 1 ELSE 0 END) = 0";
         }
 
-        if( isset($args['id_allergenes']) ){
+        if(isset($args['id_allergenes'])) {
             $qb->leftJoin('i.ingredient', 'ing')
             ->leftJoin('ing.allergenes', 'a')
-            ->setParameter('id_allergene', $args['id_allergenes'], ArrayParameterType::INTEGER );
+            ->setParameter('id_allergene', $args['id_allergenes'], ArrayParameterType::INTEGER);
             // si il y a des allergenes dans la liste à exclure ça fait une somme plus grande que 0 et la recette est exclue
             $having[] = "SUM(CASE WHEN a.id IN (:id_allergene) THEN 1 ELSE 0 END) = 0";
         }
@@ -106,6 +108,9 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $having = join(' AND ', $having);
             $qb->having($having);
         }
+
+        $qb->setMaxResults($args['page'])
+        ->setFirstResult($this->nbPagination);
 
         $ret = $qb->getQuery();
         /*echo $ret->getSQL();*/
@@ -181,5 +186,10 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
     public function setRecetteNote(): array
     {
         return [];
+    }
+
+    public function setPagination(int $nb): void
+    {
+        $this->nbPagination = $nb;
     }
 }

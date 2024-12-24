@@ -119,10 +119,25 @@ return [
             "type" => 'integer',
             "minimum" => 0
         ],
+
+        (object)[
+            '$id' => "http://amap.fr/role_input#",
+            "type" => "integer",
+            "minimum" => 0,
+            "maximum" => 1,
+            "default" => 0
+        ],
+        (object)[
+        '$id' => 'http://amap.fr/page#',
+            'type' => 'integer',
+            'minimum' => 1,
+            'default' => 1,
+        ]
     ],
 
     Validator::class => function (ContainerInterface $c) {
         $validator = new Validator();
+        $validator->parser()->setOption("allowDefaults", true);
         foreach ($c->get('validator.schema') as $schema) {
             $validator->resolver()->registerRaw($schema);
         }
@@ -132,7 +147,9 @@ return [
 
     RecetteRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
-        return $em->getRepository(Recette::class);
+        $repo = $em->getRepository(Recette::class);
+        $repo->setPagination($c->get('pagination.nb'));
+        return $repo;
     },
     ServiceRecettesInterface::class => DI\autowire(ServiceRecettes::class),
 
