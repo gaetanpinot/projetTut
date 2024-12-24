@@ -52,7 +52,7 @@ services:
       interval: 2s
       retries: 5
       timeout: 10s
-
+    restart: unless-stopped
   # angular:
   #   image: node:20
   #   container_name: amap_angular
