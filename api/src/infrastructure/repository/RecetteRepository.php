@@ -76,9 +76,21 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $i = 0;
             $qb->andWhere("i.id_ingredient IN (:id_ingredient)")
                 ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER)
-                /*->having('COUNT(DISTINCT i.id_ingredient) = :nbIngredient')*/
                 ->setParameter('nbIngredient', $nbIngredient);
             $having[] = " COUNT(DISTINCT i.id_ingredient) = :nbIngredient";
+        }
+
+        //on exclus les ustensiles
+        if( isset($args['id_ustensiles_exclus']) ){
+            $qb->leftJoin('r.ustensiles', 'u')
+            ->setParameter('id_ustensiles_exclus', $args['id_ustensiles_exclus'], ArrayParameterType::INTEGER );
+            $having[] = "SUM(CASE WHEN u.id IN (:id_ustensiles_exclus) THEN 1 ELSE 0 END) = 0";
+        }
+
+        //on exclus les ingredients
+        if( isset($args['id_ingredients_exclus']) ){
+            $qb->setParameter('id_ingredients_exclus', $args['id_ingredients_exclus'], ArrayParameterType::INTEGER );
+            $having[] = "SUM(CASE WHEN i.id_ingredient IN (:id_ingredients_exclus) THEN 1 ELSE 0 END) = 0";
         }
 
         if( isset($args['id_allergenes']) ){
