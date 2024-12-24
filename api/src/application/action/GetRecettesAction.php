@@ -44,10 +44,10 @@ class GetRecettesAction extends AbstractAction
                     '$ref' => 'http://amap.fr/nom_recherche_schema#'
                 ],
                 "id_tag" => (object)[
-                    '$ref' =>'http://amap.fr/liste_id_int#'
+                    '$ref' => 'http://amap.fr/liste_id_int#'
                 ],
                 "id_ingredients_principaux" => (object)[
-                    '$ref' =>'http://amap.fr/liste_id_int#'
+                    '$ref' => 'http://amap.fr/liste_id_int#'
                 ],
                 "temps_preparation_gt" => (object)[
                     '$ref' => 'http://amap.fr/temps#'
@@ -83,6 +83,10 @@ class GetRecettesAction extends AbstractAction
                 'id_allergenes' => (object)[
                     '$ref' => 'http://amap.fr/liste_id_int#'
                 ],
+                'page' => (object)[
+                    '$ref' => 'http://amap.fr/page#',
+                    'default' => 1
+                ]
             ],
         ];
 
