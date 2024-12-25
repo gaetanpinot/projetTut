@@ -89,6 +89,9 @@ class GetRecettesAction extends AbstractAction
                 ]
             ],
         ];
+        if(!isset($data['page'])) {
+            $data['page'] = 1;
+        }
 
         $resultValidation = $this->validator->validate((object)$data, $validationSchema);
         $check = ValidationErrorRenderer::render($rs, $resultValidation);

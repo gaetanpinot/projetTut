@@ -109,8 +109,8 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $qb->having($having);
         }
 
-        $qb->setMaxResults($args['page'])
-        ->setFirstResult($this->nbPagination);
+        $qb->setMaxResults($this->nbPagination)
+        ->setFirstResult(($args['page'] - 1) * $this->nbPagination);
 
         $ret = $qb->getQuery();
         /*echo $ret->getSQL();*/
