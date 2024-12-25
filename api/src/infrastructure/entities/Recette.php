@@ -70,8 +70,8 @@ class Recette
     /*#[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "recettes")]*/
     /*#[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id")]*/
     #[ORM\Column(type: "string", nullable: true, name: 'id_createur')]
-    private string $id_createur;
-    public function getCreateur(): string
+    private ?string $id_createur;
+    public function getCreateur(): ?string
     {
         return $this->id_createur;
     }
