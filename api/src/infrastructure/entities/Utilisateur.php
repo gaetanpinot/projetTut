@@ -5,6 +5,7 @@ namespace amap\infrastructure\entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\InverseJoinColumn;
 use Ramsey\Uuid\Rfc4122\UuidV4;
 use amap\core\dto\CredentialsDTO;
 use amap\core\dto\UtilisateurInputDTO;
@@ -14,6 +15,65 @@ use amap\infrastructure\repository\UtilisateurRepository;
 #[ORM\Table(name: "utilisateur")]
 class Utilisateur
 {
+    public function getPaniers(): Collection
+    {
+        return $this->paniers;
+    }
+
+    public function setPaniers(Collection $paniers): void
+    {
+        $this->paniers = $paniers;
+    }
+
+    public function getAllergies(): Collection
+    {
+        return $this->allergies;
+    }
+
+    public function setAllergies(Collection $allergies): void
+    {
+        $this->allergies = $allergies;
+    }
+
+    public function getIngredientsExclus(): Collection
+    {
+        return $this->ingredientsExclus;
+    }
+
+    public function setIngredientsExclus(Collection $ingredientsExclus): void
+    {
+        $this->ingredientsExclus = $ingredientsExclus;
+    }
+
+    public function getUstensilesExclus(): Collection
+    {
+        return $this->ustensilesExclus;
+    }
+
+    public function setUstensilesExclus(Collection $ustensilesExclus): void
+    {
+        $this->ustensilesExclus = $ustensilesExclus;
+    }
+
+    public function getFrigo(): Collection
+    {
+        return $this->frigo;
+    }
+
+    public function setFrigo(Collection $frigo): void
+    {
+        $this->frigo = $frigo;
+    }
+
+    public function getRecettesFavorites(): Collection
+    {
+        return $this->recettesFavorites;
+    }
+
+    public function setRecettesFavorites(Collection $recettesFavorites): void
+    {
+        $this->recettesFavorites = $recettesFavorites;
+    }
     #[ORM\Id]
     #[ORM\Column(type: "guid", unique: true)]
     private string $id;
@@ -55,14 +115,20 @@ class Utilisateur
 
     #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: "utilisateurs")]
     #[ORM\JoinTable(name: "allergie_utilisateur")]
+    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id")]
+    #[InverseJoinColumn(name: "id_allergene", referencedColumnName: "id")]
     private Collection $allergies;
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "utilisateursExclus")]
     #[ORM\JoinTable(name: "ingredient_exclu")]
+    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id")]
+    #[InverseJoinColumn(name: "id_ingredient", referencedColumnName: "id")]
     private Collection $ingredientsExclus;
 
     #[ORM\ManyToMany(targetEntity: Ustensile::class, inversedBy: "utilisateursExclus")]
     #[ORM\JoinTable(name: "ustensile_exclu")]
+    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id")]
+    #[InverseJoinColumn(name: "id_ustensile", referencedColumnName: "id")]
     private Collection $ustensilesExclus;
 
     #[ORM\OneToMany(mappedBy: "utilisateur", targetEntity: Frigo::class)]
