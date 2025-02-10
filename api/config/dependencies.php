@@ -164,7 +164,7 @@ return [
         return new LineFormatter($output, $dateFormat);
     },
 
-    LoggerInterface::class => DI\create(Logger::class)->constructor('Toubeelib_logger', [DI\get(StreamHandler::class)]),
+    LoggerInterface::class => DI\create(Logger::class)->constructor('Amap_loger', [DI\get(StreamHandler::class)]),
 
 
     //midleware
