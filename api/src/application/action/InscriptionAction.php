@@ -51,9 +51,7 @@ class InscriptionAction extends AbstractAction
         ];
 
 
-        var_dump($data);
         $resultValidation = $this->validator->validate($data, $schema);
-        var_dump($data);
         $checkValidite = ValidationErrorRenderer::render($rs, $resultValidation);
         if ($checkValidite != false) {
             return $checkValidite;

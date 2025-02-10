@@ -17,6 +17,7 @@ class Utilisateur
     #[ORM\Id]
     #[ORM\Column(type: "guid", unique: true)]
     private string $id;
+
     public function getId(): string
     {
         return $this->id;
