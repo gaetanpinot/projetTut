@@ -2,12 +2,15 @@
 
 declare(strict_types=1);
 
+use Slim\Routing\RouteCollectorProxy;
 use amap\application\action\GetRecettesAction;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
 use amap\application\action\ConnexionAction;
+use amap\application\action\GetUtilisateurProfile;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
+use amap\middleware\AuthnMiddleware;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -31,6 +34,10 @@ return function (\Slim\App $app): \Slim\App {
     $app->get('/recettes/{id}/commentaires', GetCommentsAction::class);
     $app->post('/recettes/{id}/commentaires', AddCommentAction::class);
     $app->put('/recettes/{id}/note', AddNoteAction::class);
+
+    $app->group('/utilisateurs', function (RouteCollectorProxy $group) {
+        $group->get('[/]', GetUtilisateurProfile::class)->add(AuthnMiddleware::class);
+    });
 
     $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);
     $app->get('/utilisateurs/{id}/favoris', GetFavoritesAction::class);
@@ -68,6 +75,7 @@ return function (\Slim\App $app): \Slim\App {
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;
     });
+
     $app->map(['GET', 'POST', 'PUT', 'DELETE', 'PATCH'], '/{routes:.+}', function ($request, $response) {
         throw new HttpNotFoundException($request);
     });

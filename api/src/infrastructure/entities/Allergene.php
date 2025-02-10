@@ -10,6 +10,25 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "allergene")]
 class Allergene
 {
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]

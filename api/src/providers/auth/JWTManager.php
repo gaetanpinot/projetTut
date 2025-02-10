@@ -21,7 +21,7 @@ class JWTManager
 
     public function __construct()
     {
-        $this->tempsValidite = 10000;
+        $this->tempsValidite = 100000;
         $this->emmeteur = "echo";
         $this->audience = "echo";
         // $this->key = parse_ini_file($co->get('token.key.path'))['JWT_SECRET_KEY'];
