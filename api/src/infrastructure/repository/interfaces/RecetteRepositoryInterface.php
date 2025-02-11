@@ -1,10 +1,8 @@
 <?php
 
-namespace amap\infrastructure\repository;
+namespace amap\infrastructure\repository\interfaces;
 
-use amap\infrastructure\entities\Commentaire;
 use amap\infrastructure\entities\Recette;
-use amap\infrastructure\entities\Utilisateur;
 
 interface RecetteRepositoryInterface
 {

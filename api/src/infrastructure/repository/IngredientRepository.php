@@ -3,10 +3,8 @@
 namespace amap\infrastructure\repository;
 
 use amap\infrastructure\entities\Ingredient;
-use Doctrine\ORM\EntityManager;
+use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\Mapping\ClassMetadata;
-use Psr\Container\ContainerInterface;
 
 class IngredientRepository extends EntityRepository implements IngredientRepositoryInterface
 {

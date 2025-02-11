@@ -2,8 +2,9 @@
 
 namespace amap\infrastructure\repository;
 
-use Doctrine\ORM\EntityRepository;
 use amap\infrastructure\entities\Recette;
+use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
+use Doctrine\ORM\EntityRepository;
 
 class RecetteRepository extends EntityRepository implements RecetteRepositoryInterface
 {

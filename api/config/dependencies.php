@@ -1,35 +1,34 @@
 <?php
 
-use amap\core\service\ServiceRecettes;
+use amap\core\service\interfaces\ServiceAuthInterface;
+use amap\core\service\interfaces\ServiceIngredientInterface;
+use amap\core\service\interfaces\ServiceRecettesInterface;
+use amap\core\service\interfaces\ServiceUtilisateurInterface;
+use amap\core\service\ServiceAuth;
 use amap\core\service\ServiceIngredient;
-use amap\core\service\ServiceRecettesInterface;
-use amap\core\service\ServiceIngredientInterface;
+use amap\core\service\ServiceRecettes;
+use amap\core\service\ServiceUtilisateur;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\Recette;
-use amap\infrastructure\repository\RecetteRepositoryInterface;
-use amap\infrastructure\repository\IngredientRepositoryInterface;
+use amap\infrastructure\entities\Utilisateur;
+use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
+use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
+use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
+use amap\providers\auth\AuthnProviderInterface;
+use amap\providers\auth\JWTAuthnProvider;
+use amap\providers\auth\JWTManager;
 use Doctrine\DBAL\Connection;
 use Doctrine\DBAL\DriverManager;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\ORMSetup;
-use Monolog\Logger;
-use Monolog\Level;
-use Monolog\Handler\StreamHandler;
 use Monolog\Formatter\LineFormatter;
+use Monolog\Handler\StreamHandler;
+use Monolog\Level;
+use Monolog\Logger;
 use Opis\JsonSchema\Validator;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
-use amap\core\service\ServiceAuth;
-use amap\core\service\ServiceAuthInterface;
-use amap\core\service\ServiceUtilisateur;
-use amap\core\service\ServiceUtilisateurInterface;
-use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\UtilisateurRepositoryInterface;
-use amap\providers\auth\AuthnProviderInterface;
-use amap\providers\auth\JWTAuthnProvider;
-use amap\providers\auth\JWTManager;
-
 use function DI\get;
 
 return [
