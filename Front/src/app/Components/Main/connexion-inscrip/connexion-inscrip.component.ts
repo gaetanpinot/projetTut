@@ -4,7 +4,7 @@ import { AuthStoreService } from '../../../Services/store/AuthStore.service';
 @Component({
   selector: 'app-connexion-inscrip',
   standalone: false,
-  
+
   templateUrl: './connexion-inscrip.component.html',
   styleUrl: './connexion-inscrip.component.scss'
 })

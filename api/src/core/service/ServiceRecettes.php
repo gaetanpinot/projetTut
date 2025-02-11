@@ -13,10 +13,12 @@ class ServiceRecettes implements ServiceRecettesInterface
     {
         $this->recetteRepository = $r;
     }
-    public function getRecetteById($id) : RecetteDTO {
+    public function getRecetteById($id): RecetteDTO
+    {
         return RecetteDTO::fromRecette($this->recetteRepository->getRecetteById($id));
     }
-    public function getRecettes($args) {
+    public function getRecettes($args)
+    {
         $recettes = [];
         foreach ($this->recetteRepository->getRecettes($args) as $rec) {
             array_push($recettes, RecetteDTO::fromRecette($rec));
@@ -24,15 +26,14 @@ class ServiceRecettes implements ServiceRecettesInterface
         return $recettes;
     }
 
-    public function getRecetteById($id) {
-        return RecetteDTO::fromRecette($this->recetteRepository->getRecetteById($id));
-    }
 
-    public function deleteRecette($id) {
+    public function deleteRecette($id)
+    {
         $this->recetteRepository->deleteRecette($id);
     }
 
-    public function createRecette($recetteInputDTO) {
+    public function createRecette($recetteInputDTO)
+    {
         // InputDTO to entity
     }
 
