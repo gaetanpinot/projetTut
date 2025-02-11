@@ -2,10 +2,9 @@
 
 namespace amap\infrastructure\repository;
 
+use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use Doctrine\DBAL\ArrayParameterType;
-use amap\core\dto\RecetteDTO;
 use Doctrine\ORM\EntityRepository;
-use Doctrine\ORM\QueryBuilder;
 use amap\infrastructure\entities\Recette;
 
 class RecetteRepository extends EntityRepository implements RecetteRepositoryInterface

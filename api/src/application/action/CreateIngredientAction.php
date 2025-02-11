@@ -2,7 +2,7 @@
 
 namespace amap\application\action;
 use amap\application\renderer\JsonRenderer;
-use amap\core\service\ServiceIngredientInterface;
+use amap\core\service\interfaces\ServiceIngredientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
@@ -21,7 +21,7 @@ class CreateIngredientAction extends AbstractAction
     {
         $data = json_decode((string) $request->getBody(), true);
 
-        if (!isset($data['nom']) || empty($data['nom'])) {
+        if (empty($data['nom'])) {
             return JsonRenderer::render($response, 400, ['error' => 'nom est obligatoire']);
         }
 

@@ -2,19 +2,15 @@
 
 namespace amap\application\action;
 
-use Opis\JsonSchema\Uri;
+use amap\application\renderer\JsonRenderer;
+use amap\application\renderer\ValidationErrorRenderer;
+use amap\core\dto\CredentialsDTO;
+use amap\providers\auth\AuthInvalidException;
+use amap\providers\auth\AuthnProviderInterface;
 use Opis\JsonSchema\Validator;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use amap\application\action\AbstractAction;
-use amap\application\renderer\JsonRenderer;
-use amap\application\renderer\ValidationErrorRenderer;
-use amap\core\dto\CredentialsDTO;
-use amap\core\service\BadInputException;
-use amap\core\service\ServiceAuthInterface;
-use amap\providers\auth\AuthInvalidException;
-use amap\providers\auth\AuthnProviderInterface;
 
 class InscriptionAction extends AbstractAction
 {
