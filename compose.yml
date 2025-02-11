@@ -3,7 +3,27 @@ networks:
     driver: bridge
 
 services:
-  
+
+
+  php:
+    image: canals/php:8.3
+    # build:
+    #   context: ./dockerfile
+    #   dockerfile: php8.3.Dockerfile
+    container_name: amap_php
+    ports:
+      - '1000:80'
+    networks:
+      - amap.net
+    env_file: ./secret.env
+    restart: unless-stopped
+    volumes:
+      - ./api:/var/www/html
+    working_dir: /var/www/html
+    depends_on:
+      amap.db:
+        condition: service_healthy
+
   adminer:
     image: 'adminer'
     container_name: amap_adminer
@@ -14,10 +34,10 @@ services:
     command: php -S 0.0.0.0:8080 -t /var/www/html
     restart: unless-stopped
     depends_on:
-      pgsql:
+      amap.db:
         condition: service_healthy
 
-  pgsql:
+  amap.db:
     image: postgres:alpine
     container_name: amap_pgsql
     ports:
@@ -32,6 +52,17 @@ services:
       interval: 2s
       retries: 5
       timeout: 10s
+    restart: unless-stopped
 
-
-
+  # angular:
+  #   image: node:20
+  #   container_name: amap_angular
+  #   working_dir: /app
+  #   volumes:
+  #     - ./Front:/app
+  #   ports:
+  #     - "1005:4200"
+  #   command: sh -c "npm install && npx ng serve --host 0.0.0.0 --port 4200 --public-host=http://localhost:1003"
+  #   networks:
+  #     - amap.net
+  #   restart: unless-stopped

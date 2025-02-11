@@ -1,0 +1,29 @@
+meta {
+  name: recettes
+  type: http
+  seq: 4
+}
+
+get {
+  url: http://localhost:1000/recettes?page=1
+  body: none
+  auth: none
+}
+
+params:query {
+  page: 1
+  ~id_allergenes: [4]
+  ~id_ingredients_principaux: [1]
+  ~nom: Salade
+  ~id_tag: [2]
+  ~temps_preparation_gt: 12
+  ~temps_preparation_lt: 25
+  ~complexite_gt: 0
+  ~complexite_lt: 5
+  ~debut_saison: 12
+  ~fin_saison: 8
+  ~note_gt: 0
+  ~note_lt: 5
+  ~id_ustensiles_exclus: [12,1]
+  ~id_ingredients_exclus: [4,9]
+}

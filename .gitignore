@@ -135,3 +135,5 @@ dist
 /logs/*
 !/logs/README.md
 .phpunit.result.cache
+.php-cs-fixer.cache
+api/composer.lock

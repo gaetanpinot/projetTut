@@ -1,0 +1,25 @@
+<div class="login-container">
+    <form class="login-form"
+          [formGroup]="connectForm"
+          (ngSubmit)="onSubmit()">
+        <mat-form-field class="login-field">
+            <mat-label>Nom</mat-label>
+            <input matInput
+                   type="text"
+                   formControlName="nom_utilisateur">
+        </mat-form-field>
+
+        <mat-form-field class="login-field">
+            <mat-label>Mot de passe</mat-label>
+            <input matInput
+                   type="password"
+                   formControlName="mot_de_passe">
+        </mat-form-field>
+
+        <button mat-flat-button
+                type="submit"
+                color="primary"
+                class="login-button"
+                [disabled]="connectForm.invalid">Se connecter</button>
+    </form>
+</div>

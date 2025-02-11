@@ -1,1 +1,32 @@
-<p>recette-recherche works!</p>
+<form class="search-form">
+  <mat-form-field>
+    <mat-label>Nom recette</mat-label>
+    <input matInput placeholder="Lasagnes" value="">
+  </mat-form-field>
+</form>
+<mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="NOM">
+    <mat-header-cell *matHeaderCellDef> NOM </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.nom}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="DESCR">
+    <mat-header-cell *matHeaderCellDef> DESCR </mat-header-cell>
+    <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+  </ng-container>
+
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+</mat-table>
+
+<div class="pages">
+  <button (click)="setPage(-1)" mat-mini-fab aria-label="Example icon button with a menu icon">
+    <mat-icon>keyboard_arrow_left</mat-icon>
+  </button>
+  <span>
+  Page:  {{ currentPage }}
+  </span>
+  <button (click)="setPage(1)" mat-mini-fab aria-label="Example icon button with a menu icon">
+    <mat-icon>keyboard_arrow_right</mat-icon>
+  </button>
+</div>
