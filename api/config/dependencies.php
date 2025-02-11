@@ -6,13 +6,15 @@ use amap\core\service\interfaces\ServiceRecettesInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use amap\core\service\ServiceAuth;
 use amap\core\service\ServiceIngredient;
-use amap\core\service\ServiceRecettes;
-use amap\core\service\ServiceUtilisateur;
+use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\Recette;
-use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
+use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
+use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
+use amap\core\service\ServiceRecettes;
+use amap\core\service\ServiceUtilisateur;
+use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 use amap\providers\auth\AuthnProviderInterface;
 use amap\providers\auth\JWTAuthnProvider;
@@ -29,6 +31,8 @@ use Opis\JsonSchema\Validator;
 use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 use Tuupola\Middleware\CorsMiddleware;
+
+use function DI\create;
 use function DI\get;
 
 return [
@@ -54,7 +58,8 @@ return [
     },
 
     //service
-    ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
+    ServiceUtilisateurInterface::class => DI\get(ServiceUtilisateur::class),
+    ServiceUtilisateur::class => create()->constructor(get(UtilisateurRepositoryInterface::class), get(AllergieRepositoryInterface::class)),
     ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
     ServiceIngredientInterface::class => DI\autowire(ServiceIngredient::class),
 
@@ -143,6 +148,14 @@ return [
         /*$validator->resolver()->registerRaw($c->get('validator.schema'));*/
         return $validator;
     },
+
+    /*AllergieRepositoryInterface::class => get(AllergenesRepository::class),*/
+    AllergieRepositoryInterface::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        $repo = $em->getRepository(Allergene::class);
+        return $repo;
+    },
+
 
     RecetteRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);

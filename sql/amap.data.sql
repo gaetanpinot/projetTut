@@ -204,6 +204,7 @@ INSERT INTO "ingredient_recette" (id_recette, id_ingredient, quantite) VALUES
 
 INSERT INTO "ingredient_exclu" (id_ingredient, id_utilisateur) VALUES
 (5,'f47ac10b-58cc-4372-a567-0e02b2c3d479'),
+(5,'2a0a11b7-a68c-4e21-92b4-7f7af6ffcd33'),
 (6,'c9bf9e57-1685-4c89-bafb-ff5af830be8a');
 
 -- Ustensile exclu par des utilisateurs
