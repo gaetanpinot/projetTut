@@ -3,10 +3,16 @@
 declare(strict_types=1);
 
 use Slim\Routing\RouteCollectorProxy;
+use amap\application\action\CreateAllergenesUser;
+use amap\application\action\DeleteAllergeneUser;
+use amap\application\action\GetExclusIngredientsAction;
+use amap\application\action\GetExclusUstensiles;
+use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetRecettesAction;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
 use amap\application\action\ConnexionAction;
+use amap\application\action\GetUserAllergensAction;
 use amap\application\action\GetUtilisateurProfile;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
@@ -21,7 +27,6 @@ return function (\Slim\App $app): \Slim\App {
     $app->post('/connexion[/]', ConnexionAction::class);
 
     $app->delete('/commentaires/{id}', DeleteCommentAction::class);
-    $app->delete('/utilisateurs/{id}', DeleteUserAction::class);
 
     $app->post('/recettes', CreateRecettesAction::class);
     $app->get('/recettes', GetRecettesAction::class);
@@ -37,6 +42,11 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->group('/utilisateurs', function (RouteCollectorProxy $group) {
         $group->get('[/]', GetUtilisateurProfile::class)->add(AuthnMiddleware::class);
+        $group->get('/ingredients[/]', GetExclusIngredientsAction::class)->add(AuthnMiddleware::class);
+        $group->get('/ustensiles[/]', GetExclusUstensiles::class)->add(AuthnMiddleware::class);
+        $group->get('/allergenes[/]', GetUserAllergensAction::class)->add(AuthnMiddleware::class);
+        $group->post('/allergenes[/]', CreateAllergenesUser::class)->add(AuthnMiddleware::class);
+        $group->delete('/allergenes[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
     });
 
     $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);
@@ -55,10 +65,6 @@ return function (\Slim\App $app): \Slim\App {
     $app->put('/utilisateurs/{id}/frigo/ingredient/{id_ingredient}', AddToFrigoAction::class);
     $app->patch('/utilisateurs/{id}/frigo/ingredient/{id_ingredient}', UpdateFrigoIngredientAction::class);
     $app->delete('/utilisateurs/{id}/frigo/ingredient/{id_ingredient}', RemoveFromFrigoAction::class);
-
-    $app->get('/utilisateurs/{id}/allergenes', GetUserAllergensAction::class);
-    $app->post('/utilisateurs/{id}/allergenes', AddAllergenAction::class);
-    $app->delete('/utilisateurs/{id}/allergenes', DeleteAllergenAction::class);
 
     $app->get('/utilisateurs/{id}/ustensiles', GetExcluUtensilsAction::class);
     $app->post('/utilisateurs/{id}/ustensiles', AddExcluUtensilAction::class);

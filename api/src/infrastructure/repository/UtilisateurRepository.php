@@ -5,6 +5,7 @@ namespace amap\infrastructure\repository;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
+use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Utilisateur;
 
 /**
@@ -37,5 +38,45 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
             throw new EntityConstraintViolation("Utilisateur $name déjà existant");
         }
         return $utilisateur;
+    }
+
+    public function addAllergies(string $id_utilisateur, Allergene $allergie): void
+    {
+        $user = $this->getUtilisateurById($id_utilisateur);
+        try {
+            $user->addAllergie($allergie);
+            $this->getEntityManager()->persist($user);
+            $this->getEntityManager()->flush();
+        } catch(UniqueConstraintViolationException $e) {
+
+        }
+    }
+
+    public function deleteAllergies(string $id_utilisateur, Allergene $allergie): void
+    {
+        $user = $this->getUtilisateurById($id_utilisateur);
+        try {
+            $user->deleteAllergie($allergie);
+            $this->getEntityManager()->persist($user);
+            $this->getEntityManager()->flush();
+        } catch(UniqueConstraintViolationException $e) {
+
+        }
+    }
+
+    public function addUstensiles(string $id_utilisateur, int $id_ustensiles): void
+    {
+    }
+
+    public function deleteUstensiles(string $id_utilisateur, int $id_ustensiles): void
+    {
+    }
+
+    public function addIngredient(string $id_utilisateur, int $id_ingredients): void
+    {
+    }
+
+    public function deleteIngredient(string $id_utilisateur, int $id_ingredients): void
+    {
     }
 }
