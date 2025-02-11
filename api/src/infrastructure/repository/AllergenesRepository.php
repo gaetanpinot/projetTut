@@ -4,7 +4,7 @@ namespace amap\infrastructure\repository;
 
 use Doctrine\ORM\EntityRepository;
 use amap\infrastructure\entities\Allergene;
-use amap\infrastructure\repository\AllergieRepositoryInterface;
+use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 
 /**
  * @extends EntityRepository<object>

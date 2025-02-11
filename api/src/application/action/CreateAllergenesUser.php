@@ -8,7 +8,7 @@ use Psr\Http\Message\ServerRequestInterface;
 use amap\application\action\AbstractAction;
 use amap\application\renderer\JsonRenderer;
 use amap\application\renderer\ValidationErrorRenderer;
-use amap\core\service\ServiceUtilisateurInterface;
+use amap\core\service\interfaces\ServiceUtilisateurInterface;
 
 class CreateAllergenesUser extends AbstractAction
 {

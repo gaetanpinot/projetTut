@@ -11,7 +11,7 @@ use amap\core\dto\UtilisateurDTO;
 use amap\core\dto\UtilisateurInputDTO;
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\AllergieRepositoryInterface;
+use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
