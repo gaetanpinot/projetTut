@@ -2,11 +2,10 @@
 
 namespace amap\core\service;
 
-use amap\core\dto\AuthDTO;
 use amap\core\dto\UtilisateurDTO;
 use amap\core\dto\UtilisateurInputDTO;
-use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\UtilisateurRepositoryInterface;
+use amap\core\service\interfaces\ServiceUtilisateurInterface;
+use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 class ServiceUtilisateur implements ServiceUtilisateurInterface
 {

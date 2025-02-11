@@ -4,13 +4,13 @@ namespace amap\core\service;
 
 use amap\core\dto\AuthDTO;
 use amap\core\dto\CredentialsDTO;
-use amap\core\dto\UtilisateurDTO;
 use amap\core\dto\UtilisateurInputDTO;
-use amap\core\service\ServiceAuthInterface;
+use amap\core\service\exceptions\BadInputException;
+use amap\core\service\interfaces\ServiceAuthInterface;
 use amap\infrastructure\entities\Utilisateur;
-use amap\infrastructure\repository\EntityConstraintViolation;
-use amap\infrastructure\repository\EntityNotFoundException;
-use amap\infrastructure\repository\UtilisateurRepositoryInterface;
+use amap\infrastructure\repository\exceptions\EntityConstraintViolation;
+use amap\infrastructure\repository\exceptions\EntityNotFoundException;
+use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 class ServiceAuth implements ServiceAuthInterface
 {

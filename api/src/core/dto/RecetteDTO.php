@@ -22,9 +22,9 @@ class RecetteDTO extends DTO
     protected ?array $ingredients;
     protected ?array $ustensiles;
 
-    public static function fromRecette(Recette $recette): RecetteDTO
+    public static function fromRecette(Recette $recette): self
     {
-        $recetteDTO = new RecetteDTO();
+        $recetteDTO = new self();
         $recetteDTO->id = $recette->getId();
         $recetteDTO->nom = $recette->getNom();
         $recetteDTO->temps_preparation = $recette->getTempsPreparation();

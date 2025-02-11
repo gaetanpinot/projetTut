@@ -8,20 +8,20 @@ use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
 
-class GetRecettesAction extends AbstractAction
+class GetRecetteByIdAction extends AbstractAction
 {
-    public ServiceRecettesInterface $t;
-    public function __construct(ServiceRecettesInterface $u, LoggerInterface $l)
+    protected ServiceRecettesInterface $serviceRecette;
+    public function __construct(ServiceRecettesInterface $serviceRecette, LoggerInterface $l)
     {
-        $this->t = $u;
         parent::__construct($l);
+        $this->serviceRecette = $serviceRecette;
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        try {
-            return JsonRenderer::render($rs, 200, $this->t->getRecettes($rq->getQueryParams()));
-        } catch (\Error $e) {
-            return JsonRenderer::render($rs, 500, $e->getMessage());
-        }
+        $id = $rq->getQueryParams()['id'];
+
+        $recette = $this->serviceRecette->getRecetteById($id);
+
+        return JsonRenderer::render($rs, 200, $recette);
     }
 }
