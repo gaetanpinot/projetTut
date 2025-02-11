@@ -5,8 +5,9 @@ namespace amap\infrastructure\entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use amap\infrastructure\repository\AllergenesRepository;
 
-#[ORM\Entity]
+#[ORM\Entity(repositoryClass: AllergenesRepository::class)]
 #[ORM\Table(name: "allergene")]
 class Allergene
 {

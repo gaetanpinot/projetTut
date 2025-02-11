@@ -1,6 +1,7 @@
 <?php
 
 namespace amap\application\action;
+
 use amap\application\renderer\JsonRenderer;
 use amap\core\service\interfaces\ServiceIngredientInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -21,6 +22,7 @@ class GetIngredientsAction extends AbstractAction
     {
         $ingredients = $this->serviceIngredient->getAllIngredients();
 
-        return JsonRenderer::render($rs,200, $ingredients);
+        return JsonRenderer::render($rs, 200, $ingredients);
     }
 }
+
