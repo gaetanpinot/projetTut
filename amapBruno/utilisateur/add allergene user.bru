@@ -1,0 +1,17 @@
+meta {
+  name: add allergene user
+  type: http
+  seq: 7
+}
+
+post {
+  url: {{api}}/utilisateurs/allergenes
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "id_allergene": 1
+  }
+}

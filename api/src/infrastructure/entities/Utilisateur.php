@@ -159,5 +159,14 @@ class Utilisateur
         return $u;
     }
 
-    // Getters and setters omitted for brevity
+    public function addAllergie(Allergene $allergie)
+    {
+        $this->allergies->add($allergie);
+    }
+
+    public function deleteAllergie(Allergene $allergie)
+    {
+        $this->allergies->removeElement($allergie);
+    }
+
 }
