@@ -5,6 +5,7 @@ namespace amap\infrastructure\entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Query\Lexer;
 use amap\infrastructure\repository\RecetteRepository;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
@@ -57,6 +58,7 @@ class Recette
     #[ORM\Column(type: "integer", nullable: true, name: 'temps_preparation')]
     private ?int $tempsPreparation;
 
+
     public function getTempsPreparation(): ?int
     {
         return $this->tempsPreparation;
@@ -68,8 +70,8 @@ class Recette
     /*#[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "recettes")]*/
     /*#[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id")]*/
     #[ORM\Column(type: "string", nullable: true, name: 'id_createur')]
-    private string $id_createur;
-    public function getCreateur(): string
+    private ?string $id_createur;
+    public function getCreateur(): ?string
     {
         return $this->id_createur;
     }
@@ -107,6 +109,13 @@ class Recette
     /*#[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "recettes")]*/
     /*private Collection $ingredients;*/
 
+    #[ORM\OneToMany(targetEntity: Note::class, mappedBy: "recette")]
+    private Collection|null $notes;
+
+    public function getNotes(): ?Collection
+    {
+        return $this->notes;
+    }
 
     #[ORM\OneToMany(targetEntity: IngredientRecette::class, mappedBy: "recette")]
     private Collection $ingredients_recette;
@@ -120,6 +129,7 @@ class Recette
     public function __construct()
     {
         $this->tags = new ArrayCollection();
+        $this->notes = new ArrayCollection();
         /*$this->ingredients = new ArrayCollection();*/
         $this->ingredients_recette = new ArrayCollection();
         $this->ustensiles = new ArrayCollection();
@@ -153,6 +163,46 @@ class Recette
     public function getUrlPhoto(): ?string
     {
         return $this->urlPhoto;
+    }
+
+    public function setNom(?string $nom): void
+    {
+        $this->nom = $nom;
+    }
+
+    public function setTempsPreparation(?int $tempsPreparation): void
+    {
+        $this->tempsPreparation = $tempsPreparation;
+    }
+
+    public function setComplexite(?int $complexite): void
+    {
+        $this->complexite = $complexite;
+    }
+
+    public function setDescription(?string $description): void
+    {
+        $this->description = $description;
+    }
+
+    public function setDebutSaison(?int $debutSaison): void
+    {
+        $this->debutSaison = $debutSaison;
+    }
+
+    public function setFinSaison(?int $finSaison): void
+    {
+        $this->finSaison = $finSaison;
+    }
+
+    public function setUrlPhoto(?string $urlPhoto): void
+    {
+        $this->urlPhoto = $urlPhoto;
+    }
+
+    public function setCreateur(?Utilisateur $createur): void
+    {
+        $this->createur = $createur;
     }
 
 }

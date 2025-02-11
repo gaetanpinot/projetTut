@@ -28,6 +28,7 @@ class ConnexionAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
+
         $schema = (object) [
             'type' => 'object',
             'properties' => (object)[
@@ -59,3 +60,4 @@ class ConnexionAction extends AbstractAction
     }
 
 }
+

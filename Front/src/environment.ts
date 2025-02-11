@@ -2,4 +2,4 @@
 export const apiUrl = 'https://jsonplaceholder.typicode.com/users';
 
 
-export const apiBaseUrl = 'http://localhost:1000';
+export const apiBaseUrl = 'http://docketu.iutnc.univ-lorraine.fr:12200';

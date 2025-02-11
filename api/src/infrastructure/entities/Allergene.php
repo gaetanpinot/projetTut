@@ -10,6 +10,25 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "allergene")]
 class Allergene
 {
+    public function getId(): int
+    {
+        return $this->id;
+    }
+
+    public function getLabel(): ?string
+    {
+        return $this->label;
+    }
+
+    public function getIngredients(): Collection
+    {
+        return $this->ingredients;
+    }
+
+    public function getUtilisateurs(): Collection
+    {
+        return $this->utilisateurs;
+    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -18,7 +37,9 @@ class Allergene
     #[ORM\Column(type: "string", unique: true, nullable: true)]
     private ?string $label;
 
-    #[ORM\ManyToMany(targetEntity: Ingredient::class, mappedBy: "allergenes")]
+    #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "allergenes")]
+    #[ORM\JoinTable(name: "allergene_ingredient")]
+    #[ORM\JoinColumn(name: "id_allergene", referencedColumnName: "id")]
     private Collection $ingredients;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: "allergies")]

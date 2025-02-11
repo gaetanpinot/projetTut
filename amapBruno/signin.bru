@@ -13,11 +13,11 @@ post {
 body:json {
   {  
       "nom_utilisateur": "gaetan",  
-      "mot_de_passe": "quoifeur"  
+      "mot_de_passe": "1234"  
   }
 }
 
 script:post-response {
-  bru.setVar("access-token",res.body.atoken);
+  bru.setVar("access-token",res.body.token);
   
 }

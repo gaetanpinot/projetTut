@@ -33,6 +33,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
@@ -55,7 +56,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
-    MatDialogModule, 
+    MatDialogModule,
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
@@ -65,9 +66,9 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     MatInputModule,
     MatIconModule,
     MatSliderModule,
-    MatRadioModule, 
-    MatCheckboxModule, 
-    MatSlideToggleModule
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSlideToggleModule,
   ],
   providers: [
     provideAnimationsAsync(),
