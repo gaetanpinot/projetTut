@@ -3,7 +3,7 @@ import { isAuth } from '../../../shared/functions/isAuth';
 @Component({
   selector: 'app-connexion-inscrip',
   standalone: false,
-  
+
   templateUrl: './connexion-inscrip.component.html',
   styleUrl: './connexion-inscrip.component.scss'
 })

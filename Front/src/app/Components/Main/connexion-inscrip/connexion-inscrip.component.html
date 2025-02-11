@@ -1,13 +1,8 @@
 <section class="auth-wrapper">
-    <div *ngIf="!isAuthenticated()"
-         class="auth-container p-8 shadow-lg rounded-lg">
+    <div *ngIf="!isAuthenticated()" class="auth-container p-8 shadow-lg rounded-lg">
         <div class="auth-tabs">
-            <button class="tab-button"
-                    [class.active]="activeTab === 'login'"
-                    (click)="switchTab('login')">Connexion</button>
-            <button class="tab-button"
-                    [class.active]="activeTab === 'signup'"
-                    (click)="switchTab('signup')">Inscription</button>
+            <button class="tab-button" [class.active]="activeTab === 'login'" (click)="switchTab('login')">Connexion</button>
+            <button class="tab-button" [class.active]="activeTab === 'signup'" (click)="switchTab('signup')">Inscription</button>
 
         </div>
         <div class="auth-content">
