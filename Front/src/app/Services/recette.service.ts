@@ -11,8 +11,8 @@ export class RecetteService {
 
   private apiServerUrl = apiBaseUrl;
   constructor(private http: HttpClient) { }
-  
-  getRecettes(): Observable<GetRecetteResponse[]>{
-    return this.http.get<GetRecetteResponse[]>(this.apiServerUrl + '/recettes');
+
+  getRecettes(page: number): Observable<GetRecetteResponse[]>{
+    return this.http.get<GetRecetteResponse[]>(this.apiServerUrl + '/recettes?page=' + page);
   }
 }

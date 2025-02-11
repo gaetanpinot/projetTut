@@ -3,9 +3,8 @@
 namespace amap\core\service;
 
 use amap\core\dto\RecetteDTO;
-use amap\infrastructure\repository\RecetteRepository;
-use amap\infrastructure\repository\RecetteRepositoryInterface;
-use amap\infrastructure\repository\UtilisateurRepositoryInterface;
+use amap\core\service\interfaces\ServiceRecettesInterface;
+use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 
 class ServiceRecettes implements ServiceRecettesInterface
 {
@@ -14,7 +13,9 @@ class ServiceRecettes implements ServiceRecettesInterface
     {
         $this->recetteRepository = $r;
     }
-
+    public function getRecetteById($id) : RecetteDTO {
+        return RecetteDTO::fromRecette($this->recetteRepository->getRecetteById($id));
+    }
     public function getRecettes($args) {
         $recettes = [];
         foreach ($this->recetteRepository->getRecettes($args) as $rec) {

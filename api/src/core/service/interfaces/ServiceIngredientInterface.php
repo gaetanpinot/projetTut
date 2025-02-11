@@ -1,6 +1,6 @@
 <?php
 
-namespace amap\core\service;
+namespace amap\core\service\interfaces;
 
 use amap\core\dto\IngredientDTO;
 

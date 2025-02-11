@@ -3,8 +3,9 @@
 namespace amap\core\service;
 
 use amap\core\dto\IngredientDTO;
+use amap\core\service\interfaces\ServiceIngredientInterface;
 use amap\infrastructure\entities\Ingredient;
-use amap\infrastructure\repository\IngredientRepositoryInterface;
+use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
 
 class ServiceIngredient implements ServiceIngredientInterface
 {

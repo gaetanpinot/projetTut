@@ -2,18 +2,13 @@
 
 namespace amap\application\action;
 
+use amap\application\renderer\JsonRenderer;
+use amap\core\service\interfaces\ServiceRecettesInterface;
 use Opis\JsonSchema\Validator;
 use amap\application\renderer\ValidationErrorRenderer;
-use amap\core\service\ServiceRecettes;
-use amap\core\service\ServiceRecettesInterface;
-use amap\infrastructure\repository\RecetteRepository;
-use amap\infrastructure\repository\RecetteRepositoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use amap\application\renderer\JsonRenderer;
-use amap\infrastructure\repository\UtilisateurRepository;
-use amap\infrastructure\repository\UtilisateurRepositoryInterface;
 
 class GetRecettesAction extends AbstractAction
 {
@@ -104,6 +99,5 @@ class GetRecettesAction extends AbstractAction
         } catch (\Error $e) {
             return JsonRenderer::render($rs, 500, $e->getMessage());
         }
-        //return $rs;
     }
 }

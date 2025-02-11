@@ -1,6 +1,6 @@
 <?php
 
-namespace amap\infrastructure\repository;
+namespace amap\infrastructure\repository\interfaces;
 
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Utilisateur;
