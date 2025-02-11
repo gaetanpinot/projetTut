@@ -3,10 +3,12 @@
 namespace amap\infrastructure\repository;
 
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
-use Doctrine\ORM\EntityManager;
 use Doctrine\ORM\EntityRepository;
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Utilisateur;
+use amap\infrastructure\repository\exceptions\EntityConstraintViolation;
+use amap\infrastructure\repository\exceptions\EntityNotFoundException;
+use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 /**
  * @extends EntityRepository<object>

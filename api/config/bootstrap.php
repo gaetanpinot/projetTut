@@ -3,6 +3,7 @@
 require_once __DIR__ . "/../vendor/autoload.php";
 
 
+use amap\middleware\CorsMiddleware;
 use DI\ContainerBuilder;
 use Doctrine\ORM\EntityManager;
 use Slim\Factory\AppFactory;
@@ -14,7 +15,7 @@ $builder->addDefinitions(__DIR__ . '/actions.php');
 
 $c = $builder->build();
 $app = AppFactory::createFromContainer($c);
-
+$app->add(CorsMiddleware::class);
 $app->addBodyParsingMiddleware();
 $app->addRoutingMiddleware();
 $app->addErrorMiddleware($c->get('displayErrorDetails'), false, false);

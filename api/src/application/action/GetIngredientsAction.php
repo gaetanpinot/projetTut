@@ -3,10 +3,9 @@
 namespace amap\application\action;
 
 use amap\application\renderer\JsonRenderer;
-use amap\core\service\ServiceIngredientInterface;
+use amap\core\service\interfaces\ServiceIngredientInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use Psr\Container\ContainerInterface;
 use Psr\Log\LoggerInterface;
 
 class GetIngredientsAction extends AbstractAction

@@ -2,12 +2,11 @@
 
 namespace amap\application\action;
 
-use Psr\Container\ContainerInterface;
+use amap\application\renderer\JsonRenderer;
+use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
-use amap\application\renderer\JsonRenderer;
-use amap\core\service\ServiceUtilisateurInterface;
 
 class HomeAction extends AbstractAction
 {

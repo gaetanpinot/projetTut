@@ -10,7 +10,12 @@ import { DialogComponent } from './dialog/dialog.component';
   templateUrl: './test-home.component.html',
   styleUrl: './test-home.component.scss'
 })
+
+
+
 export class TestHomeComponent {
+
+  
   constructor(private dialog: MatDialog, private router: Router) {}
 
   openDialog() {
