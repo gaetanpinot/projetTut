@@ -1,0 +1,13 @@
+:root {
+  --white: #F4F4F4;
+  --green-light: #18A362;
+  --green: #386641;
+  --green-dark: #1C5A41;
+  --black-dark: #1B1519;
+}
+
+body {
+  background-color: var(--black-dark);
+  color: var(--white);
+  font-family: Arial, sans-serif;
+}/*# sourceMappingURL=home.component.css.map */
