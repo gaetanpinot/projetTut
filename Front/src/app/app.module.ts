@@ -32,14 +32,7 @@ import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconn
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-import {NgxsModule, Store} from '@ngxs/store';
-import {NgxsStoragePluginModule} from '@ngxs/storage-plugin';
-import {SetTokenUser} from './store/store.actions';
-import {StoreUser} from './store/store.state';
 
-let AppState;
-
-// @ts-ignore
 // @ts-ignore
 @NgModule({
   declarations: [
@@ -75,11 +68,7 @@ let AppState;
     MatSliderModule,
     MatRadioModule,
     MatCheckboxModule,
-    MatSlideToggleModule, NgxsModule.forRoot([], { developmentMode: /** !environment.production */ false }),
-    //NgxsModule.forRoot([StoreUser]),
-    // NgxsStoragePluginModule.forRoot({
-    //  key: 'user'
-    //})
+    MatSlideToggleModule,
   ],
   providers: [
     provideAnimationsAsync(),

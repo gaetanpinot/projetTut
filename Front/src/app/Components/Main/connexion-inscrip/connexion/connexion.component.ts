@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { ConnexionService } from '../../../../Services/connexion.service';
 import { LogInRequestBody } from '../../../../Interfaces/connexion-user.interface';
-import { Store } from '@ngxs/store';
+import { AuthStoreService } from '../../../../Services/store/AuthStore.service';
 
 @Component({
   selector: 'app-connexion',
@@ -18,15 +18,13 @@ export class ConnexionComponent implements OnInit {
     mot_de_passe: new FormControl('', [Validators.required])
   })
 
-  constructor(private connectServ: ConnexionService, private store: Store){
+  constructor(private connectServ: ConnexionService, private authStore: AuthStoreService){
   }
-
 
   ngOnInit(): void {
 
   }
-
-
+  
   onSubmit() {
     console.log("ok")
     const body: LogInRequestBody = {
@@ -41,9 +39,11 @@ export class ConnexionComponent implements OnInit {
         next: (data) => {
           console.log(data);
 
-          localStorage.setItem("token", data.token);
-          this.store.dispatch({token: data.token}).subscribe(() => {});
-
+          this.authStore.setToken(data.token);
+          console.log(this.authStore);
+          
+          //token
+          console.log(this.authStore.getToken());
         },
         error: (err) => {
           console.error(err);

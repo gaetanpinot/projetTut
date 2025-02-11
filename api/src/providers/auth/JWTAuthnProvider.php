@@ -2,11 +2,10 @@
 
 namespace amap\providers\auth;
 
-use DI\Container;
 use amap\core\dto\AuthDTO;
 use amap\core\dto\CredentialsDTO;
-use amap\core\service\BadInputException;
-use amap\core\service\ServiceAuthInterface;
+use amap\core\service\exceptions\BadInputException;
+use amap\core\service\interfaces\ServiceAuthInterface;
 
 class JWTAuthnProvider implements AuthnProviderInterface
 {

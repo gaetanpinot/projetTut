@@ -2,10 +2,9 @@
 
 namespace amap\application\action;
 
+use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
-use amap\application\action\AbstractAction;
-use amap\core\service\ServiceUtilisateurInterface;
 
 class GetFavoritesAction extends AbstractAction
 {

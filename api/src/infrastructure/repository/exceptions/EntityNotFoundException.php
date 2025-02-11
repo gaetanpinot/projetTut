@@ -1,6 +1,6 @@
 <?php
 
-namespace amap\infrastructure\repository;
+namespace amap\infrastructure\repository\exceptions;
 
 class EntityNotFoundException extends \Exception
 {
