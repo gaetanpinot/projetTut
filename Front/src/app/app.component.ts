@@ -7,5 +7,7 @@ import { Component } from '@angular/core';
   standalone: false
 })
 export class AppComponent {
-
+  // setTheme(theme: 'red' | 'blue'): void {
+  //   document.body.setAttribute('data-theme', theme);
+  // }
 }

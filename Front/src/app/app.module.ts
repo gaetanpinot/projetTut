@@ -1,18 +1,18 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { HomeComponent } from './Components/TEST/home/home.component';
+
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './router/app-routing.module';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { DialogComponent } from './Components/TEST/home/dialog/dialog.component';
+import { DialogComponent } from './Components/TEST/test-home/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NextPageComponent } from './Components/TEST/home/next-page/next-page.component';
+import { NextPageComponent } from './Components/TEST/test-home/next-page/next-page.component';
 import { TestService } from './Services/test.service';
 import { provideHttpClient } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
 import { MatSelectModule } from '@angular/material/select';
 import { HeaderComponent } from './Components/header/header.component';
@@ -20,30 +20,66 @@ import { FooterComponent } from './Components/footer/footer.component';
 import { RecetteRechercheComponent } from './Components/Main/recette-recherche/recette-recherche.component';
 import { FrigoComponent } from './Components/Main/frigo/frigo.component';
 import { PanierComponent } from './Components/Main/panier/panier.component';
+import { ConnexionInscripComponent } from './Components/Main/connexion-inscrip/connexion-inscrip.component';
+import { TestHomeComponent } from './Components/TEST/test-home/test-home.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { ConnexionComponent } from './Components/Main/connexion-inscrip/connexion/connexion.component';
+import { InscriptionComponent } from './Components/Main/connexion-inscrip/inscription/inscription.component';
+import { MatSliderModule } from '@angular/material/slider';
+import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
+import { MatRadioModule } from '@angular/material/radio';
+import { MatSlideToggleModule } from '@angular/material/slide-toggle';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import {NgxsModule, Store} from '@ngxs/store';
+import {NgxsStoragePluginModule} from '@ngxs/storage-plugin';
+import {SetTokenUser} from './store/store.actions';
+import {StoreUser} from './store/store.state';
 
+let AppState;
+
+// @ts-ignore
+// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
+    TestHomeComponent,
     DialogComponent,
     NextPageComponent,
     HeaderComponent,
     FooterComponent,
     RecetteRechercheComponent,
     FrigoComponent,
-    PanierComponent
+    PanierComponent,
+    ConnexionInscripComponent,
+    ConnexionComponent,
+    InscriptionComponent,
+    DeconnexionComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
+    ReactiveFormsModule,
     MatCardModule,
     MatButtonModule,
-    MatDialogModule, 
+    MatDialogModule,
     BrowserAnimationsModule,
     FormsModule,
     MatTableModule,
     MatSelectModule,
     MatDialogModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule,
+    MatSliderModule,
+    MatRadioModule,
+    MatCheckboxModule,
+    MatSlideToggleModule, NgxsModule.forRoot([], { developmentMode: /** !environment.production */ false }),
+    //NgxsModule.forRoot([StoreUser]),
+    // NgxsStoragePluginModule.forRoot({
+    //  key: 'user'
+    //})
   ],
   providers: [
     provideAnimationsAsync(),

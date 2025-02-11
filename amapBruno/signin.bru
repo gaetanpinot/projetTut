@@ -1,0 +1,23 @@
+meta {
+  name: signin
+  type: http
+  seq: 2
+}
+
+post {
+  url: http://localhost:1000/connexion
+  body: json
+  auth: none
+}
+
+body:json {
+  {  
+      "nom_utilisateur": "gaetan",  
+      "mot_de_passe": "1234"  
+  }
+}
+
+script:post-response {
+  bru.setVar("access-token",res.body.token);
+  
+}

@@ -1,0 +1,19 @@
+meta {
+  name: inscription
+  type: http
+  seq: 3
+}
+
+post {
+  url: http://localhost:1000/inscription
+  body: json
+  auth: none
+}
+
+body:json {
+  {  
+      "nom_utilisateur": "safede",  
+      "mot_de_passe": "quoifeur",
+      "role" : 0
+  }
+}
