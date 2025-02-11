@@ -49,6 +49,10 @@ return function (\Slim\App $app): \Slim\App {
         $group->delete('/allergenes[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
     });
 
+    $app->group('/paniers', function (RouteCollectorProxy $group) {
+        $group->post('[/]', CreatePanier::class)->add(AuthnMiddleware::class);
+    });
+
     $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);
     $app->get('/utilisateurs/{id}/favoris', GetFavoritesAction::class);
 
@@ -72,11 +76,6 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->get('/ustensiles', GetUtensilsAction::class);
     $app->post('/ustensiles', CreateUtensilAction::class);
-
-    $app->post('/paniers', CreateBasketAction::class);
-    $app->put('/paniers/{id}', UpdateBasketAction::class);
-    $app->post('/paniers/{id}', SendBasketAction::class);
-
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;
