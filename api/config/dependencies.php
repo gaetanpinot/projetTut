@@ -4,8 +4,11 @@ use amap\core\service\ServiceRecettes;
 use amap\core\service\ServiceIngredient;
 use amap\core\service\ServiceRecettesInterface;
 use amap\core\service\ServiceIngredientInterface;
+use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\Recette;
+use amap\infrastructure\repository\AllergenesRepository;
+use amap\infrastructure\repository\AllergieRepositoryInterface;
 use amap\infrastructure\repository\RecetteRepositoryInterface;
 use amap\infrastructure\repository\IngredientRepositoryInterface;
 use Doctrine\DBAL\Connection;
@@ -30,6 +33,7 @@ use amap\providers\auth\AuthnProviderInterface;
 use amap\providers\auth\JWTAuthnProvider;
 use amap\providers\auth\JWTManager;
 
+use function DI\create;
 use function DI\get;
 
 return [
@@ -55,7 +59,8 @@ return [
     },
 
     //service
-    ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
+    ServiceUtilisateurInterface::class => DI\get(ServiceUtilisateur::class),
+    ServiceUtilisateur::class => create()->constructor(get(UtilisateurRepositoryInterface::class), get(AllergieRepositoryInterface::class)),
     ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
     ServiceIngredientInterface::class => DI\autowire(ServiceIngredient::class),
 
@@ -144,6 +149,14 @@ return [
         /*$validator->resolver()->registerRaw($c->get('validator.schema'));*/
         return $validator;
     },
+
+    /*AllergieRepositoryInterface::class => get(AllergenesRepository::class),*/
+    AllergieRepositoryInterface::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        $repo = $em->getRepository(Allergene::class);
+        return $repo;
+    },
+
 
     RecetteRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
