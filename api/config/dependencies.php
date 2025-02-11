@@ -63,22 +63,80 @@ return [
     JWTManager::class => DI\autowire(JWTManager::class),
 
     //validator
+    //références de schémas de validation
     'validator.schema' => (object) [
- (object)       [
-        '$id' => 'http://amap.fr/nom_utilisateur_schema#',
-        'type' => 'string',
-        'minLength' => 4,
-        'maxLength' => 100,
-    ],
+        (object)       [
+            '$id' => 'http://amap.fr/nom_utilisateur_schema#',
+            'type' => 'string',
+            'minLength' => 4,
+            'maxLength' => 100,
+        ],
+
         (object)[
             '$id' => 'http://amap.fr/mot_de_passe_schema#',
             'type' => 'string',
             'minLength' => 4,
             'maxLength' => 100,
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/nom_recherche_schema#',
+            "type" => 'string',
+            "minLength" => 1
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/liste_id_int#',
+            "type" => 'array',
+            "minLength" => 1,
+            "contains" => (object)[
+                "type" => "integer"
+            ],
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/complexite#',
+            "type" => 'integer',
+            "minimum" => 0,
+            "maximum" => 5
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/note#',
+            '$ref' => 'http://amap.fr/complexite#'
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/saison#',
+            "type" => 'integer',
+            "minimum" => 1,
+            "maximum" => 12
+        ],
+
+        (object)[
+            '$id' => 'http://amap.fr/temps#',
+            "type" => 'integer',
+            "minimum" => 0
+        ],
+
+        (object)[
+            '$id' => "http://amap.fr/role_input#",
+            "type" => "integer",
+            "minimum" => 0,
+            "maximum" => 1,
+            "default" => 0
+        ],
+        (object)[
+        '$id' => 'http://amap.fr/page#',
+            'type' => 'integer',
+            'minimum' => 1,
+            'default' => 1,
         ]
     ],
+
     Validator::class => function (ContainerInterface $c) {
         $validator = new Validator();
+        $validator->parser()->setOption("allowDefaults", true);
         foreach ($c->get('validator.schema') as $schema) {
             $validator->resolver()->registerRaw($schema);
         }
@@ -88,7 +146,9 @@ return [
 
     RecetteRepositoryInterface::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
-        return $em->getRepository(Recette::class);
+        $repo = $em->getRepository(Recette::class);
+        $repo->setPagination($c->get('pagination.nb'));
+        return $repo;
     },
     ServiceRecettesInterface::class => DI\autowire(ServiceRecettes::class),
 
@@ -103,7 +163,7 @@ return [
         return new LineFormatter($output, $dateFormat);
     },
 
-    LoggerInterface::class => DI\create(Logger::class)->constructor('Toubeelib_logger', [DI\get(StreamHandler::class)]),
+    LoggerInterface::class => DI\create(Logger::class)->constructor('Amap_loger', [DI\get(StreamHandler::class)]),
 
 
     //midleware

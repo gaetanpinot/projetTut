@@ -6,11 +6,13 @@ import { MatTableDataSource } from '@angular/material/table';
 @Component({
   selector: 'app-recette-recherche',
   standalone: false,
-  
+
   templateUrl: './recette-recherche.component.html',
   styleUrl: './recette-recherche.component.scss'
 })
 export class RecetteRechercheComponent implements OnInit {
+
+  currentPage: number = 1;
 
   displayedColumns = ['NOM','DESCR'];
   dataSource: MatTableDataSource<GetRecetteResponse> = new MatTableDataSource();
@@ -19,7 +21,11 @@ export class RecetteRechercheComponent implements OnInit {
   {}
 
   ngOnInit(): void {
-    this.recetteService.getRecettes().subscribe({
+    this.loadRecettes();
+  }
+
+  loadRecettes(): void {
+    this.recetteService.getRecettes(this.currentPage).subscribe({
       next: (data) => {
         console.log(data);
         this.dataSource.data = data;
@@ -28,6 +34,11 @@ export class RecetteRechercheComponent implements OnInit {
         console.error(err);
       }
     })
+  }
+
+  setPage(value: number): void {
+    this.currentPage += value;
+    this.loadRecettes();
   }
 
 }

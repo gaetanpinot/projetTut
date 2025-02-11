@@ -6,13 +6,15 @@ use amap\infrastructure\entities\Recette;
 
 interface RecetteRepositoryInterface
 {
+    public function setPagination(int $nb): void;
+
     public function getRecettes($args): array;
 
     public function getRecetteById($id): Recette;
 
-    public function deleteRecette(): void;
+    public function deleteRecette(int $id): void;
 
-    public function createRecette(): void;
+    public function createRecette(Recette $r): Recette;
 
     public function getRecetteCommentaires(): array;
 

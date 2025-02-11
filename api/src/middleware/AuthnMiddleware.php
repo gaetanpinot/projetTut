@@ -2,6 +2,7 @@
 
 namespace amap\middleware;
 
+use Psr\Log\LoggerInterface;
 use amap\providers\auth\AuthInvalidException;
 use amap\providers\auth\AuthnProviderInterface;
 use DI\Container;
@@ -13,16 +14,15 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 use Slim\Exception\HttpUnauthorizedException;
 
-
 class AuthnMiddleware implements MiddlewareInterface
 {
     protected AuthnProviderInterface $authProvider;
-    protected Logger $loger;
+    protected LoggerInterface $loger;
 
-    public function __construct(Container $co)
+    public function __construct(AuthnProviderInterface $authProvider, LoggerInterface $loger)
     {
-        $this->authProvider = $co->get(AuthnProviderInterface::class);
-        $this->loger = $co->get(Logger::class)->withName("AutnhMiddleware");
+        $this->authProvider = $authProvider;
+        $this->loger = $loger;
     }
 
     public function process(ServerRequestInterface $rq, RequestHandlerInterface $next): ResponseInterface
@@ -41,7 +41,7 @@ class AuthnMiddleware implements MiddlewareInterface
             }
             $token = $token[0];
             $user = $this->authProvider->getSignedInUser($token);
-            $rq = $rq->withAttribute('user', $user);
+            $rq = $rq->withAttribute('idutilisateur', $user->id);
         } catch (AuthInvalidException $e) {
             $this->loger->error($e->getMessage());
             throw new HttpUnauthorizedException($rq, "Votre authentification n'est pas valide, veuillez vous reconnecter");

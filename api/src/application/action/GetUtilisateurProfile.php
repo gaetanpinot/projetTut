@@ -2,15 +2,16 @@
 
 namespace amap\application\action;
 
-use amap\application\renderer\JsonRenderer;
-use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Log\LoggerInterface;
+use amap\application\action\AbstractAction;
+use amap\application\renderer\JsonRenderer;
+use amap\core\service\ServiceUtilisateurInterface;
 
-class HomeAction extends AbstractAction
+class GetUtilisateurProfile extends AbstractAction
 {
-    public ServiceUtilisateurInterface $serviceUtilisateur;
+    protected ServiceUtilisateurInterface $serviceUtilisateur;
     public function __construct(ServiceUtilisateurInterface $service, LoggerInterface $l)
     {
         $this->serviceUtilisateur = $service;
@@ -18,9 +19,8 @@ class HomeAction extends AbstractAction
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        /*$retour = $this->serviceUtilisateur->getUtilisateurByNom("alice");*/
-        /*$this->loger->info("Home action");*/
-        /*return $rs;*/
-        return JsonRenderer::render($rs, 200, ["message" => "Bienvenue sur l'api amap"]);
+        $user_id = $rq->getAttribute('idutilisateur');
+        $profile = $this->serviceUtilisateur->getProfileUtilisateur($user_id);
+        return JsonRenderer::render($rs, 200, $profile);
     }
 }
