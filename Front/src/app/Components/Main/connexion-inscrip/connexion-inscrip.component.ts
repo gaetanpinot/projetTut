@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { isAuth } from '../../../shared/functions/isAuth';
 import { AuthStoreService } from '../../../Services/store/AuthStore.service';
 @Component({
   selector: 'app-connexion-inscrip',
