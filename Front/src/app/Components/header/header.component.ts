@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 import { isAuth, isClient } from '../../shared/functions/isAuth';
 import { switchTheme } from '../../shared/functions/switchTheme';
+import {AuthStoreService} from '../../Services/store/AuthStore.service';
 
 
 @Component({
@@ -11,6 +12,9 @@ import { switchTheme } from '../../shared/functions/switchTheme';
   styleUrl: './header.component.scss'
 })
 export class HeaderComponent implements OnInit {
+
+  constructor(protected authStore: AuthStoreService)
+  {}
 
   ngOnInit() {
 
