@@ -1,0 +1,26 @@
+meta {
+  name: createpanier
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api}}/paniers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "ingredients":[
+      {
+        "id":1,
+        "quantite":"12g"
+      },
+      {
+        "id":3,
+        "quantite":"3kg"
+      }
+    ]
+  }
+}
