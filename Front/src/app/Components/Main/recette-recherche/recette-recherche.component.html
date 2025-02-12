@@ -39,7 +39,7 @@
   <ng-container matColumnDef="CONFIRM">
     <mat-header-cell *matHeaderCellDef> Visiter </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <button mat-flat-button>Visiter</button>
+      <a [routerLink]="['/Recette', element.id]"><button mat-flat-button>Visiter</button></a>
     </mat-cell>
   </ng-container>
 
