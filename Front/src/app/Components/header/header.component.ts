@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import { isAuth } from '../../shared/functions/isAuth';
+import { isAuth, isClient } from '../../shared/functions/isAuth';
 import { switchTheme } from '../../shared/functions/switchTheme';
 
 
@@ -22,5 +22,8 @@ export class HeaderComponent implements OnInit {
 
   switchTheme(event: any){
     switchTheme();
+  }
+  isClientAuth(): boolean{
+    return isClient();
   }
 }

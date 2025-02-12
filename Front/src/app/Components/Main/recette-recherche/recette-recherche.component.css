@@ -1,3 +1,6 @@
+.search-form mat-form-field {
+  width: 100%;
+}
 
 .pages {
   display: flex;
@@ -5,4 +8,4 @@
   gap: 12px;
   align-items: center;
   padding: 12px;
-}
+}/*# sourceMappingURL=recette-recherche.component.css.map */
