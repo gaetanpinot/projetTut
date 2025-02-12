@@ -4,10 +4,12 @@ declare(strict_types=1);
 
 use Slim\Routing\RouteCollectorProxy;
 use amap\application\action\CreateAllergenesUser;
+use amap\application\action\CreatePanier;
 use amap\application\action\DeleteAllergeneUser;
 use amap\application\action\GetExclusIngredientsAction;
 use amap\application\action\GetExclusUstensiles;
 use amap\application\action\GetIngredientsAction;
+use amap\application\action\GetPanierAction;
 use amap\application\action\GetRecettesAction;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
@@ -17,6 +19,7 @@ use amap\application\action\GetUtilisateurProfile;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
 use amap\middleware\AuthnMiddleware;
+use amap\middleware\AuthzProducteurMiddleware;
 
 return function (\Slim\App $app): \Slim\App {
 
@@ -50,7 +53,9 @@ return function (\Slim\App $app): \Slim\App {
     });
 
     $app->group('/paniers', function (RouteCollectorProxy $group) {
-        $group->post('[/]', CreatePanier::class)->add(AuthnMiddleware::class);
+        $group->post('[/]', CreatePanier::class)->add(AuthzProducteurMiddleware::class)
+            ->add(AuthnMiddleware::class);
+        $group->get('/{id}', GetPanierAction::class)->add(AuthnMiddleware::class);
     });
 
     $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);

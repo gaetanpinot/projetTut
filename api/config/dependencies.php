@@ -1,15 +1,21 @@
 <?php
 
+use amap\core\service\ServicePanier;
 use amap\core\service\interfaces\ServiceAuthInterface;
 use amap\core\service\interfaces\ServiceIngredientInterface;
+use amap\core\service\interfaces\ServicePanierInterface;
 use amap\core\service\interfaces\ServiceRecettesInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use amap\core\service\ServiceAuth;
 use amap\core\service\ServiceIngredient;
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Ingredient;
+use amap\infrastructure\entities\Panier;
 use amap\infrastructure\entities\Recette;
+use amap\infrastructure\repository\AllergenesRepository;
+use amap\infrastructure\repository\PanierRepository;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
+use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
 use amap\core\service\ServiceRecettes;
@@ -62,6 +68,7 @@ return [
     ServiceUtilisateur::class => create()->constructor(get(UtilisateurRepositoryInterface::class), get(AllergieRepositoryInterface::class)),
     ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
     ServiceIngredientInterface::class => DI\autowire(ServiceIngredient::class),
+    ServicePanierInterface::class => DI\autowire(ServicePanier::class),
 
     //provider
     AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
@@ -149,10 +156,17 @@ return [
         return $validator;
     },
 
-    /*AllergieRepositoryInterface::class => get(AllergenesRepository::class),*/
-    AllergieRepositoryInterface::class => function (ContainerInterface $c) {
+    AllergieRepositoryInterface::class => get(AllergenesRepository::class),
+    AllergenesRepository::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
         $repo = $em->getRepository(Allergene::class);
+        return $repo;
+    },
+
+    PanierRepositoryInterface::class => get(PanierRepository::class),
+    PanierRepository::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        $repo = $em->getRepository(Panier::class);
         return $repo;
     },
 
