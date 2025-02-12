@@ -1,5 +1,5 @@
 <section class="auth-wrapper">
-    <div *ngIf="!isAuthenticated()"
+    <div *ngIf="!(authStore.token$ | async); else loggedIn"
          class="auth-container p-8 shadow-lg rounded-lg">
         <div class="auth-tabs">
             <button class="tab-button"
@@ -16,7 +16,9 @@
         </div>
     </div>
 
-    <div *ngIf="isAuthenticated()">
-        Vous-etes auth
-    </div>
+    <ng-template #loggedIn>
+        <div>
+            Vous-etes auth
+        </div>
+    </ng-template>
 </section>

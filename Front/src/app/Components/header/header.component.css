@@ -42,11 +42,6 @@
     transition: color 0.3s ease-in-out;
 }
 
-.nav-item a.active {
-    color: #00d1b2;
-    font-weight: bold;
-}
-
 .nav-item a>img {
     height: 50px;
 }
@@ -94,3 +89,6 @@
 .dropdown li a {
     color: var(--white);
 }
+
+
+/*# sourceMappingURL=header.component.css.map */

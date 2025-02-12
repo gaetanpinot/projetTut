@@ -15,4 +15,8 @@ export class RecetteService {
   getRecettes(page: number): Observable<GetRecetteResponse[]>{
     return this.http.get<GetRecetteResponse[]>(this.apiServerUrl + '/recettes?page=' + page);
   }
+
+  getRecettesByName(name: string): Observable<GetRecetteResponse[]>{
+    return this.http.get<GetRecetteResponse[]>(this.apiServerUrl + '/recettes?nom=' + name);
+  }
 }

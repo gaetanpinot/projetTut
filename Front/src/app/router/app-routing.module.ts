@@ -6,6 +6,7 @@ import { ConnexionInscripComponent } from '../Components/Main/connexion-inscrip/
 import { HomeComponent } from '../Components/Main/home/home.component';
 import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
 import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
+import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
 
 
 const routes: Routes = [
@@ -15,6 +16,7 @@ const routes: Routes = [
   { path: 'next', component: NextPageComponent },
   { path: 'Connexion', component: ConnexionInscripComponent },  
   { path: 'Deconnexion', component: DeconnexionComponent },
+  { path: 'Frigo', component: FrigoComponent },
   { path: 'Recette', component: RecetteRechercheComponent },
 ];
 
