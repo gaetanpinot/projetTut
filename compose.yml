@@ -4,7 +4,6 @@ networks:
 
 services:
 
-
   php:
     image: canals/php:8.3
     # build:
@@ -12,7 +11,7 @@ services:
     #   dockerfile: php8.3.Dockerfile
     container_name: amap_php
     ports:
-      - '1000:80'
+      - $PORT_PHP:80
     networks:
       - amap.net
     env_file: ./secret.env
@@ -28,7 +27,7 @@ services:
     image: 'adminer'
     container_name: amap_adminer
     ports:
-      - '1001:8080'
+      - $PORT_ADMINER:8080
     networks:
       - amap.net
     command: php -S 0.0.0.0:8080 -t /var/www/html
@@ -40,8 +39,6 @@ services:
   amap.db:
     image: postgres:alpine
     container_name: amap_pgsql
-    ports:
-      - "1002:5432"
     volumes:
       - ./sql:/var/sql
     env_file: ./db.env
