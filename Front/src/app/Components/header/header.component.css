@@ -1,0 +1,94 @@
+/* Styles de la navbar */
+
+.navbar {
+    background-color: var(--green);
+    padding: 10px 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--white);
+    position: relative;
+    cursor: pointer;
+    padding: 10px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease-in-out;
+}
+
+.nav-item:hover {
+    background-color: var(--white);
+    color: var(--green);
+}
+
+.nav-item:hover a {
+    color: var(--green);
+}
+
+.nav-item a {
+    text-decoration: none;
+    color: var(--white);
+    transition: color 0.3s ease-in-out;
+}
+
+.nav-item a>img {
+    height: 50px;
+}
+
+
+/* Dropdown menu avec animation */
+
+.dropdown {
+    position: absolute;
+    background-color: var(--green);
+    list-style: none;
+    padding: 10px 0;
+    border-radius: 5px;
+    top: 100%;
+    left: 0;
+    min-width: 180px;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: opacity 0.3s ease-in-out, transform 0.3s ease-in-out;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+    z-index: 2;
+}
+
+.nav-item:hover .dropdown {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.dropdown li {
+    padding: 12px;
+    transition: background 0.3s ease-in-out, margin-left 0.3s ease-in-out;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.dropdown li:hover {
+    background: var(--light);
+    margin-left: 30px;
+    color: var(--white);
+}
+
+.dropdown li a {
+    color: var(--white);
+}
+
+
+/*# sourceMappingURL=header.component.css.map */

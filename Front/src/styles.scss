@@ -1,37 +1,45 @@
 @use '@angular/material' as mat;
+
 /* You can add global styles to this file, and also import other style files */
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
-
 // Customize the entire app. Change :root to your selector if you want to scope the styles.
 :root {
-  @include mat.form-field-overrides((
-    filled-container-color: white,
-  ));
-
-  @include mat.card-overrides((
-    elevated-container-color: --white,
-  ));
+    @include mat.form-field-overrides(( filled-container-color: white, ));
+    @include mat.card-overrides(( elevated-container-color: --white, ));
 }
 
 //themes
 [data-theme="dark"] {
-  --white: #CADEDE;
-  --dark: #1C2628;
-  --light: #386641;
-  --text: #1C2628;
+    --white: #CADEDE;
+    --dark: #1C2628;
+    --green: #386641;
+    --text: #1B1519;
+    --light: #18A362;
 }
 
 [data-theme="light"] {
-  --white: #F4F4F4;
-  --dark: #1C5A41;
-  --light: #18A362;
-  --text: #1B1519;
+    --white: #F4F4F4;
+    --dark: #1C5A41;
+    --green: #8ca74d;
+    --text: #1B1519;
+    --light: #18A362;
 }
 
-html, body { height: 100%; }
-body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/*# sourceMappingURL=home.component.css.map */
+
+html,
+body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
 
 ::-webkit-scrollbar {
     display: none;
