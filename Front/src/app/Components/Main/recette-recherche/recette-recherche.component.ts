@@ -13,6 +13,7 @@ import { MatTableDataSource } from '@angular/material/table';
 export class RecetteRechercheComponent implements OnInit {
 
   currentPage: number = 1;
+  maxPage: number = 10;
 
   displayedColumns = ['IMAGE', 'NOM','DESCR', 'CONFIRM'];
   dataSource: MatTableDataSource<GetRecetteResponse> = new MatTableDataSource();
@@ -50,6 +51,9 @@ export class RecetteRechercheComponent implements OnInit {
   }
 
   setPage(value: number): void {
+    if(this.currentPage + value < 1 || this.currentPage + value > this.maxPage)
+      return;
+
     this.currentPage += value;
     this.loadRecettes();
   }
