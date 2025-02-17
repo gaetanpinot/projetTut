@@ -1,18 +1,46 @@
-<form class="search-form">
+<div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+  <form class="search-form">
+    <mat-form-field>
+      <mat-label>Nom recette</mat-label>
+      <input matInput placeholder="Lasagnes" value="" (input)="searchByName($event)">
+    </mat-form-field>
+  </form>
+
   <mat-form-field>
-    <mat-label>Nom recette</mat-label>
-    <input matInput placeholder="Lasagnes" value="">
+    <mat-label>Favorite food</mat-label>
+    <mat-select>
+      <mat-option>coucou</mat-option>
+      <mat-option>coucou</mat-option>
+      <mat-option>coucou</mat-option>
+      <mat-option [value]="">coucou</mat-option>
+    </mat-select>
   </mat-form-field>
-</form>
+</div>
+
 <mat-table [dataSource]="dataSource">
+  <ng-container matColumnDef="IMAGE">
+    <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <img src="{{element.url_photo}}" style="width: 100px;">
+    </mat-cell>
+  </ng-container>
+
+
   <ng-container matColumnDef="NOM">
-    <mat-header-cell *matHeaderCellDef> NOM </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> Recette </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.nom}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="DESCR">
-    <mat-header-cell *matHeaderCellDef> DESCR </mat-header-cell>
+    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
     <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+  </ng-container>
+
+  <ng-container matColumnDef="CONFIRM">
+    <mat-header-cell *matHeaderCellDef> Visiter </mat-header-cell>
+    <mat-cell *matCellDef="let element">
+      <a [routerLink]="['/Recette', element.id]"><button mat-flat-button>Visiter</button></a>
+    </mat-cell>
   </ng-container>
 
   <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>

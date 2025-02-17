@@ -168,5 +168,8 @@ class Utilisateur
     {
         $this->allergies->removeElement($allergie);
     }
-
+    public function setId(string $id): void
+    {
+        $this->id = $id;
+    }
 }
