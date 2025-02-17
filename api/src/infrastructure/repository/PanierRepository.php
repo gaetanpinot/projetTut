@@ -2,9 +2,13 @@
 
 namespace amap\infrastructure\repository;
 
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityRepository;
 use amap\core\dto\InputPanierDTO;
+use amap\core\dto\UtilisateurDTO;
 use amap\core\entities\PanierEntity;
+use amap\infrastructure\entities\DateIdType;
+use amap\infrastructure\entities\Frigo;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\IngredientPanier;
 use amap\infrastructure\entities\Utilisateur;
@@ -26,11 +30,48 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
         return $panier;
     }
 
+    public function publierPanier(int $id_panier): void
+    {
+        /*try {*/
+        $panier = $this->getPanierById($id_panier);
+        if($panier->getDate() !== null) {
+            return;
+        }
+        $date_panier = new DateIdType();
+        $panier->setDate($date_panier);
+        //get utilisateur abonné a producteur
+        $users = $panier->getProducteur()->getAbonnees();
+        //ajouter panier à utilisateur
+        $ingredientsFrigo = [];
+        foreach($panier->getIngredients() as $ingred) {
+            $ingredFrigo = new Frigo();
+            $ingredFrigo->setIngredient($ingred->getIngredient());
+            $ingredFrigo->setQuantite($ingred->getQuantite());
+            $ingredFrigo->setDateAjout($date_panier);
+            $ingredientsFrigo[] = $ingredFrigo;
+        }
+        foreach($users as $user) {
+            foreach($ingredientsFrigo as $ingredFrigo) {
+                $ingredFrigo->setUtilisateur($user);
+                $user->addIngredientFrigo($ingredFrigo);
+                $this->getEntityManager()->persist($ingredFrigo);
+            }
+
+            $this->getEntityManager()->persist($user);
+        }
+
+        $this->getEntityManager()->persist($panier);
+        $this->getEntityManager()->flush();
+        /*} catch(UniqueConstraintViolationException $e) {*/
+        /*}*/
+    }
+
     public function createPanier(InputPanierDTO $panierInput): Panier
     {
         try {
             $panier = new Panier();
-            $panier->setIdProducteur($panierInput->id_producteur);
+            /*$panier->setIdProducteur($panierInput->id_producteur);*/
+            $panier->setProducteur($this->getEntityManager()->getRepository(Utilisateur::class)->find($panierInput->id_producteur));
             $this->getEntityManager()->persist($panier);
             $this->getEntityManager()->flush();
             /*echo $panier->getId();*/

@@ -18,6 +18,7 @@ use amap\application\action\GetUserAllergensAction;
 use amap\application\action\GetUtilisateurProfile;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
+use amap\application\action\PublierPanier;
 use amap\middleware\AuthnMiddleware;
 use amap\middleware\AuthzProducteurMiddleware;
 
@@ -54,6 +55,8 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->group('/paniers', function (RouteCollectorProxy $group) {
         $group->post('[/]', CreatePanier::class)->add(AuthzProducteurMiddleware::class)
+            ->add(AuthnMiddleware::class);
+        $group->post('/{id}[/]', PublierPanier::class)->add(AuthzProducteurMiddleware::class)
             ->add(AuthnMiddleware::class);
         $group->get('/{id}', GetPanierAction::class)->add(AuthnMiddleware::class);
     });

@@ -79,10 +79,10 @@ class Panier
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: "id_producteur", referencedColumnName: "id")]
-    /*private ?Utilisateur $producteur;*/
+    private ?Utilisateur $producteur;
 
     #[ORM\Column(type: "date", nullable: true)]
-    private ?\DateTimeInterface $date;
+    private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: "panier")]
     private Collection $utilisateurs;
@@ -94,7 +94,6 @@ class Panier
     {
         $this->utilisateurs = new ArrayCollection();
         $this->ingredients_panier = new ArrayCollection();
-        $this->date = new \DateTime();
     }
 
     public function addIngredient(IngredientPanier $ingredient): void

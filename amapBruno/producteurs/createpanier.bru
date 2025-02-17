@@ -20,7 +20,15 @@ body:json {
       {
         "id":3,
         "quantite":"3kg"
+      },
+      {
+        "id":10,
+        "quantite": "4pc"
       }
     ]
   }
+}
+
+assert {
+  res.status: eq 201
 }

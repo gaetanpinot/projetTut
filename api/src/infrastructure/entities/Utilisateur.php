@@ -4,8 +4,13 @@ namespace amap\infrastructure\entities;
 
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\InverseJoinColumn;
+use Doctrine\ORM\Mapping\JoinColumn;
+use Doctrine\ORM\Mapping\JoinTable;
+use Doctrine\ORM\Mapping\ManyToMany;
+use Doctrine\ORM\Mapping\OneToMany;
 use Ramsey\Uuid\Rfc4122\UuidV4;
 use amap\core\dto\CredentialsDTO;
 use amap\core\dto\UtilisateurInputDTO;
@@ -15,6 +20,25 @@ use amap\infrastructure\repository\UtilisateurRepository;
 #[ORM\Table(name: "utilisateur")]
 class Utilisateur
 {
+    public function getAbonnees(): ?Collection
+    {
+        return $this->abonnees;
+    }
+
+    public function setAbonnees(?Collection $abonnees): void
+    {
+        $this->abonnees = $abonnees;
+    }
+
+    public function getProducteurs(): ?Collection
+    {
+        return $this->producteurs;
+    }
+
+    public function setProducteurs(?Collection $producteurs): void
+    {
+        $this->producteurs = $producteurs;
+    }
     public function getPaniers(): Collection
     {
         return $this->paniers;
@@ -58,6 +82,11 @@ class Utilisateur
     public function getFrigo(): Collection
     {
         return $this->frigo;
+    }
+
+    public function addIngredientFrigo(Frigo $ingredientFrigo): void
+    {
+        $this->frigo->add($ingredientFrigo);
     }
 
     public function setFrigo(Collection $frigo): void
@@ -111,7 +140,20 @@ class Utilisateur
 
     #[ORM\ManyToMany(targetEntity: Panier::class, inversedBy: "utilisateurs")]
     #[ORM\JoinTable(name: "panier_utilisateur")]
+    #[JoinColumn(name:"id_utilisateur", referencedColumnName: "id")]
+    #[InverseJoinColumn(name:"id_panier", referencedColumnName: 'id')]
     private Collection $paniers;
+
+    #[ManyToMany(targetEntity: Utilisateur::class, mappedBy:  "producteurs")]
+    private ?Collection $abonnees;
+
+    #[JoinTable(name: 'producteur_utilisateur')]
+    #[JoinColumn(name: 'id_utilisateur', referencedColumnName: 'id')]
+    #[InverseJoinColumn(name: 'id_producteur', referencedColumnName: 'id')]
+    #[ManyToMany(targetEntity: Utilisateur::class, inversedBy:  "abonnees")]
+    private ?Collection $producteurs;
+
+
 
     #[ORM\ManyToMany(targetEntity: Allergene::class, inversedBy: "utilisateurs")]
     #[ORM\JoinTable(name: "allergie_utilisateur")]
@@ -148,6 +190,8 @@ class Utilisateur
         $this->ustensilesExclus = new ArrayCollection();
         $this->frigo = new ArrayCollection();
         $this->recettesFavorites = new ArrayCollection();
+        $this->producteurs = new ArrayCollection();
+        $this->abonnees = new ArrayCollection();
     }
 
     public static function fromCredentialsDTO(CredentialsDTO $utilisateur): Utilisateur
@@ -171,5 +215,12 @@ class Utilisateur
     public function setId(string $id): void
     {
         $this->id = $id;
+    }
+    public function addPanier(Panier $panier)
+    {
+        try {
+            $this->paniers->add($panier);
+        } catch(UniqueConstraintViolationException $e) {
+        }
     }
 }

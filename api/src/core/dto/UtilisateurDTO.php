@@ -28,4 +28,16 @@ class UtilisateurDTO extends DTO
         return $utilisateur;
 
     }
+    /**
+     * @param array<Utilisateur> $u
+     * @return UtilisateurDTO[]
+     */
+    public static function fromArrayUtilisateur($u): array
+    {
+        $retour = [];
+        foreach($u as $utilisateur) {
+            $retour[] = self::fromUtilisateur($utilisateur);
+        }
+        return $retour;
+    }
 }
