@@ -6,4 +6,8 @@ PRYKHODKO Yehor
 
 Retro planning (gant)
 
+# Liens:
+## Docketu:
+Api: <http://docketu.iutnc.univ-lorraine.fr:12200>
+Adminer: <http://docketu.iutnc.univ-lorraine.fr:12201>
 
