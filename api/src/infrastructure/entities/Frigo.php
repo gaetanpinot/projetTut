@@ -25,8 +25,8 @@ class Frigo
     private Ingredient $ingredient;
 
     #[ORM\Id]
-    #[ORM\Column(name:"date_ajout", type: "datetime")]
-    private DateIdType $dateAjout;
+    #[ORM\Column(name:"date_ajout", type: "integer")]
+    private int $timestampAjout;
 
     #[ORM\Column(type: "string", nullable: true)]
     private ?string $quantite;
@@ -47,13 +47,13 @@ class Frigo
     {
         $this->ingredient = $ingredient;
     }
-    public function getDateAjout(): \DateTimeInterface
+    public function getTimestampAjout(): int
     {
-        return $this->dateAjout;
+        return $this->timestampAjout;
     }
-    public function setDateAjout(\DateTimeInterface $dateAjout): void
+    public function setTimestampAjout(int $dateAjout): void
     {
-        $this->dateAjout = $dateAjout;
+        $this->timestampAjout = $dateAjout;
     }
     public function getQuantite(): ?string
     {

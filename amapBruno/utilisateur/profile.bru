@@ -1,11 +1,83 @@
 meta {
   name: profile
   type: http
-  seq: 1
+  seq: 2
 }
 
 get {
   url: {{api}}/utilisateurs
   body: none
   auth: none
+}
+
+script:post-response {
+  // Detect and visualize PHP errors from response body
+  // This script should be placed in the "Post Response" category
+  
+  // Convert response body to string if it's not already
+  const bodyText = typeof res.body === 'string' 
+    ? res.body 
+    : JSON.stringify(res.body);
+  
+  // Split the body by newlines and filter for lines starting with #
+  const errorLines = bodyText.split('\n')
+    .filter(line => line.trim().startsWith('#'));
+  
+  // If no errors found, exit early
+  if (errorLines.length === 0) {
+    return;
+  }
+  
+  // Parse the error lines to extract information
+  const rowData = errorLines.map((line, index) => {
+    // Match common PHP error format: #<number> <message> in <file> on line <line>
+    const regex = /^#(\d+)\s+(.+?)\s+in\s+(.+?)\s+on\s+line\s+(\d+)/;
+    const match = line.match(regex);
+    
+    if (match) {
+      return {
+        id: index + 1,
+        errorNumber: match[1],
+        message: match[2],
+        file: match[3],
+        line: match[4]
+      };
+    } else {
+      // If not standard format, just return the full message
+      return {
+        id: index + 1,
+        errorNumber: "-",
+        message: line,
+        file: "-",
+        line: "-"
+      };
+    }
+  });
+  
+  // Column definitions for AG Grid
+  const columnDefinitions = [
+    { field: "id", headerName: "#", width: 60, filter: true, floatingFilter: true },
+    { field: "errorNumber", headerName: "Error Number", width: 130, filter: true, floatingFilter: true },
+    { field: "message", headerName: "Error Message", width: 450, filter: true, floatingFilter: true },
+    { field: "file", headerName: "File", width: 300, filter: true, floatingFilter: true },
+    { field: "line", headerName: "Line", width: 100, filter: true, floatingFilter: true }
+  ];
+  
+  // Visualize the errors in a table using AG Grid
+  bru.visualize('table', {
+    name: 'PHP Errors',
+    provider: 'ag-grid',
+    props: { 
+      rowData,
+      columnDefinitions,
+      theme: 'balham',
+      defaultColDef: {
+        sortable: true,
+        resizable: true
+      }
+    }
+  });
+  
+  // Log the total number of errors
+  console.log(`Detected ${rowData.length} PHP errors in the response`);
 }

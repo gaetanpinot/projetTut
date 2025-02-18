@@ -4,16 +4,21 @@ namespace amap\core\service;
 
 use amap\core\dto\AllergenesDTO;
 use amap\core\dto\AuthDTO;
+use amap\core\dto\FrigoDTO;
 use amap\core\dto\IngredientDTO;
+use amap\core\dto\IngredientPanierDTO;
 use amap\core\dto\ProfileDTO;
 use amap\core\dto\UstensileDTO;
 use amap\core\dto\UtilisateurDTO;
 use amap\core\dto\UtilisateurInputDTO;
 use amap\infrastructure\entities\Allergene;
+use amap\infrastructure\entities\Frigo;
 use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
+use mapObj;
+use pq\DateTime;
 
 class ServiceUtilisateur implements ServiceUtilisateurInterface
 {
@@ -43,7 +48,18 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
         $ustensiles_exclus = UstensileDTO::fromArrayToDTO($utilisateur->getUstensilesExclus());
         $allergies = AllergenesDTO::fromArrayToDTO($utilisateur->getAllergies());
         $ingredients_exclus = IngredientDTO::fromArrayToDTO($utilisateur->getIngredientsExclus());
-        $profile = new ProfileDTO(UtilisateurDTO::fromUtilisateur($utilisateur), $ustensiles_exclus, $allergies, $ingredients_exclus);
+        $frigo = [];
+
+        foreach($utilisateur->getFrigo() as $f) {
+            $frigo[] = new FrigoDTO(
+                $f->getIngredient()->getNom(),
+                $f->getIngredient()->getUrlPhoto(),
+                $f->getQuantite(),
+                \DateTime::createFromFormat('U',$f->getTimestampAjout()),
+            );
+        }
+
+        $profile = new ProfileDTO(UtilisateurDTO::fromUtilisateur($utilisateur), $ustensiles_exclus, $allergies, $ingredients_exclus, $frigo);
         return $profile;
     }
 

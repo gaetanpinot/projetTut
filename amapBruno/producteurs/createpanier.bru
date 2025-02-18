@@ -18,11 +18,11 @@ body:json {
         "quantite":"12g"
       },
       {
-        "id":3,
+        "id":8,
         "quantite":"3kg"
       },
       {
-        "id":10,
+        "id":11,
         "quantite": "4pc"
       }
     ]
@@ -31,4 +31,12 @@ body:json {
 
 assert {
   res.status: eq 201
+}
+
+script:post-response {
+  if(res.body.panier!==undefined){
+    const id = res.body.panier.id;
+    bru.setVar('id_panier',id);
+  }
+  
 }

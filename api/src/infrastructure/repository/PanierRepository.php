@@ -21,6 +21,9 @@ use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
  */
 class PanierRepository extends EntityRepository implements PanierRepositoryInterface
 {
+    /**
+ * @throws EntityNotFoundException
+ */
     public function getPanierById(int $id): Panier
     {
         $panier = $this->find($id);
@@ -32,38 +35,42 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
 
     public function publierPanier(int $id_panier): void
     {
-        /*try {*/
+        //si la date est null le panier n'est pas publié
         $panier = $this->getPanierById($id_panier);
         if($panier->getDate() !== null) {
-            return;
+            /*return;*/
         }
+
         $date_panier = new DateIdType();
+        /*$date_panier = $date_panier->getTimestamp();*/
         $panier->setDate($date_panier);
+
         //get utilisateur abonné a producteur
         $users = $panier->getProducteur()->getAbonnees();
+
         //ajouter panier à utilisateur
         $ingredientsFrigo = [];
+        $timestamp_ajout = $date_panier->getTimestamp();
         foreach($panier->getIngredients() as $ingred) {
             $ingredFrigo = new Frigo();
             $ingredFrigo->setIngredient($ingred->getIngredient());
             $ingredFrigo->setQuantite($ingred->getQuantite());
-            $ingredFrigo->setDateAjout($date_panier);
+            $ingredFrigo->setTimestampAjout($timestamp_ajout);
             $ingredientsFrigo[] = $ingredFrigo;
         }
+
         foreach($users as $user) {
             foreach($ingredientsFrigo as $ingredFrigo) {
-                $ingredFrigo->setUtilisateur($user);
-                $user->addIngredientFrigo($ingredFrigo);
-                $this->getEntityManager()->persist($ingredFrigo);
+                //clone pour persister des objet different pour chaque utilisateur
+                $ingredFrigoUser = clone $ingredFrigo;
+                $ingredFrigoUser->setUtilisateur($user);
+                $user->addIngredientFrigo($ingredFrigoUser);
+                $this->getEntityManager()->persist($ingredFrigoUser);
             }
-
-            $this->getEntityManager()->persist($user);
         }
 
         $this->getEntityManager()->persist($panier);
         $this->getEntityManager()->flush();
-        /*} catch(UniqueConstraintViolationException $e) {*/
-        /*}*/
     }
 
     public function createPanier(InputPanierDTO $panierInput): Panier

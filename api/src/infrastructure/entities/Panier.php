@@ -81,7 +81,7 @@ class Panier
     #[ORM\JoinColumn(name: "id_producteur", referencedColumnName: "id")]
     private ?Utilisateur $producteur;
 
-    #[ORM\Column(type: "date", nullable: true)]
+    #[ORM\Column(type: "datetime", nullable: true)]
     private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: "panier")]
