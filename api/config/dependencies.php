@@ -143,7 +143,21 @@ return [
             'type' => 'integer',
             'minimum' => 1,
             'default' => 1,
-        ]
+        ],
+        (object)[
+        '$id' => 'http://amap.fr/date#',
+            'type' => 'string',
+            'format' => 'date-time',
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/id_int#',
+            'type' => 'integer',
+            'minimum' => 1,
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/quantite#',
+            'type' => 'string',
+        ],
     ],
 
     Validator::class => function (ContainerInterface $c) {

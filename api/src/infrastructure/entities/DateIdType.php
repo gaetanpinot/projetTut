@@ -8,6 +8,7 @@ namespace amap\infrastructure\entities;
  */
 class DateIdType extends \DateTime
 {
+    public const FORMAT = 'Y-m-d H:i:s';
     public function __toString(): string
     {
         return $this->format('U');

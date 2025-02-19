@@ -2,9 +2,15 @@
 
 namespace amap\infrastructure\repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\ORM\EntityRepository;
+use amap\core\entities\FrigoEntity;
 use amap\infrastructure\entities\Allergene;
+use amap\infrastructure\entities\DateIdType;
+use amap\infrastructure\entities\Frigo;
+use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\exceptions\EntityConstraintViolation;
 use amap\infrastructure\repository\exceptions\EntityNotFoundException;
@@ -80,5 +86,34 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
 
     public function deleteIngredient(string $id_utilisateur, int $id_ingredients): void
     {
+    }
+
+    /**
+     * @param FrigoEntity[] $frigo
+     */
+    public function remplaceFrigo(string $id_utilisateur, array $frigo): void
+    {
+        $user = $this->getUtilisateurById($id_utilisateur);
+        $ingredRepo = $this->getEntityManager()->getRepository(Ingredient::class);
+        /*$frigoRepo = $this->getEntityManager()->getRepository(Frigo::class);*/
+        $frigos =new ArrayCollection();
+        $frigoUser = $user->getFrigo();
+        foreach($frigoUser as $f) {
+            $this->getEntityManager()->remove($f);
+        }
+        $this->getEntityManager()->flush();
+        foreach($frigo as $f) {
+            $ingred = $ingredRepo->find($f->id_ingredient);
+            $ingredientFrigo = new Frigo();
+            $ingredientFrigo->setIngredient($ingred);
+            $ingredientFrigo->setQuantite($f->quantite);
+            $ingredientFrigo->setTimestampAjout($f->timestamp_ajout);
+            $ingredientFrigo->setUtilisateur($user);
+            $frigos->add($ingredientFrigo);
+            $this->getEntityManager()->persist($ingredientFrigo);
+        }
+        $user->setFrigo($frigos);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
     }
 }

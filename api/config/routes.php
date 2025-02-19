@@ -15,10 +15,12 @@ use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
 use amap\application\action\ConnexionAction;
 use amap\application\action\GetUserAllergensAction;
+use amap\application\action\GetUserFrigo;
 use amap\application\action\GetUtilisateurProfile;
 use amap\application\action\HomeAction;
 use amap\application\action\InscriptionAction;
 use amap\application\action\PublierPanier;
+use amap\application\action\ReplaceUserFrigo;
 use amap\middleware\AuthnMiddleware;
 use amap\middleware\AuthzProducteurMiddleware;
 
@@ -51,6 +53,8 @@ return function (\Slim\App $app): \Slim\App {
         $group->get('/allergenes[/]', GetUserAllergensAction::class)->add(AuthnMiddleware::class);
         $group->post('/allergenes[/]', CreateAllergenesUser::class)->add(AuthnMiddleware::class);
         $group->delete('/allergenes[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
+        $group->get('/frigo[/]', GetUserFrigo::class)->add(AuthnMiddleware::class);
+        $group->put('/frigo[/]', ReplaceUserFrigo::class)->add(AuthnMiddleware::class);
     });
 
     $app->group('/paniers', function (RouteCollectorProxy $group) {
