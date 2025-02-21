@@ -125,7 +125,7 @@ class Utilisateur
     }
     #[ORM\Column(type: "string", name: 'mot_de_passe', nullable: true)]
     private ?string $motDePasse;
-    public function getMotDePasse()
+    public function getMotDePasse(): ?string
     {
         return $this->motDePasse;
     }
@@ -225,12 +225,12 @@ class Utilisateur
         return $u;
     }
 
-    public function addAllergie(Allergene $allergie)
+    public function addAllergie(Allergene $allergie): void
     {
         $this->allergies->add($allergie);
     }
 
-    public function deleteAllergie(Allergene $allergie)
+    public function deleteAllergie(Allergene $allergie): void
     {
         $this->allergies->removeElement($allergie);
     }
@@ -238,11 +238,23 @@ class Utilisateur
     {
         $this->id = $id;
     }
-    public function addPanier(Panier $panier)
+    public function addPanier(Panier $panier):void
     {
         try {
             $this->paniers->add($panier);
         } catch(UniqueConstraintViolationException $e) {
         }
     }
+
+    public function addProducteur(Utilisateur $producteur):void
+    {
+        $this->producteurs->add($producteur);
+    }
+
+    public function deleteProducteur(Utilisateur $producteur):void
+    {
+        $this->producteurs->removeElement($producteur);
+    }
+
+
 }

@@ -3,9 +3,11 @@
 declare(strict_types=1);
 
 use Slim\Routing\RouteCollectorProxy;
+use amap\application\action\AbonnerUtilisateurAProducteur;
 use amap\application\action\CreateAllergenesUser;
 use amap\application\action\CreatePanier;
 use amap\application\action\DeleteAllergeneUser;
+use amap\application\action\DesabonnerUtilisateurAProducteur;
 use amap\application\action\GetExclusIngredientsAction;
 use amap\application\action\GetExclusUstensiles;
 use amap\application\action\GetIngredientsAction;
@@ -57,6 +59,8 @@ return function (\Slim\App $app): \Slim\App {
         $group->delete('/allergenes[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
         $group->get('/frigo[/]', GetUserFrigo::class)->add(AuthnMiddleware::class);
         $group->put('/frigo[/]', ReplaceUserFrigo::class)->add(AuthnMiddleware::class);
+        $group->post('/producteurs/{id}[/]', AbonnerUtilisateurAProducteur::class)->add(AuthnMiddleware::class);
+        $group->delete('/producteurs/{id}[/]', DesabonnerUtilisateurAProducteur::class)->add(AuthnMiddleware::class);
     });
 
     $app->group('/paniers', function (RouteCollectorProxy $group) {

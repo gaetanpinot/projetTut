@@ -165,10 +165,12 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
 
     public function addProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
     {
+        $this->utilisateurRepository->addProducteurToUtilisateur($id_utilisateur, $id_producteur);
     }
 
     public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
     {
+        $this->utilisateurRepository->deleteProducteurToUtilisateur($id_utilisateur, $id_producteur);
     }
 
 }

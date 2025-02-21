@@ -142,9 +142,23 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
 
     public function addProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
     {
+        $producteur = $this->getProducteur($id_producteur);
+        $user = $this->getUtilisateurById($id_utilisateur);
+        try{
+        $user->addProducteur($producteur);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
+        }catch(UniqueConstraintViolationException $e) {
+            //l'utilisateur est déjà abonné pas besoin de lui retournée une erreur
+        }
     }
 
     public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
     {
+        $producteur = $this->getProducteur($id_producteur);
+        $user = $this->getUtilisateurById($id_utilisateur);
+        $user->deleteProducteur($producteur);
+        $this->getEntityManager()->persist($user);
+        $this->getEntityManager()->flush();
     }
 }
