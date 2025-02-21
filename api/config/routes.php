@@ -10,6 +10,8 @@ use amap\application\action\GetExclusIngredientsAction;
 use amap\application\action\GetExclusUstensiles;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetPanierAction;
+use amap\application\action\GetProducteurIngredients;
+use amap\application\action\GetProducteurPaniers;
 use amap\application\action\GetRecettesAction;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
@@ -65,29 +67,10 @@ return function (\Slim\App $app): \Slim\App {
         $group->get('/{id}', GetPanierAction::class)->add(AuthnMiddleware::class);
     });
 
-    $app->post('/utilisateurs/{id}/favoris/{id_recette}', AddToFavoritesAction::class);
-    $app->get('/utilisateurs/{id}/favoris', GetFavoritesAction::class);
-
-    $app->post('/utilisateurs/{id}/producteurs/{id_producteur}', SubscribeProducteurAction::class);
-    $app->delete('/utilisateurs/{id}/producteurs/{id_producteur}', UnsubscribeProducteurAction::class);
-
-    $app->get('/producteurs/{id}/ingredients', GetProducteurIngredientsAction::class);
-    $app->get('/producteurs/{id}/panier', GetProducteurBasketAction::class);
-
-    $app->get('/ingredients', GetIngredientsAction::class);
-    $app->post('/ingredients', CreateIngredientAction::class);
-
-    $app->get('/utilisateurs/{id}/frigo', GetFrigoContentAction::class);
-    $app->put('/utilisateurs/{id}/frigo/ingredient/{id_ingredient}', AddToFrigoAction::class);
-    $app->patch('/utilisateurs/{id}/frigo/ingredient/{id_ingredient}', UpdateFrigoIngredientAction::class);
-    $app->delete('/utilisateurs/{id}/frigo/ingredient/{id_ingredient}', RemoveFromFrigoAction::class);
-
-    $app->get('/utilisateurs/{id}/ustensiles', GetExcluUtensilsAction::class);
-    $app->post('/utilisateurs/{id}/ustensiles', AddExcluUtensilAction::class);
-    $app->delete('/utilisateurs/{id}/ustensiles', DeleteExcluUtensilAction::class);
-
-    $app->get('/ustensiles', GetUtensilsAction::class);
-    $app->post('/ustensiles', CreateUtensilAction::class);
+    $app->group('/producteurs', function(RouteCollectorProxy $group){
+        $group->get('/{id}/paniers', GetProducteurPaniers::class)->add(AuthnMiddleware::class);
+        $group->get('/{id}/ingredients', GetProducteurIngredients::class)->add(AuthnMiddleware::class);
+    });
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
         return $response;

@@ -6,6 +6,8 @@ use amap\core\dto\AllergenesDTO;
 use amap\core\dto\AuthDTO;
 use amap\core\dto\CredentialsDTO;
 use amap\core\dto\FrigoDTO;
+use amap\core\dto\IngredientDTO;
+use amap\core\dto\PanierDTO;
 use amap\core\dto\ProfileDTO;
 use amap\core\dto\UtilisateurDTO;
 
@@ -36,4 +38,23 @@ interface ServiceUtilisateurInterface
     public function getFrigoUtilisateur(string $id): array;
     public function replaceFrigo(string $id_utilisateur, array $ingredients_frigo):void;
     
+    /**
+     * @return PanierDTO[]
+     */
+    public function getPanierProducteur(string $id_producteur): array;
+
+    /**
+    * @return IngredientDTO[]
+    */
+    public function getIngredientProducteur(string $id_producteur): array;
+
+    /**
+    * s'abonner à un producteur
+    */
+    public function addProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void;
+
+    /**
+    * se desabonner à un producteur
+    */
+    public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void;
 }

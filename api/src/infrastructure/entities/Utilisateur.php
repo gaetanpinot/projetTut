@@ -138,6 +138,14 @@ class Utilisateur
         return $this->recettes;
     }
 
+    #[OneToMany(mappedBy: "producteur", targetEntity: Panier::class)]
+    private Collection $paniersProducteur;
+
+    public function getPaniersProducteur(): Collection
+    {
+        return $this->paniersProducteur;
+    }
+
     #[ORM\ManyToMany(targetEntity: Panier::class, inversedBy: "utilisateurs")]
     #[ORM\JoinTable(name: "panier_utilisateur")]
     #[JoinColumn(name:"id_utilisateur", referencedColumnName: "id")]
@@ -160,6 +168,17 @@ class Utilisateur
     #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id")]
     #[InverseJoinColumn(name: "id_allergene", referencedColumnName: "id")]
     private Collection $allergies;
+
+    #[ORM\ManyToMany(targetEntity: Ingredient::class )]
+    #[ORM\JoinTable(name: "ingredient_produit")]
+    #[ORM\JoinColumn(name: "id_producteur", referencedColumnName: "id")]
+    #[InverseJoinColumn(name: "id_ingredient", referencedColumnName: "id")]
+    private Collection $ingredientsProduits;
+
+    public function getIngredientsProduits(): Collection
+    {
+        return $this->ingredientsProduits;
+    }
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "utilisateursExclus")]
     #[ORM\JoinTable(name: "ingredient_exclu")]
@@ -192,6 +211,9 @@ class Utilisateur
         $this->recettesFavorites = new ArrayCollection();
         $this->producteurs = new ArrayCollection();
         $this->abonnees = new ArrayCollection();
+        $this->paniersProducteur = new ArrayCollection();
+        $this->ingredientsProduits = new ArrayCollection();
+
     }
 
     public static function fromCredentialsDTO(CredentialsDTO $utilisateur): Utilisateur

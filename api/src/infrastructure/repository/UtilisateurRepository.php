@@ -116,4 +116,35 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function getPanierProducteur(string $id_producteur): array
+    {
+        $producteur = $this->getProducteur($id_producteur);
+        $paniers = $producteur->getPaniersProducteur();
+        return $paniers->toArray(); 
+    }
+
+    public function getProducteur(string $id_producteur): Utilisateur{
+
+        $producteur = $this->getUtilisateurById($id_producteur);
+        if($producteur ===null || $producteur->getRole() !==1 ){
+            throw new EntityNotFoundException("Producteur $id_producteur non trouvé");
+        }
+        return $producteur;
+    }
+
+    public function getIngredientProducteur(string $id_producteur): array
+    {
+        $producteur = $this->getProducteur($id_producteur);
+        $ingredients = $producteur->getIngredientsProduits();
+        return $ingredients->toArray();
+    }
+
+    public function addProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
+    {
+    }
+
+    public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
+    {
+    }
 }

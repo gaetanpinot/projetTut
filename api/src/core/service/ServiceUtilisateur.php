@@ -8,6 +8,7 @@ use amap\core\dto\FrigoDTO;
 use amap\core\dto\FrigoInputDTO;
 use amap\core\dto\IngredientDTO;
 use amap\core\dto\IngredientPanierDTO;
+use amap\core\dto\PanierDTO;
 use amap\core\dto\ProfileDTO;
 use amap\core\dto\UstensileDTO;
 use amap\core\dto\UtilisateurDTO;
@@ -142,6 +143,32 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
             $frigo[] = $ingredient;
         }
         $this->utilisateurRepository->remplaceFrigo($id_utilisateur, $frigo);
+    }
+
+    public function getPanierProducteur(string $id_producteur): array
+    {
+        $paniers = $this->utilisateurRepository->getPanierProducteur($id_producteur);
+        $paniersDTO = [];
+        foreach($paniers as $p){
+            $paniersDTO[] = PanierDTO::fromEntity($p);
+        }
+        return $paniersDTO;
+    }
+
+    public function getIngredientProducteur(string $id_producteur): array
+    {
+        $ingredients = $this->utilisateurRepository->getIngredientProducteur($id_producteur);
+        $ingredientsDTO = array_map(
+        fn ($i) => IngredientDTO::fromIngredient($i),$ingredients);
+        return $ingredientsDTO;
+    }
+
+    public function addProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
+    {
+    }
+
+    public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void
+    {
     }
 
 }
