@@ -21,9 +21,19 @@ use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
  */
 class UtilisateurRepository extends EntityRepository implements UtilisateurRepositoryInterface
 {
+    public function getProducteurs(): array
+    {
+        $producteurs = $this->findBy(['role' => 1]);
+        return $producteurs;
+    }
+
     public function getUtilisateurById(string $id): Utilisateur
     {
-        return $this->findOneBy(['id' => $id]);
+         $utilisateur = $this->findOneBy(['id' => $id]);
+        if($utilisateur === null){
+            throw new EntityNotFoundException("Utilisateur $id non trouvé");
+        }
+        return $utilisateur;
     }
     public function getUtilisateurByNom(string $nomUtilisateur): Utilisateur
     {
@@ -125,8 +135,7 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
     }
 
     public function getProducteur(string $id_producteur): Utilisateur{
-
-        $producteur = $this->getUtilisateurById($id_producteur);
+        $producteur = $this->find($id_producteur);
         if($producteur ===null || $producteur->getRole() !==1 ){
             throw new EntityNotFoundException("Producteur $id_producteur non trouvé");
         }

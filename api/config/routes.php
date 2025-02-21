@@ -14,6 +14,7 @@ use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetPanierAction;
 use amap\application\action\GetProducteurIngredients;
 use amap\application\action\GetProducteurPaniers;
+use amap\application\action\GetProducteursList;
 use amap\application\action\GetRecettesAction;
 use Slim\Exception\HttpNotFoundException;
 use amap\application\action\GetFavoritesAction;
@@ -72,6 +73,7 @@ return function (\Slim\App $app): \Slim\App {
     });
 
     $app->group('/producteurs', function(RouteCollectorProxy $group){
+        $group->get('[/]', GetProducteursList::class);
         $group->get('/{id}/paniers', GetProducteurPaniers::class)->add(AuthnMiddleware::class);
         $group->get('/{id}/ingredients', GetProducteurIngredients::class)->add(AuthnMiddleware::class);
     });

@@ -57,4 +57,8 @@ interface ServiceUtilisateurInterface
     * se desabonner à un producteur
     */
     public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void;
+    /**
+    * @return UtilisateurDTO[]
+    */
+    public function getProducteurs(): array;
 }

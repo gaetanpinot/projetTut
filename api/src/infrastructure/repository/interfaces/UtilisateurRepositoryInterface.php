@@ -47,4 +47,8 @@ interface UtilisateurRepositoryInterface
     */
     public function deleteProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void;
 
+    /**
+     * @return Utilisateur[]
+     */
+    public function getProducteurs(): array;
 }

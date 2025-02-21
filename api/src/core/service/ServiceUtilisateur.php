@@ -173,4 +173,12 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
         $this->utilisateurRepository->deleteProducteurToUtilisateur($id_utilisateur, $id_producteur);
     }
 
+    public function getProducteurs(): array{
+
+        $producteurs = $this->utilisateurRepository->getProducteurs();
+        $producteursDTO = array_map(
+        fn ($p) => UtilisateurDTO::fromUtilisateur($p),$producteurs);
+        return $producteursDTO;
+    }
+
 }
