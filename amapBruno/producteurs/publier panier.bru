@@ -1,0 +1,15 @@
+meta {
+  name: publier panier
+  type: http
+  seq: 4
+}
+
+post {
+  url: {{api}}/paniers/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: {{id_panier}}
+}

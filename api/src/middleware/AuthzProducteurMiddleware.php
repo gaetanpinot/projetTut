@@ -2,14 +2,9 @@
 
 namespace amap\middleware;
 
-use Psr\Log\LoggerInterface;
-use Slim\Exception\HttpForbiddenException;
 use Slim\Routing\RouteContext;
-use Slim\Routing\RouteParser;
+use Slim\Exception\HttpForbiddenException;
 use amap\core\service\interfaces\ServicePanierInterface;
-use amap\providers\auth\AuthInvalidException;
-use amap\providers\auth\AuthnProviderInterface;
-use Exception;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
@@ -18,6 +13,7 @@ use Slim\Exception\HttpUnauthorizedException;
 
 class AuthzProducteurMiddleware implements MiddlewareInterface
 {
+
     public function __construct(protected ServicePanierInterface $servicePanier)
     {
     }
@@ -26,6 +22,7 @@ class AuthzProducteurMiddleware implements MiddlewareInterface
     {
 
         $id_user = $rq->getAttribute('idutilisateur');
+
         $role_user = $rq->getAttribute('role_utilisateur');
         if($id_user === null) {
             throw new HttpUnauthorizedException($rq, "Vous n'êtes pas connécté");

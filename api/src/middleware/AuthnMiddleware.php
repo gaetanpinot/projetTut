@@ -41,6 +41,7 @@ class AuthnMiddleware implements MiddlewareInterface
             }
             $token = $token[0];
             $user = $this->authProvider->getSignedInUser($token);
+
             $rq = $rq->withAttribute('idutilisateur', $user->id)
                 ->withAttribute('role_utilisateur', $user->role);
         } catch (AuthInvalidException $e) {

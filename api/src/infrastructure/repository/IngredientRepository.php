@@ -15,6 +15,7 @@ class IngredientRepository extends EntityRepository implements IngredientReposit
         $this->getEntityManager()->flush();
     }
 
+
     public function getIngredientById(int $id): Ingredient
     {
         $ingredient = $this->find($id);

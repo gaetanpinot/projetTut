@@ -5,7 +5,11 @@ meta {
 }
 
 get {
-  url: {{api}}/paniers/46
+  url: {{api}}/paniers/:id
   body: none
   auth: none
+}
+
+params:path {
+  id: {{id_panier}}
 }

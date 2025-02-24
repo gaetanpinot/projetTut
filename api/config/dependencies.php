@@ -1,6 +1,5 @@
 <?php
 
-use amap\core\service\ServicePanier;
 use amap\core\service\interfaces\ServiceAuthInterface;
 use amap\core\service\interfaces\ServiceIngredientInterface;
 use amap\core\service\interfaces\ServicePanierInterface;
@@ -8,20 +7,23 @@ use amap\core\service\interfaces\ServiceRecettesInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use amap\core\service\ServiceAuth;
 use amap\core\service\ServiceIngredient;
+use amap\core\service\ServicePanier;
+use amap\core\service\ServiceRecettes;
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\Panier;
 use amap\infrastructure\entities\Recette;
 use amap\infrastructure\repository\AllergenesRepository;
-use amap\infrastructure\repository\PanierRepository;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
-use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
-use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
-use amap\core\service\ServiceRecettes;
 use amap\core\service\ServiceUtilisateur;
 use amap\infrastructure\entities\Utilisateur;
+use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
+use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
+use amap\infrastructure\repository\PanierRepository;
+use amap\infrastructure\repository\RecetteRepository;
+use amap\middleware\CorsMiddleware;
 use amap\providers\auth\AuthnProviderInterface;
 use amap\providers\auth\JWTAuthnProvider;
 use amap\providers\auth\JWTManager;
@@ -35,9 +37,8 @@ use Monolog\Level;
 use Monolog\Logger;
 use Opis\JsonSchema\Validator;
 use Psr\Container\ContainerInterface;
-use Psr\Log\LoggerInterface;
-use Tuupola\Middleware\CorsMiddleware;
 
+use Psr\Log\LoggerInterface;
 use function DI\create;
 use function DI\get;
 
@@ -68,6 +69,7 @@ return [
     ServiceUtilisateur::class => create()->constructor(get(UtilisateurRepositoryInterface::class), get(AllergieRepositoryInterface::class)),
     ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
     ServiceIngredientInterface::class => DI\autowire(ServiceIngredient::class),
+
     ServicePanierInterface::class => DI\autowire(ServicePanier::class),
 
     //provider
@@ -143,7 +145,21 @@ return [
             'type' => 'integer',
             'minimum' => 1,
             'default' => 1,
-        ]
+        ],
+        (object)[
+        '$id' => 'http://amap.fr/date#',
+            'type' => 'string',
+            'format' => 'date-time',
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/id_int#',
+            'type' => 'integer',
+            'minimum' => 1,
+        ],
+        (object)[
+            '$id' => 'http://amap.fr/quantite#',
+            'type' => 'string',
+        ],
     ],
 
     Validator::class => function (ContainerInterface $c) {
@@ -170,8 +186,8 @@ return [
         return $repo;
     },
 
-
-    RecetteRepositoryInterface::class => function (ContainerInterface $c) {
+    RecetteRepositoryInterface::class => get(RecetteRepository::class),
+    RecetteRepository::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
         $repo = $em->getRepository(Recette::class);
         $repo->setPagination($c->get('pagination.nb'));

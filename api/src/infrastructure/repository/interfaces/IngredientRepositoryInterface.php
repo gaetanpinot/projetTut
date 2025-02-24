@@ -8,4 +8,3 @@ interface IngredientRepositoryInterface
 {
     public function getIngredientById(int $id): Ingredient;
 }
-
