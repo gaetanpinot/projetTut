@@ -6,6 +6,7 @@ use amap\application\action\ChangeIngredientsProduit;
 use amap\application\action\CreateRecetteAction;
 use amap\application\action\DeleteRecetteAction;
 use amap\application\action\GetIngredientsAction;
+use amap\application\action\GetRecetteByIdAction;
 use amap\application\action\PostCreateRecetteAction;
 use Slim\Routing\RouteCollectorProxy;
 use amap\application\action\AbonnerUtilisateurAProducteur;
@@ -45,7 +46,7 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->post('/recettes[/]', PostCreateRecetteAction::class);
     $app->get('/recettes[/]', GetRecettesAction::class);
-    $app->get('/recettes/{id}', GetRecettesDetailsAction::class);
+    $app->get('/recettes/{id}', GetRecetteByIdAction::class);
     $app->delete('/recettes/{id}', DeleteRecetteAction::class);
 
     $app->post('/tag', CreateTagAction::class);

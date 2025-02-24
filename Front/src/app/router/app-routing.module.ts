@@ -6,8 +6,8 @@ import { ConnexionInscripComponent } from '../Components/Main/connexion-inscrip/
 import { HomeComponent } from '../Components/Main/home/home.component';
 import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
 import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
-import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
 import { CreatePanierComponent } from '../Components/Main/create-panier/create-panier.component';
+import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
 
 
