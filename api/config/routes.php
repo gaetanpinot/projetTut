@@ -8,6 +8,8 @@ use amap\application\action\DeleteRecetteAction;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetRecetteByIdAction;
 use amap\application\action\PostCreateRecetteAction;
+use amap\application\action\PatchUtilisateurUstensiles;
+use amap\application\action\PostNoteAction;
 use Slim\Routing\RouteCollectorProxy;
 use amap\application\action\AbonnerUtilisateurAProducteur;
 use amap\application\action\CreateAllergenesUser;
@@ -54,7 +56,8 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->get('/recettes/{id}/commentaires', GetCommentsAction::class);
     $app->post('/recettes/{id}/commentaires', AddCommentAction::class);
-    $app->put('/recettes/{id}/note', AddNoteAction::class);
+
+    $app->post('/recettes/{id}/note', PostNoteAction::class)->add(AuthnMiddleware::class);
 
     $app->group('/ingredients', function (RouteCollectorProxy $group){
         $group->get('[/]', GetIngredientsAction::class);
@@ -63,7 +66,10 @@ return function (\Slim\App $app): \Slim\App {
     $app->group('/utilisateurs', function (RouteCollectorProxy $group) {
         $group->get('[/]', GetUtilisateurProfile::class)->add(AuthnMiddleware::class);
         $group->get('/ingredients[/]', GetExclusIngredientsAction::class)->add(AuthnMiddleware::class);
+
         $group->get('/ustensiles[/]', GetExclusUstensiles::class)->add(AuthnMiddleware::class);
+        $group->patch('/ustensiles[/]', PatchUtilisateurUstensiles::class)->add(AuthnMiddleware::class);
+
         $group->get('/allergenes[/]', GetUserAllergensAction::class)->add(AuthnMiddleware::class);
         $group->post('/allergenes[/]', CreateAllergenesUser::class)->add(AuthnMiddleware::class);
         $group->delete('/allergenes[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
