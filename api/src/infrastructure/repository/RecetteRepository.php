@@ -122,7 +122,8 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
 
     public function getRecetteById($id): Recette
     {
-        return $this->findBy(["id" => $id]);
+        //return $this->findBy(["id" => $id]);
+        return $this->find($id);
     }
 
     public function deleteRecette(int $id): void
