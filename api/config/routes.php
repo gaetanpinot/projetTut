@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use amap\application\action\DeleteRecetteAction;
+use amap\application\action\PostCreateRecetteAction;
 use Slim\Routing\RouteCollectorProxy;
 use amap\application\action\CreateAllergenesUser;
 use amap\application\action\DeleteAllergeneUser;
@@ -28,10 +30,10 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->delete('/commentaires/{id}', DeleteCommentAction::class);
 
-    $app->post('/recettes', CreateRecettesAction::class);
+    $app->post('/recettes', PostCreateRecetteAction::class);
     $app->get('/recettes', GetRecettesAction::class);
     $app->get('/recettes/{id}', GetRecettesDetailsAction::class);
-    $app->delete('/recettes/{id}', DeleteRecettesAction::class);
+    $app->delete('/recettes/{id}', DeleteRecetteAction::class);
 
     $app->post('/tag', CreateTagAction::class);
     $app->get('/tag', GetTagsAction::class);

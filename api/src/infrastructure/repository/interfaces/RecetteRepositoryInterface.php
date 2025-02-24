@@ -2,6 +2,7 @@
 
 namespace amap\infrastructure\repository\interfaces;
 
+use amap\core\dto\input\InputRecetteDTO;
 use amap\infrastructure\entities\Recette;
 
 interface RecetteRepositoryInterface
@@ -14,7 +15,7 @@ interface RecetteRepositoryInterface
 
     public function deleteRecette(int $id): void;
 
-    public function createRecette(Recette $r): Recette;
+    public function createRecette(InputRecetteDTO $r): Recette;
 
     public function getRecetteCommentaires(): array;
 

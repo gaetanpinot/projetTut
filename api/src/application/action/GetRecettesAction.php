@@ -90,7 +90,7 @@ class GetRecettesAction extends AbstractAction
 
         $resultValidation = $this->validator->validate((object)$data, $validationSchema);
         $check = ValidationErrorRenderer::render($rs, $resultValidation);
-        if ($check != false) {
+        if ($check) {
             return $check;
         }
 

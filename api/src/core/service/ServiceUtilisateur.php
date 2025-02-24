@@ -8,7 +8,6 @@ use amap\core\dto\IngredientDTO;
 use amap\core\dto\ProfileDTO;
 use amap\core\dto\UstensileDTO;
 use amap\core\dto\UtilisateurDTO;
-use amap\core\dto\UtilisateurInputDTO;
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;

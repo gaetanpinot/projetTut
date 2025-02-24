@@ -2,67 +2,28 @@
 
 namespace amap\infrastructure\entities;
 
+use amap\core\dto\input\InputRecetteDTO;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Query\Lexer;
 use amap\infrastructure\repository\RecetteRepository;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 #[ORM\Table(name: "recette")]
 class Recette
 {
-    public function getIngredientsRecette(): Collection
-    {
-        return $this->ingredients_recette;
-    }
 
-    public function setIngredientsRecette(Collection $ingredients_recette): void
-    {
-        $this->ingredients_recette = $ingredients_recette;
-    }
-    public function getIngredients(): Collection
-    {
-        return $this->ingredients;
-    }
-
-    /*public function setIngredients(Collection $ingredients): void*/
-    /*{*/
-    /*    $this->ingredients = $ingredients;*/
-    /*}*/
-
-    public function getUstensiles(): Collection
-    {
-        return $this->ustensiles;
-    }
-
-    public function setUstensiles(Collection $ustensiles): void
-    {
-        $this->ustensiles = $ustensiles;
-    }
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private int $id;
-    public function getId(): int
-    {
-        return $this->id;
-    }
+    protected int $id;
 
     #[ORM\Column(type: "string", nullable: true)]
     private ?string $nom;
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
+
     #[ORM\Column(type: "integer", nullable: true, name: 'temps_preparation')]
     private ?int $tempsPreparation;
 
-
-    public function getTempsPreparation(): ?int
-    {
-        return $this->tempsPreparation;
-    }
 
     #[ORM\Column(type: "integer", nullable: true)]
     private ?int $complexite;
@@ -71,10 +32,6 @@ class Recette
     /*#[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id")]*/
     #[ORM\Column(type: "string", nullable: true, name: 'id_createur')]
     private ?string $id_createur;
-    public function getCreateur(): ?string
-    {
-        return $this->id_createur;
-    }
 
     #[ORM\Column(type: "text", nullable: true)]
     private ?string $description;
@@ -88,10 +45,6 @@ class Recette
     #[ORM\ManyToOne(targetEntity: Recette::class)]
     #[ORM\JoinColumn(name: "id_recette_parente", referencedColumnName: "id", nullable: true)]
     private ?Recette $recetteParente;
-    public function getRecetteParente(): ?Recette
-    {
-        return $this->recetteParente;
-    }
 
     #[ORM\Column(type: "string", nullable: true, name: 'url_photo')]
     private ?string $urlPhoto;
@@ -112,10 +65,7 @@ class Recette
     #[ORM\OneToMany(targetEntity: Note::class, mappedBy: "recette")]
     private Collection|null $notes;
 
-    public function getNotes(): ?Collection
-    {
-        return $this->notes;
-    }
+
 
     #[ORM\OneToMany(targetEntity: IngredientRecette::class, mappedBy: "recette")]
     private Collection $ingredients_recette;
@@ -135,9 +85,72 @@ class Recette
         $this->ustensiles = new ArrayCollection();
     }
 
+    public static function fromInputDTO(InputRecetteDTO $inputRecetteDTO): self{
+        $recette = new self();
+        $recette->setNom($inputRecetteDTO->nom);
+        $recette->setTempsPreparation($inputRecetteDTO->tempsPreparation);
+        $recette->setComplexite($inputRecetteDTO->complexite);
+        $recette->setDescription($inputRecetteDTO->description);
+        $recette->setDebutSaison($inputRecetteDTO->debutSaison);
+        $recette->setFinSaison($inputRecetteDTO->finSaison);
+        $recette->setUrlPhoto($inputRecetteDTO->urlPhoto);
+        $recette->setCreateur(null);
+//        $recette->setRecetteParente($inputRecetteDTO->id_recette_parente);
+        $recette->setTags(new ArrayCollection());
+        $recette->setIngredientsRecette(new ArrayCollection());
+        $recette->setUstensiles(new ArrayCollection());
+        $recette->setNotes(new ArrayCollection());
+        return $recette;
+    }
+
+    public function getId(): int
+    {
+        return $this->id;
+    }
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function setRecetteParente(?Recette $recetteParente): void
+    {
+        $this->recetteParente = $recetteParente;
+    }
+    public function getRecetteParente(): ?Recette
+    {
+        return $this->recetteParente;
+    }
+    public function setCreateur(?string $id_createur): void
+    {
+        $this->id_createur = $id_createur;
+    }
+    public function getCreateur(): ?string
+    {
+        return $this->id_createur;
+    }
+
+    public function getTempsPreparation(): ?int
+    {
+        return $this->tempsPreparation;
+    }
+    public function getNotes(): ?Collection
+    {
+        return $this->notes;
+    }
+
+    public function setNotes(?Collection $notes): void
+    {
+        $this->notes = $notes;
+    }
+
     public function getTags(): Collection
     {
         return $this->tags;
+    }
+
+    public function setTags(Collection $tags): void
+    {
+        $this->tags = $tags;
     }
 
     public function getComplexite(): ?int
@@ -200,9 +213,24 @@ class Recette
         $this->urlPhoto = $urlPhoto;
     }
 
-    public function setCreateur(?Utilisateur $createur): void
+    public function getIngredientsRecette(): Collection
     {
-        $this->createur = $createur;
+        return $this->ingredients_recette;
+    }
+
+    public function setIngredientsRecette(Collection $ingredients_recette): void
+    {
+        $this->ingredients_recette = $ingredients_recette;
+    }
+
+    public function getUstensiles(): Collection
+    {
+        return $this->ustensiles;
+    }
+
+    public function setUstensiles(Collection $ustensiles): void
+    {
+        $this->ustensiles = $ustensiles;
     }
 
 }

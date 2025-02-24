@@ -20,7 +20,7 @@ class Commentaire
     private Utilisateur $utilisateur;
 
     #[ORM\ManyToOne(targetEntity: Recette::class)]
-    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id", onDelete: "CASCADE")]
     private Recette $recette;
 
     #[ORM\Column(type: "text", nullable: true)]

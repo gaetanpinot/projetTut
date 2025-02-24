@@ -2,6 +2,7 @@
 
 namespace amap\infrastructure\repository;
 
+use amap\core\dto\input\InputRecetteDTO;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -137,36 +138,40 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         $this->getEntityManager()->flush();
     }
 
-    public function createRecette(Recette $r): Recette
+    public function createRecette(InputRecetteDTO $r): Recette
     {
-        $data = $r;
-        $recette = new Recette();
+//        $data = $r;
+//        $recette = new Recette();
+//
+//        if (isset($data['nom'])) {
+//            $recette->setNom($data['nom']);
+//        }
+//        if (isset($data['tempsPreparation'])) {
+//            $recette->setTempsPreparation($data['tempsPreparation']);
+//        }
+//        if (isset($data['complexite'])) {
+//            $recette->setComplexite($data['complexite']);
+//        }
+//        if (isset($data['description'])) {
+//            $recette->setDescription($data['description']);
+//        }
+//        if (isset($data['debutSaison'])) {
+//            $recette->setDebutSaison($data['debutSaison']);
+//        }
+//        if (isset($data['finSaison'])) {
+//            $recette->setFinSaison($data['finSaison']);
+//        }
+//        if (isset($data['urlPhoto'])) {
+//            $recette->setUrlPhoto($data['urlPhoto']);
+//        }
+//        if (isset($data['createur'])) {
+//            $recette->setCreateur($data['createur']);
+//        }
+        $recette = Recette::fromInputDTO($r);
 
-        if (isset($data['nom'])) {
-            $recette->setNom($data['nom']);
-        }
-        if (isset($data['tempsPreparation'])) {
-            $recette->setTempsPreparation($data['tempsPreparation']);
-        }
-        if (isset($data['complexite'])) {
-            $recette->setComplexite($data['complexite']);
-        }
-        if (isset($data['description'])) {
-            $recette->setDescription($data['description']);
-        }
-        if (isset($data['debutSaison'])) {
-            $recette->setDebutSaison($data['debutSaison']);
-        }
-        if (isset($data['finSaison'])) {
-            $recette->setFinSaison($data['finSaison']);
-        }
-        if (isset($data['urlPhoto'])) {
-            $recette->setUrlPhoto($data['urlPhoto']);
-        }
-        if (isset($data['createur'])) {
-            $recette->setCreateur($data['createur']);
-        }
+//        var_dump($recette->getId());
 
+//        $recette->setId(Uuid::uuid4());
         $this->getEntityManager()->persist($recette);
         $this->getEntityManager()->flush();
 

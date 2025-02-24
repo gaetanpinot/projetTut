@@ -2,9 +2,12 @@
 
 namespace amap\core\service;
 
+use amap\core\dto\input\InputRecetteDTO;
 use amap\core\dto\RecetteDTO;
 use amap\core\service\interfaces\ServiceRecettesInterface;
+use amap\infrastructure\entities\Recette;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
+use Ramsey\Uuid\Uuid;
 
 class ServiceRecettes implements ServiceRecettesInterface
 {
@@ -13,10 +16,12 @@ class ServiceRecettes implements ServiceRecettesInterface
     {
         $this->recetteRepository = $r;
     }
+
     public function getRecetteById($id): RecetteDTO
     {
         return RecetteDTO::fromRecette($this->recetteRepository->getRecetteById($id));
     }
+
     public function getRecettes($args)
     {
         $recettes = [];
@@ -26,15 +31,17 @@ class ServiceRecettes implements ServiceRecettesInterface
         return $recettes;
     }
 
-
     public function deleteRecette($id)
     {
         $this->recetteRepository->deleteRecette($id);
     }
 
-    public function createRecette($recetteInputDTO)
+    public function createRecette(InputRecetteDTO $recetteInputDTO) : RecetteDTO
     {
-        // InputDTO to entity
-    }
 
+        $res = $this->recetteRepository->createRecette($recetteInputDTO);
+
+//        var_dump($res->getId());
+        return RecetteDTO::fromRecette($res);
+    }
 }
