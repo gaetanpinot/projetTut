@@ -32,7 +32,7 @@ import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconn
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
-// import { RecetteComponent } from './Components/Main/recette/recette.component';
+import { CreatePanierComponent } from './Components/Main/create-panier/create-panier.component';
 
 // @ts-ignore
 @NgModule({
@@ -50,7 +50,7 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ConnexionComponent,
     InscriptionComponent,
     DeconnexionComponent,
-    // RecetteComponent
+    CreatePanierComponent,
   ],
   imports: [
     BrowserModule,

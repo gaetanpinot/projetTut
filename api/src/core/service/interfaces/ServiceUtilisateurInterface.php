@@ -62,4 +62,5 @@ interface ServiceUtilisateurInterface
     * @return UtilisateurDTO[]
     */
     public function getProducteurs(): array;
+    public function changerIngredientsProduits(string $id_producteur, array $ingredients): void;
 }

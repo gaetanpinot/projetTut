@@ -6,19 +6,21 @@ import { ConnexionInscripComponent } from '../Components/Main/connexion-inscrip/
 import { HomeComponent } from '../Components/Main/home/home.component';
 import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
 import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
-import {FrigoComponent} from '../Components/Main/frigo/frigo.component';
+import { CreatePanierComponent } from '../Components/Main/create-panier/create-panier.component';
+import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
 
 
 const routes: Routes = [
-  { path: '', redirectTo: 'Home', pathMatch: 'full'},
+  { path: '', redirectTo: 'Home', pathMatch: 'full' },
   { path: 'Home', component: HomeComponent },
   { path: 'Connexion', component: ConnexionInscripComponent },
   { path: 'Deconnexion', component: DeconnexionComponent },
   { path: 'Recette', component: RecetteRechercheComponent },
   { path: 'Frigo', component: FrigoComponent },
+  { path: 'Panier', component: CreatePanierComponent },
   // { path: 'Recette/:id', component: RecetteComponent },
-];  
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

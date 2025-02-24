@@ -25,5 +25,15 @@ class IngredientRepository extends EntityRepository implements IngredientReposit
         return $ingredient;
     }
 
+    /**
+     * @param int[] $ids
+     * @return Ingredient[]
+     */
+    public function getIngredientsById(array $ids): array
+    {
+        $ingredients = $this->findBy(['id' => $ids]);
+        return $ingredients;
+    }
+
 }
 

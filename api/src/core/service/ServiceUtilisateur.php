@@ -183,4 +183,9 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
         return $producteursDTO;
     }
 
+    public function changerIngredientsProduits(string $id_producteur, array $ingredients): void
+    {
+        $producteur = $this->utilisateurRepository->changerIngredientsProduits($id_producteur, $ingredients);
+    }
+
 }

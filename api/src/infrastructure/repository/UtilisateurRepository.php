@@ -187,4 +187,18 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
         $this->getEntityManager()->persist($user);
         $this->getEntityManager()->flush();
     }
+
+    public function changerIngredientsProduits(string $id_producteur, array $ingredients_id): void
+    {
+        $producteur = $this->getProducteur($id_producteur);
+        /**
+        * @var IngredientRepository $ingredRepo
+        */
+        $ingredRepo = $this->getEntityManager()->getRepository(Ingredient::class);
+        $ingredients = $ingredRepo->getIngredientsById($ingredients_id);
+        $producteur->setIngredientsProduits(new ArrayCollection($ingredients));
+        $this->getEntityManager()->persist($producteur);
+        $this->getEntityManager()->flush();
+        
+    }
 }

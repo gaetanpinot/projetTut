@@ -2,8 +2,11 @@
 
 declare(strict_types=1);
 
+use amap\application\action\ChangeIngredientsProduit;
 use amap\application\action\CreateRecetteAction;
 use amap\application\action\DeleteRecetteAction;
+use amap\application\action\GetIngredientsAction;
+use amap\application\action\GetRecetteByIdAction;
 use amap\application\action\PostCreateRecetteAction;
 use amap\application\action\PatchUtilisateurUstensiles;
 use amap\application\action\PostNoteAction;
@@ -45,7 +48,7 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->post('/recettes[/]', PostCreateRecetteAction::class);
     $app->get('/recettes[/]', GetRecettesAction::class);
-    $app->get('/recettes/{id}', GetRecettesDetailsAction::class);
+    $app->get('/recettes/{id}', GetRecetteByIdAction::class);
     $app->delete('/recettes/{id}', DeleteRecetteAction::class);
 
     $app->post('/tag', CreateTagAction::class);
@@ -55,6 +58,10 @@ return function (\Slim\App $app): \Slim\App {
     $app->post('/recettes/{id}/commentaires', AddCommentAction::class);
 
     $app->post('/recettes/{id}/note', PostNoteAction::class)->add(AuthnMiddleware::class);
+
+    $app->group('/ingredients', function (RouteCollectorProxy $group){
+        $group->get('[/]', GetIngredientsAction::class);
+    });
 
     $app->group('/utilisateurs', function (RouteCollectorProxy $group) {
         $group->get('[/]', GetUtilisateurProfile::class)->add(AuthnMiddleware::class);
@@ -85,6 +92,8 @@ return function (\Slim\App $app): \Slim\App {
         $group->get('[/]', GetProducteursList::class);
         $group->get('/{id}/paniers', GetProducteurPaniers::class)->add(AuthnMiddleware::class);
         $group->get('/{id}/ingredients', GetProducteurIngredients::class)->add(AuthnMiddleware::class);
+        $group->put('/ingredients[/]', ChangeIngredientsProduit::class)->add(AuthzProducteurMiddleware::class)
+            ->add(AuthnMiddleware::class);
     });
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
