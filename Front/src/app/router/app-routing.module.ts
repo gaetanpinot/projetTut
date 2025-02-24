@@ -7,6 +7,7 @@ import { HomeComponent } from '../Components/Main/home/home.component';
 import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/deconnexion/deconnexion.component';
 import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
 import {FrigoComponent} from '../Components/Main/frigo/frigo.component';
+import {RecetteComponent} from '../Components/Main/recette/recette.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
 
 
@@ -17,8 +18,8 @@ const routes: Routes = [
   { path: 'Deconnexion', component: DeconnexionComponent },
   { path: 'Recette', component: RecetteRechercheComponent },
   { path: 'Frigo', component: FrigoComponent },
-  // { path: 'Recette/:id', component: RecetteComponent },
-];  
+  { path: 'Recette/:id', component: RecetteComponent },
+];
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],
