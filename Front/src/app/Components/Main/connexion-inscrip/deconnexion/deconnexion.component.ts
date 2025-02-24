@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthStoreService } from '../../../../Services/store/AuthStore.service';
 
 @Component({
   selector: 'app-deconnexion',
@@ -9,9 +10,10 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DeconnexionComponent implements OnInit{
 
+  constructor(private authStore: AuthStoreService){}
 
   ngOnInit(): void {
-    localStorage.removeItem('token');
+    this.authStore.clearUser();
   }
 
 }

@@ -1,8 +1,13 @@
-<div fxLayout="row" fxLayoutGap="16px" fxLayoutAlign="start center">
+<div fxLayout="row"
+     fxLayoutGap="16px"
+     fxLayoutAlign="start center">
   <form class="search-form">
     <mat-form-field>
       <mat-label>Nom recette</mat-label>
-      <input matInput placeholder="Lasagnes" value="" (input)="searchByName($event)">
+      <input matInput
+             placeholder="Lasagnes"
+             value=""
+             (input)="searchByName($event)">
     </mat-form-field>
   </form>
 
@@ -21,7 +26,8 @@
   <ng-container matColumnDef="IMAGE">
     <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
     <mat-cell *matCellDef="let element">
-      <img src="{{element.url_photo}}" style="width: 100px;">
+      <img src="{{element.url_photo}}"
+           style="width: 100px;">
     </mat-cell>
   </ng-container>
 
@@ -39,11 +45,7 @@
   <ng-container matColumnDef="CONFIRM">
     <mat-header-cell *matHeaderCellDef> Visiter </mat-header-cell>
     <mat-cell *matCellDef="let element">
-<<<<<<< HEAD
-      <button mat-flat-button>Visiter</button>
-=======
       <a [routerLink]="['/Recette', element.id]"><button mat-flat-button>Visiter</button></a>
->>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
     </mat-cell>
   </ng-container>
 
@@ -52,13 +54,17 @@
 </mat-table>
 
 <div class="pages">
-  <button (click)="setPage(-1)" mat-mini-fab aria-label="Example icon button with a menu icon">
+  <button (click)="setPage(-1)"
+          mat-mini-fab
+          aria-label="Example icon button with a menu icon">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
   <span>
-  Page:  {{ currentPage }}
+    Page: {{ currentPage }}
   </span>
-  <button (click)="setPage(1)" mat-mini-fab aria-label="Example icon button with a menu icon">
+  <button (click)="setPage(1)"
+          mat-mini-fab
+          aria-label="Example icon button with a menu icon">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
 </div>

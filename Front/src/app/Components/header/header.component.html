@@ -1,70 +1,57 @@
 <nav class="navbar">
-    <span>
-          <ul class="nav-list">
-            <li class="nav-item">
-                <a href="/Home">
-                    <img src="https://amap-idf.org/images/env/logo.svg">
-                </a>
-            </li>
-            <li class="nav-item">
-              <mat-icon>home</mat-icon>
-              <a href="/Home">Acceuil</a>
-            </li>
-            <li class="nav-item">
-              <mat-icon> fastfood</mat-icon>
-              <a href="/Recette">Recettes</a>
-            </li>
-<<<<<<< HEAD
-            <li class="nav-item" *ngIf="isAuthenticated()">
-=======
-            <li class="nav-item" *ngIf="(authStore.token$ | async);">
->>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
-              Autres
-              <ul class="dropdown">
-                <li class="nav-item">
-                <mat-icon>shopping_cart</mat-icon>
-                <a href="/Panier">Panier</a>
-              </li>
-              <li class="nav-item">
-                <mat-icon>frigo</mat-icon>
-                <a href="/Frigo">Frigo</a>
-              </li>
-              <li class="nav-item">
-                <mat-icon>favorite</mat-icon>
-                <a href="/Favoris">Favoris</a>
-              </li>
-              <li class="nav-item" *ngIf="isClientAuth()">
-                <a href="/">Nouveau panier</a>
-              </li>
-              </ul>
-            </li>
+  <span>
+    <ul class="nav-list">
+      <li class="nav-item">
+        <a href="/Home">
+          <img src="https://amap-idf.org/images/env/logo.svg">
+        </a>
+      </li>
+      <li class="nav-item">
+        <mat-icon>home</mat-icon>
+        <a href="/Home">Acceuil</a>
+      </li>
+      <li class="nav-item">
+        <mat-icon> fastfood</mat-icon>
+        <a href="/Recette">Recettes</a>
+      </li>
+      <li class="nav-item"
+          *ngIf="authStore.isAuthenticated()">
+        Autres
+        <ul class="dropdown">
+          <li class="nav-item">
+            <mat-icon>shopping_cart</mat-icon>
+            <a href="/Panier">Panier</a>
+          </li>
+          <li class="nav-item">
+            <mat-icon>frigo</mat-icon>
+            <a href="/Frigo">Frigo</a>
+          </li>
+          <li class="nav-item">
+            <mat-icon>favorite</mat-icon>
+            <a href="/Favoris">Favoris</a>
+          </li>
+          <li class="nav-item"
+              *ngIf="authStore.isClient()">
+            <a href="/">Nouveau panier</a>
+          </li>
+        </ul>
+      </li>
 
-          </ul>
-        </span>
-    <span>
-          <ul class="nav-list">
-<<<<<<< HEAD
-            <li *ngIf="!isAuthenticated()"
-=======
-            <li *ngIf="!(authStore.token$ | async);"
->>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
-                class="nav-item">
-              <mat-icon>account_circle</mat-icon>
-              <a href="/Connexion">Connexion</a>
-            </li>
-<<<<<<< HEAD
-            <li *ngIf="isAuthenticated()"
-=======
-            <li *ngIf="(authStore.token$ | async);"
->>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
-                class="nav-item"><a href="/Deconnexion">Deconnexion</a></li>
-            <li class="nav-item"><mat-slide-toggle (change)="switchTheme($event)"
-                                  class="example-margin"></mat-slide-toggle></li>
+    </ul>
+  </span>
+  <span>
+    <ul class="nav-list">
+      <li *ngIf="!authStore.isAuthenticated()"
+          class="nav-item">
+        <mat-icon>account_circle</mat-icon>
+        <a href="/Connexion">Connexion</a>
+      </li>
+      <li *ngIf="authStore.isAuthenticated()"
+          class="
+          nav-item"><a href="/Deconnexion">Deconnexion</a></li>
+      <li class="nav-item"><mat-slide-toggle (change)="switchTheme($event)"
+                          class="example-margin"></mat-slide-toggle></li>
 
-          </ul>
-          </span>
-<<<<<<< HEAD
+    </ul>
+  </span>
 </nav>
-=======
-</nav>
->>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
