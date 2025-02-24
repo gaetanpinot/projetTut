@@ -1,0 +1,54 @@
+h1 {
+  font-size: 30px;
+}
+
+h2 {
+  font-size: 20px;
+}
+
+ol {
+  list-style: decimal;
+}
+
+section {
+  padding: 30px 400px;
+}
+
+.tag {
+  background: #cccccc;
+  color: black;
+  padding: 5px 12px;
+  border-radius: 2px;
+  display: inline;
+  margin-right: 12px;
+}
+
+#recette-img {
+  height: 200px;
+  float: right;
+  border-radius: 5px;
+}
+
+@media screen and (max-width: 1400px) {
+  section {
+    padding: 30px 200px;
+  }
+}
+
+@media screen and (max-width: 1200px) {
+  section {
+    padding: 30px 100px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  section {
+    padding: 30px 70px;
+  }
+}
+
+@media screen and (max-width: 1000px) {
+  section {
+    padding: 30px 100px;
+  }
+}
