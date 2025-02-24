@@ -24,8 +24,21 @@ class UtilisateurDTO extends DTO
         $utilisateur->id = $u->getId();
         $utilisateur->nom_utilisateur = $u->getNomUtilisateur();
         $utilisateur->role = $u->getRole();
+        /*$utilisateur->frigo = $u->getFrigo();*/
         /*$utilisateur->recettes = $u->getRecettes()->map(fn ($r) => $r->getId())->toArray();*/
         return $utilisateur;
 
+    }
+    /**
+     * @param array<Utilisateur> $u
+     * @return UtilisateurDTO[]
+     */
+    public static function fromArrayUtilisateur($u): array
+    {
+        $retour = [];
+        foreach($u as $utilisateur) {
+            $retour[] = self::fromUtilisateur($utilisateur);
+        }
+        return $retour;
     }
 }

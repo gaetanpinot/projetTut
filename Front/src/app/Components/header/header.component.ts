@@ -1,5 +1,4 @@
 import {Component, OnInit} from '@angular/core';
-import { isAuth, isClient } from '../../shared/functions/isAuth';
 import { switchTheme } from '../../shared/functions/switchTheme';
 import {AuthStoreService} from '../../Services/store/AuthStore.service';
 
@@ -19,15 +18,9 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
 
   }
-
-  isAuthenticated(): boolean{
-    return isAuth();
-  }
-
+  
   switchTheme(event: any){
     switchTheme();
   }
-  isClientAuth(): boolean{
-    return isClient();
-  }
+
 }

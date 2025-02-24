@@ -2,6 +2,7 @@
 
 namespace amap\infrastructure\repository\interfaces;
 
+use amap\core\dto\input\InputRecetteDTO;
 use amap\infrastructure\entities\Recette;
 
 interface RecetteRepositoryInterface

@@ -18,7 +18,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         $qb->groupBy('r.id');
 
         if (isset($args['nom'])) {
-            $qb->andWhere('r.nom LIKE :nom')
+            $qb->andWhere('upper(r.nom) LIKE upper(:nom)')
                 ->setParameter('nom', '%' . $args['nom'] . '%');
         }
 
@@ -139,38 +139,38 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
 
     public function createRecette(Recette $r): Recette
     {
-        $data = $r;
-        $recette = new Recette();
+//        $data = $r;
+//        $recette = new Recette();
+//
+//        if (isset($data['nom'])) {
+//            $recette->setNom($data['nom']);
+//        }
+//        if (isset($data['tempsPreparation'])) {
+//            $recette->setTempsPreparation($data['tempsPreparation']);
+//        }
+//        if (isset($data['complexite'])) {
+//            $recette->setComplexite($data['complexite']);
+//        }
+//        if (isset($data['description'])) {
+//            $recette->setDescription($data['description']);
+//        }
+//        if (isset($data['debutSaison'])) {
+//            $recette->setDebutSaison($data['debutSaison']);
+//        }
+//        if (isset($data['finSaison'])) {
+//            $recette->setFinSaison($data['finSaison']);
+//        }
+//        if (isset($data['urlPhoto'])) {
+//            $recette->setUrlPhoto($data['urlPhoto']);
+//        }
+//        if (isset($data['createur'])) {
+//            $recette->setCreateur($data['createur']);
+//        }
 
-        if (isset($data['nom'])) {
-            $recette->setNom($data['nom']);
-        }
-        if (isset($data['tempsPreparation'])) {
-            $recette->setTempsPreparation($data['tempsPreparation']);
-        }
-        if (isset($data['complexite'])) {
-            $recette->setComplexite($data['complexite']);
-        }
-        if (isset($data['description'])) {
-            $recette->setDescription($data['description']);
-        }
-        if (isset($data['debutSaison'])) {
-            $recette->setDebutSaison($data['debutSaison']);
-        }
-        if (isset($data['finSaison'])) {
-            $recette->setFinSaison($data['finSaison']);
-        }
-        if (isset($data['urlPhoto'])) {
-            $recette->setUrlPhoto($data['urlPhoto']);
-        }
-        if (isset($data['createur'])) {
-            $recette->setCreateur($data['createur']);
-        }
-
-        $this->getEntityManager()->persist($recette);
+        $this->getEntityManager()->persist($r);
         $this->getEntityManager()->flush();
 
-        return $recette;
+        return $r;
     }
 
     public function getRecetteCommentaires(): array

@@ -34,4 +34,9 @@ class ServicePanier implements ServicePanierInterface
         $panierInseree = $this->panierRepository->createPanier($panierInput);
         return PanierDTO::fromEntity($panierInseree);
     }
+
+    public function publierPanier(int $id_panier): void
+    {
+        $this->panierRepository->publierPanier($id_panier);
+    }
 }

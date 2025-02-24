@@ -4,7 +4,8 @@ namespace amap\infrastructure\repository;
 
 use Doctrine\ORM\EntityRepository;
 use amap\core\dto\InputPanierDTO;
-use amap\core\entities\PanierEntity;
+use amap\infrastructure\entities\DateIdType;
+use amap\infrastructure\entities\Frigo;
 use amap\infrastructure\entities\Ingredient;
 use amap\infrastructure\entities\IngredientPanier;
 use amap\infrastructure\entities\Utilisateur;
@@ -13,10 +14,13 @@ use amap\infrastructure\entities\Panier;
 use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
 
 /**
- * @extends EntityRepository<object>
+ * @extends EntityRepository<Panier>
  */
 class PanierRepository extends EntityRepository implements PanierRepositoryInterface
 {
+    /**
+ * @throws EntityNotFoundException
+ */
     public function getPanierById(int $id): Panier
     {
         $panier = $this->find($id);
@@ -26,11 +30,52 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
         return $panier;
     }
 
+    public function publierPanier(int $id_panier): void
+    {
+        //si la date est null le panier n'est pas publié
+        $panier = $this->getPanierById($id_panier);
+        if($panier->getDate() !== null) {
+            /*return;*/
+        }
+
+        $date_panier = new DateIdType();
+        /*$date_panier = $date_panier->getTimestamp();*/
+        $panier->setDate($date_panier);
+
+        //get utilisateur abonné a producteur
+        $users = $panier->getProducteur()->getAbonnees();
+
+        //ajouter panier à utilisateur
+        $ingredientsFrigo = [];
+        $timestamp_ajout = $date_panier->getTimestamp();
+        foreach($panier->getIngredients() as $ingred) {
+            $ingredFrigo = new Frigo();
+            $ingredFrigo->setIngredient($ingred->getIngredient());
+            $ingredFrigo->setQuantite($ingred->getQuantite());
+            $ingredFrigo->setTimestampAjout($timestamp_ajout);
+            $ingredientsFrigo[] = $ingredFrigo;
+        }
+
+        foreach($users as $user) {
+            foreach($ingredientsFrigo as $ingredFrigo) {
+                //clone pour persister des objet different pour chaque utilisateur
+                $ingredFrigoUser = clone $ingredFrigo;
+                $ingredFrigoUser->setUtilisateur($user);
+                $user->addIngredientFrigo($ingredFrigoUser);
+                $this->getEntityManager()->persist($ingredFrigoUser);
+            }
+        }
+
+        $this->getEntityManager()->persist($panier);
+        $this->getEntityManager()->flush();
+    }
+
     public function createPanier(InputPanierDTO $panierInput): Panier
     {
         try {
             $panier = new Panier();
-            $panier->setIdProducteur($panierInput->id_producteur);
+            /*$panier->setIdProducteur($panierInput->id_producteur);*/
+            $panier->setProducteur($this->getEntityManager()->getRepository(Utilisateur::class)->find($panierInput->id_producteur));
             $this->getEntityManager()->persist($panier);
             $this->getEntityManager()->flush();
             /*echo $panier->getId();*/

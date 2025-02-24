@@ -134,7 +134,11 @@ ALTER TABLE public.favoris OWNER TO "user";
 CREATE TABLE public.frigo (
     id_utilisateur uuid NOT NULL,
     id_ingredient integer NOT NULL,
+<<<<<<< HEAD
     date_ajout date NOT NULL,
+=======
+    date_ajout timestamp NOT NULL,
+>>>>>>> acc38a05d936478d3f876661c64ac14286a25fef
     quantite character varying
 );
 

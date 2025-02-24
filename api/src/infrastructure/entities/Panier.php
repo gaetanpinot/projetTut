@@ -5,6 +5,7 @@ namespace amap\infrastructure\entities;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+
 use amap\infrastructure\repository\PanierRepository;
 
 #[ORM\Entity(repositoryClass: PanierRepository::class)]
@@ -69,6 +70,7 @@ class Panier
     {
         $this->id_producteur = $id;
     }
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
@@ -79,10 +81,10 @@ class Panier
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: "id_producteur", referencedColumnName: "id")]
-    /*private ?Utilisateur $producteur;*/
+    private ?Utilisateur $producteur;
 
-    #[ORM\Column(type: "date", nullable: true)]
-    private ?\DateTimeInterface $date;
+    #[ORM\Column(type: "datetime", nullable: true)]
+    private ?\DateTimeInterface $date = null;
 
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: "panier")]
     private Collection $utilisateurs;
@@ -94,12 +96,10 @@ class Panier
     {
         $this->utilisateurs = new ArrayCollection();
         $this->ingredients_panier = new ArrayCollection();
-        $this->date = new \DateTime();
     }
 
     public function addIngredient(IngredientPanier $ingredient): void
     {
         $this->ingredients_panier->add($ingredient);
     }
-
 }

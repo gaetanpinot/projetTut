@@ -15,6 +15,7 @@ class IngredientRepository extends EntityRepository implements IngredientReposit
         $this->getEntityManager()->flush();
     }
 
+
     public function getIngredientById(int $id): Ingredient
     {
         $ingredient = $this->find($id);
@@ -22,6 +23,16 @@ class IngredientRepository extends EntityRepository implements IngredientReposit
             throw new EntityNotFoundException("Ingredient $id doesn't exist");
         }
         return $ingredient;
+    }
+
+    /**
+     * @param int[] $ids
+     * @return Ingredient[]
+     */
+    public function getIngredientsById(array $ids): array
+    {
+        $ingredients = $this->findBy(['id' => $ids]);
+        return $ingredients;
     }
 
 }

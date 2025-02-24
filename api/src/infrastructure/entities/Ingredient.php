@@ -40,7 +40,6 @@ class Ingredient
     #[ORM\ManyToMany(targetEntity: Utilisateur::class, mappedBy: "ingredientsExclus")]
     private Collection $utilisateursExclus;
 
-
     public function __construct()
     {
         $this->allergenes = new ArrayCollection();
@@ -91,7 +90,6 @@ class Ingredient
     {
         $this->urlPhoto = $urlPhoto;
     }
-
     public function setId(int $id): void
     {
         $this->id = $id;
