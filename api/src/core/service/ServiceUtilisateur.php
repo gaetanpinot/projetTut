@@ -13,17 +13,20 @@ use amap\core\dto\UtilisateurDTO;
 use amap\core\entities\FrigoEntity;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
+use amap\infrastructure\repository\interfaces\UstensileRepositoryInterface;
 use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 class ServiceUtilisateur implements ServiceUtilisateurInterface
 {
     private UtilisateurRepositoryInterface $utilisateurRepository;
     private AllergieRepositoryInterface $allergieRepo;
+    private UstensileRepositoryInterface $ustensileRepository;
 
-    public function __construct(UtilisateurRepositoryInterface $u, AllergieRepositoryInterface $a)
+    public function __construct(UtilisateurRepositoryInterface $u, AllergieRepositoryInterface $a, UstensileRepositoryInterface $ustensileRepository)
     {
         $this->utilisateurRepository = $u;
         $this->allergieRepo = $a;
+        $this->ustensileRepository = $ustensileRepository;
     }
 
 
@@ -96,6 +99,12 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
     {
         $ustensiles_exclus = UstensileDTO::fromArrayToDTO($this->utilisateurRepository->getUtilisateurById($id)->getUstensilesExclus());
         return $ustensiles_exclus;
+    }
+
+    public function setUstensiles($user_id, $ustensiles_ids): void
+    {
+        $ustensiles = $this->ustensileRepository->getUstensilesByIds($ustensiles_ids);
+        $this->utilisateurRepository->setUstensiles($user_id, $ustensiles);
     }
 
     public function addAllergies(string $id_utilisateur, int $id_allergie): void
