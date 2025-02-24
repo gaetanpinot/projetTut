@@ -39,4 +39,14 @@ class ServicePanier implements ServicePanierInterface
     {
         $this->panierRepository->publierPanier($id_panier);
     }
+
+    /**
+     * @param string $id_producteur
+     * @return PanierDTO[]
+     */
+    public function getPanierByProducteur(string $id_producteur): array{
+        $paniers = $this->panierRepository->getPanierProducteur($id_producteur);
+        $paniersDTO = array_map(fn(Panier $panier) => PanierDTO::fromEntity($panier), $paniers);
+        return $paniersDTO;
+    }
 }

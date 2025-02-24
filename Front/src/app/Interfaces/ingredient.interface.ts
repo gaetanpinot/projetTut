@@ -5,3 +5,8 @@ export interface Ingredient {
   fin_saison: number,
   url_photo: string
 }
+
+export interface IngredientInput {
+  id: number,
+  quantite: string
+}
