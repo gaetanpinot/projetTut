@@ -5,6 +5,7 @@ declare(strict_types=1);
 use amap\application\action\ChangeIngredientsProduit;
 use amap\application\action\CreateRecetteAction;
 use amap\application\action\DeleteRecetteAction;
+use amap\application\action\GetIngredientsAction;
 use amap\application\action\PostCreateRecetteAction;
 use Slim\Routing\RouteCollectorProxy;
 use amap\application\action\AbonnerUtilisateurAProducteur;
@@ -53,6 +54,10 @@ return function (\Slim\App $app): \Slim\App {
     $app->get('/recettes/{id}/commentaires', GetCommentsAction::class);
     $app->post('/recettes/{id}/commentaires', AddCommentAction::class);
     $app->put('/recettes/{id}/note', AddNoteAction::class);
+
+    $app->group('/ingredients', function (RouteCollectorProxy $group){
+        $group->get('[/]', GetIngredientsAction::class);
+    });
 
     $app->group('/utilisateurs', function (RouteCollectorProxy $group) {
         $group->get('[/]', GetUtilisateurProfile::class)->add(AuthnMiddleware::class);
