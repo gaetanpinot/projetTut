@@ -18,7 +18,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         $qb->groupBy('r.id');
 
         if (isset($args['nom'])) {
-            $qb->andWhere('r.nom LIKE :nom')
+            $qb->andWhere('upper(r.nom) LIKE upper(:nom)')
                 ->setParameter('nom', '%' . $args['nom'] . '%');
         }
 
