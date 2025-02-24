@@ -20,11 +20,7 @@ class Commentaire
     private Utilisateur $utilisateur;
 
     #[ORM\ManyToOne(targetEntity: Recette::class)]
-<<<<<<< HEAD
     #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id", onDelete: "CASCADE")]
-=======
-    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
->>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
     private Recette $recette;
 
     #[ORM\Column(type: "text", nullable: true)]
