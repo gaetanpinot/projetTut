@@ -2,27 +2,35 @@
 
 use amap\core\service\interfaces\ServiceAuthInterface;
 use amap\core\service\interfaces\ServiceIngredientInterface;
+use amap\core\service\interfaces\ServiceNoteInterface;
 use amap\core\service\interfaces\ServicePanierInterface;
 use amap\core\service\interfaces\ServiceRecettesInterface;
 use amap\core\service\interfaces\ServiceUtilisateurInterface;
 use amap\core\service\ServiceAuth;
 use amap\core\service\ServiceIngredient;
+use amap\core\service\ServiceNote;
 use amap\core\service\ServicePanier;
 use amap\core\service\ServiceRecettes;
 use amap\infrastructure\entities\Allergene;
 use amap\infrastructure\entities\Ingredient;
+use amap\infrastructure\entities\Note;
 use amap\infrastructure\entities\Panier;
 use amap\infrastructure\entities\Recette;
+use amap\infrastructure\entities\Ustensile;
 use amap\infrastructure\repository\AllergenesRepository;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
 use amap\core\service\ServiceUtilisateur;
 use amap\infrastructure\entities\Utilisateur;
+use amap\infrastructure\repository\interfaces\NoteRepositoryInterface;
 use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
+use amap\infrastructure\repository\interfaces\UstensileRepositoryInterface;
 use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
+use amap\infrastructure\repository\NoteRepository;
 use amap\infrastructure\repository\PanierRepository;
 use amap\infrastructure\repository\RecetteRepository;
+use amap\infrastructure\repository\UstensileRepository;
 use amap\middleware\CorsMiddleware;
 use amap\providers\auth\AuthnProviderInterface;
 use amap\providers\auth\JWTAuthnProvider;
@@ -65,12 +73,17 @@ return [
     },
 
     //service
-    ServiceUtilisateurInterface::class => DI\get(ServiceUtilisateur::class),
-    ServiceUtilisateur::class => create()->constructor(get(UtilisateurRepositoryInterface::class), get(AllergieRepositoryInterface::class)),
+    ServiceUtilisateurInterface::class => DI\autowire(ServiceUtilisateur::class),
+
     ServiceAuthInterface::class => DI\autowire(ServiceAuth::class),
+
     ServiceIngredientInterface::class => DI\autowire(ServiceIngredient::class),
 
     ServicePanierInterface::class => DI\autowire(ServicePanier::class),
+
+    ServiceRecettesInterface::class => DI\autowire(ServiceRecettes::class),
+
+    ServiceNoteInterface::class => DI\autowire(ServiceNote::class),
 
     //provider
     AuthnProviderInterface::class => DI\autowire(JWTAuthnProvider::class),
@@ -172,6 +185,20 @@ return [
         return $validator;
     },
 
+    UstensileRepositoryInterface::class => get(UstensileRepository::class),
+    UstensileRepository::class => function (ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        $repo = $em->getRepository(Ustensile::class);
+        return $repo;
+    },
+
+    NoteRepositoryInterface::class => get(NoteRepository::class),
+    NoteRepository::class => function (ContainerInterface $c){
+        $em = $c->get(EntityManager::class);
+        $repo = $em->getRepository(Note::class);
+        return $repo;
+    },
+
     AllergieRepositoryInterface::class => get(AllergenesRepository::class),
     AllergenesRepository::class => function (ContainerInterface $c) {
         $em = $c->get(EntityManager::class);
@@ -193,7 +220,7 @@ return [
         $repo->setPagination($c->get('pagination.nb'));
         return $repo;
     },
-    ServiceRecettesInterface::class => DI\autowire(ServiceRecettes::class),
+
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)

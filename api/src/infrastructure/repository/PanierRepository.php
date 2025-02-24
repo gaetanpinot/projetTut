@@ -14,7 +14,7 @@ use amap\infrastructure\entities\Panier;
 use amap\infrastructure\repository\interfaces\PanierRepositoryInterface;
 
 /**
- * @extends EntityRepository<Panier>
+ * @extends EntityRepository<object>
  */
 class PanierRepository extends EntityRepository implements PanierRepositoryInterface
 {

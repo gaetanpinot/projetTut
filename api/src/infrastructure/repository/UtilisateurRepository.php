@@ -143,6 +143,22 @@ class UtilisateurRepository extends EntityRepository implements UtilisateurRepos
         return $producteur;
     }
 
+    public function setUstensiles($user_id, $ustensiles): void
+    {
+        $user = $this->find($user_id);
+        if (!$user) {
+            throw new \Exception("User $user_id not found");
+        }
+
+        $user->getUstensilesExclus()->clear();
+
+        foreach ($ustensiles as $ustensile) {
+            $user->getUstensilesExclus()->add($ustensile);
+        }
+
+        $this->getEntityManager()->flush();
+    }
+
     public function getIngredientProducteur(string $id_producteur): array
     {
         $producteur = $this->getProducteur($id_producteur);
