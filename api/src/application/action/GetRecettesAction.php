@@ -99,10 +99,10 @@ class GetRecettesAction extends AbstractAction
             return $check;
         }
 
-        try {
+//        try {
             return JsonRenderer::render($rs, 200, $this->serviceRecette->getRecettes($data));
-        } catch (\Error $e) {
-            return JsonRenderer::render($rs, 500, $e->getMessage());
-        }
+//        } catch (\Error $e) {
+//            return JsonRenderer::render($rs, 500, $e->getMessage());
+//        }
     }
 }
