@@ -30,7 +30,7 @@ class RecetteDTO extends DTO
         $recetteDTO->nom = $recette->getNom();
         $recetteDTO->temps_preparation = $recette->getTempsPreparation();
         $recetteDTO->complexite = $recette->getComplexite();
-        $recetteDTO->id_createur = $recette->getCreateur();
+        $recetteDTO->id_createur = $recette->getCreateur()->getId();
         $recetteDTO->description = $recette->getDescription();
         $recetteDTO->debut_saison = $recette->getDebutSaison();
         $recetteDTO->fin_saison = $recette->getFinSaison();

@@ -2,7 +2,6 @@
 
 namespace amap\infrastructure\repository;
 
-use amap\core\dto\input\InputRecetteDTO;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -138,7 +137,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         $this->getEntityManager()->flush();
     }
 
-    public function createRecette(InputRecetteDTO $r): Recette
+    public function createRecette(Recette $r): Recette
     {
 //        $data = $r;
 //        $recette = new Recette();
@@ -167,15 +166,11 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
 //        if (isset($data['createur'])) {
 //            $recette->setCreateur($data['createur']);
 //        }
-        $recette = Recette::fromInputDTO($r);
 
-//        var_dump($recette->getId());
-
-//        $recette->setId(Uuid::uuid4());
-        $this->getEntityManager()->persist($recette);
+        $this->getEntityManager()->persist($r);
         $this->getEntityManager()->flush();
 
-        return $recette;
+        return $r;
     }
 
     public function getRecetteCommentaires(): array

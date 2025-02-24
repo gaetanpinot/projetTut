@@ -14,7 +14,11 @@
               <mat-icon> fastfood</mat-icon>
               <a href="/Recette">Recettes</a>
             </li>
+<<<<<<< HEAD
             <li class="nav-item" *ngIf="isAuthenticated()">
+=======
+            <li class="nav-item" *ngIf="(authStore.token$ | async);">
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
               Autres
               <ul class="dropdown">
                 <li class="nav-item">
@@ -39,16 +43,28 @@
         </span>
     <span>
           <ul class="nav-list">
+<<<<<<< HEAD
             <li *ngIf="!isAuthenticated()"
+=======
+            <li *ngIf="!(authStore.token$ | async);"
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
                 class="nav-item">
               <mat-icon>account_circle</mat-icon>
               <a href="/Connexion">Connexion</a>
             </li>
+<<<<<<< HEAD
             <li *ngIf="isAuthenticated()"
+=======
+            <li *ngIf="(authStore.token$ | async);"
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
                 class="nav-item"><a href="/Deconnexion">Deconnexion</a></li>
             <li class="nav-item"><mat-slide-toggle (change)="switchTheme($event)"
                                   class="example-margin"></mat-slide-toggle></li>
 
           </ul>
           </span>
+<<<<<<< HEAD
 </nav>
+=======
+</nav>
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7

@@ -125,7 +125,7 @@ CREATE TABLE "allergene" (
 CREATE TABLE "frigo" (
   "id_utilisateur" uuid,
   "id_ingredient" int,
-  "date_ajout" date,
+  "date_ajout" int,
   "quantite" varchar,
   PRIMARY KEY ("id_utilisateur", "id_ingredient", "date_ajout")
 );

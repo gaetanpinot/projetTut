@@ -1,0 +1,15 @@
+meta {
+  name: id
+  type: http
+  seq: 3
+}
+
+get {
+  url: {{api}}/paniers/:id
+  body: none
+  auth: none
+}
+
+params:path {
+  id: {{id_panier}}
+}

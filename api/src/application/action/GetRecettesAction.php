@@ -81,7 +81,12 @@ class GetRecettesAction extends AbstractAction
                 'page' => (object)[
                     '$ref' => 'http://amap.fr/page#',
                     'default' => 1
-                ]
+                ],
+                'quantite' => (object)[
+                    '$ref' => 'http://amap.fr/quantite#',
+                    'type' => 'string',
+                    'minLength' => 1
+                ],
             ],
         ];
         if(!isset($data['page'])) {
@@ -90,7 +95,7 @@ class GetRecettesAction extends AbstractAction
 
         $resultValidation = $this->validator->validate((object)$data, $validationSchema);
         $check = ValidationErrorRenderer::render($rs, $resultValidation);
-        if ($check) {
+        if ($check != false) {
             return $check;
         }
 

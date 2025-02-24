@@ -15,7 +15,7 @@ interface RecetteRepositoryInterface
 
     public function deleteRecette(int $id): void;
 
-    public function createRecette(InputRecetteDTO $r): Recette;
+    public function createRecette(Recette $r): Recette;
 
     public function getRecetteCommentaires(): array;
 

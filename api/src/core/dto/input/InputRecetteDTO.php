@@ -62,4 +62,70 @@ class InputRecetteDTO extends DTO
     {
         $this->id = $id;
     }
+
+    public function getNom(): ?string
+    {
+        return $this->nom;
+    }
+
+    public function getTempsPreparation(): ?int
+    {
+        return $this->tempsPreparation;
+    }
+
+    public function getComplexite(): ?int
+    {
+        return $this->complexite;
+    }
+
+    public function getIdCreateur(): ?string
+    {
+        return $this->idCreateur;
+    }
+
+    public function getDescription(): ?string
+    {
+        return $this->description;
+    }
+
+    public function getDebutSaison(): ?int
+    {
+        return $this->debutSaison;
+    }
+
+    public function getFinSaison(): ?int
+    {
+        return $this->finSaison;
+    }
+
+    public function getUrlPhoto(): ?string
+    {
+        return $this->urlPhoto;
+    }
+
+    public function getIdRecetteParente(): ?int
+    {
+        return $this->id_recette_parente;
+    }
+
+    public function getTags(): array
+    {
+        return $this->tags;
+    }
+
+    public function getIngredientsRecette(): array
+    {
+        return $this->ingredientsRecette;
+    }
+
+    public function getUstensiles(): array
+    {
+        return $this->ustensiles;
+    }
+
+    public function getNotes(): array
+    {
+        return $this->notes;
+    }
+
 }

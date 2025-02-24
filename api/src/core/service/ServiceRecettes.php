@@ -6,15 +6,20 @@ use amap\core\dto\input\InputRecetteDTO;
 use amap\core\dto\RecetteDTO;
 use amap\core\service\interfaces\ServiceRecettesInterface;
 use amap\infrastructure\entities\Recette;
+use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
-use Ramsey\Uuid\Uuid;
+use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 class ServiceRecettes implements ServiceRecettesInterface
 {
     private RecetteRepositoryInterface $recetteRepository;
-    public function __construct(RecetteRepositoryInterface $r)
+    private UtilisateurRepositoryInterface $utilisateurRepository;
+
+
+    public function __construct(RecetteRepositoryInterface $recetteRepository, UtilisateurRepositoryInterface $utilisateurRepository )
     {
-        $this->recetteRepository = $r;
+        $this->recetteRepository = $recetteRepository;
+        $this->utilisateurRepository = $utilisateurRepository;
     }
 
     public function getRecetteById($id): RecetteDTO
@@ -36,12 +41,12 @@ class ServiceRecettes implements ServiceRecettesInterface
         $this->recetteRepository->deleteRecette($id);
     }
 
-    public function createRecette(InputRecetteDTO $recetteInputDTO) : RecetteDTO
+    public function createRecette(InputRecetteDTO $inputRecette) : RecetteDTO
     {
+        $createur = $this->utilisateurRepository->getUtilisateurById($inputRecette->getIdCreateur());
+        $recette = Recette::fromInputRecetteDTO($inputRecette, $createur);
+        $res = $this->recetteRepository->createRecette($recette);
 
-        $res = $this->recetteRepository->createRecette($recetteInputDTO);
-
-//        var_dump($res->getId());
         return RecetteDTO::fromRecette($res);
     }
 }

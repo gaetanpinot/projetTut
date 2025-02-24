@@ -90,4 +90,8 @@ class Ingredient
     {
         $this->urlPhoto = $urlPhoto;
     }
+    public function setId(int $id): void
+    {
+        $this->id = $id;
+    }
 }

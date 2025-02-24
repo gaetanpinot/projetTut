@@ -172,10 +172,17 @@ INSERT INTO "note_recette" (id_utilisateur, id_recette, note) VALUES
 -- Frigo des utilisateurs
 -- alice a Tomate(1)=3kg, bob a Oignon(2)=2pcs, diane a Fraise(3)=250g, fanny a Laitue(4)=1pc
 INSERT INTO "frigo" (id_utilisateur, id_ingredient, date_ajout, quantite) VALUES
+<<<<<<< HEAD
 ('f47ac10b-58cc-4372-a567-0e02b2c3d479',1,'2024-12-10','3kg'),
 ('c9bf9e57-1685-4c89-bafb-ff5af830be8a',2,'2024-12-11','2pcs'),
 ('2a0a11b7-a68c-4e21-92b4-7f7af6ffcd33',3,'2024-12-12','250g'),
 ('84be57c6-4ef4-4381-bf05-a52139a50911',4,'2024-12-15','1pc');
+=======
+('f47ac10b-58cc-4372-a567-0e02b2c3d479',1,1739891035,'3kg'),
+('c9bf9e57-1685-4c89-bafb-ff5af830be8a',2,1739804635,'2pcs'),
+('2a0a11b7-a68c-4e21-92b4-7f7af6ffcd33',3,1739804635,'250g'),
+('84be57c6-4ef4-4381-bf05-a52139a50911',4,1737126235,'1pc');
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
 
 INSERT INTO "ingredient_recette" (id_recette, id_ingredient, quantite) VALUES
 (1,1,'200g'),

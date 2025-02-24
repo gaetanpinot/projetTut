@@ -32,6 +32,10 @@ import { DeconnexionComponent } from './Components/Main/connexion-inscrip/deconn
 import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
+<<<<<<< HEAD
+=======
+import { RecetteComponent } from './Components/Main/recette/recette.component';
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
 
 // @ts-ignore
 @NgModule({
@@ -48,7 +52,12 @@ import { MatCheckboxModule } from '@angular/material/checkbox';
     ConnexionInscripComponent,
     ConnexionComponent,
     InscriptionComponent,
+<<<<<<< HEAD
     DeconnexionComponent
+=======
+    DeconnexionComponent,
+    RecetteComponent
+>>>>>>> a557e730a8cbfa6a857dba8090272a79c297e3a7
   ],
   imports: [
     BrowserModule,

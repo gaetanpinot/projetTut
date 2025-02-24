@@ -1,6 +1,7 @@
 <?php
 
 use amap\application\action\ConnexionAction;
+use amap\application\action\CreateRecetteAction;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetRecetteByIdAction;
 use amap\application\action\GetUtilisateurProfile;
@@ -12,4 +13,5 @@ return [
     GetIngredientsAction::class => DI\autowire(),
     GetRecetteByIdAction::class => DI\autowire(),
     GetUtilisateurProfile::class => DI\autowire(),
+    CreateRecetteAction::class => DI\autowire(),
 ];

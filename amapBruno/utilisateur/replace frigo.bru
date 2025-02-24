@@ -1,0 +1,51 @@
+meta {
+  name: replace frigo
+  type: http
+  seq: 10
+}
+
+put {
+  url: {{api}}/utilisateurs/frigo
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "frigo":[
+      {
+        "id":1,
+        "quantite":"12g",
+        "timestamp_ajout":128881828
+      },
+      {
+        "id":8,
+        "quantite":"3kg",
+        "timestamp_ajout":128881828
+      },{
+        "id":1,
+        "quantite":"12g",
+        "timestamp_ajout":1528881828
+      },
+      {
+        "id":8,
+        "quantite":"3kg",
+        "timestamp_ajout":1258881828
+      },{
+        "id":1,
+        "quantite":"3883kg",
+        "timestamp_ajout":128881822
+      },
+      {
+        "id":8,
+        "quantite":"bouse de vache",
+        "timestamp_ajout":128881128
+      },
+      {
+        "id":11,
+        "quantite": "4pc",
+        "timestamp_ajout":128883881
+      }
+    ]
+  }
+}
