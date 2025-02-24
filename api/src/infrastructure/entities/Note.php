@@ -28,13 +28,13 @@ class Note
         return $this->note;
     }
 
-//    #[ORM\ManyToOne(targetEntity: Recette::class, inversedBy: "ingredient_recette")]
-//    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id", nullable: true)]
-//    private Recette $recette;
-//
-//    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "utilisateur")]
-//    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id", nullable:true)]
-//    private Utilisateur $utilisateur;
+    #[ORM\ManyToOne(targetEntity: Recette::class, inversedBy: "ingredient_recette")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id", nullable: true)]
+    private Recette $recette;
+
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "utilisateur")]
+    #[ORM\JoinColumn(name: "id_utilisateur", referencedColumnName: "id", nullable:true)]
+    private Utilisateur $utilisateur;
 
     public function setNote(int $note): void
     {

@@ -6,9 +6,7 @@ use amap\core\dto\input\InputRecetteDTO;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Query\Lexer;
 use amap\infrastructure\repository\RecetteRepository;
-use Monolog\Handler\Curl\Util;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
 #[ORM\Table(name: "recette")]
@@ -45,7 +43,8 @@ class Recette
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private int $id;
+    private ?int $id = null;
+
     public function getId(): int
     {
         return $this->id;
