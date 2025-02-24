@@ -179,6 +179,10 @@ class Utilisateur
     {
         return $this->ingredientsProduits;
     }
+    public function setIngredientsProduits(Collection $ingredientsProduits): void
+    {
+        $this->ingredientsProduits = $ingredientsProduits;
+    }
 
     #[ORM\ManyToMany(targetEntity: Ingredient::class, inversedBy: "utilisateursExclus")]
     #[ORM\JoinTable(name: "ingredient_exclu")]

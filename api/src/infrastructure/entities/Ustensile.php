@@ -2,11 +2,12 @@
 
 namespace amap\infrastructure\entities;
 
+use amap\infrastructure\repository\UstensileRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity]
+#[ORM\Entity (repositoryClass: UstensileRepository::class)]
 #[ORM\Table(name: "ustensile")]
 class Ustensile
 {

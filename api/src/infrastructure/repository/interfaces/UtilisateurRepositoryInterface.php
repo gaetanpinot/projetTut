@@ -52,4 +52,9 @@ interface UtilisateurRepositoryInterface
      * @return Utilisateur[]
      */
     public function getProducteurs(): array;
+
+    /**
+    * @param int[] $ingredients
+    */
+    public function changerIngredientsProduits(string $id_producteur, array $ingredients_id): void;
 }
