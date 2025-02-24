@@ -33,6 +33,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CreatePanierComponent } from './Components/Main/create-panier/create-panier.component';
+import {RecetteComponent} from './Components/Main/recette/recette.component';
 
 // @ts-ignore
 @NgModule({
@@ -51,6 +52,7 @@ import { CreatePanierComponent } from './Components/Main/create-panier/create-pa
     InscriptionComponent,
     DeconnexionComponent,
     CreatePanierComponent,
+    RecetteComponent
   ],
   imports: [
     BrowserModule,

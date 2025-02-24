@@ -8,6 +8,7 @@ import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/decon
 import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
 import { CreatePanierComponent } from '../Components/Main/create-panier/create-panier.component';
 import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
+import {RecetteComponent} from '../Components/Main/recette/recette.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
 
 
@@ -19,7 +20,7 @@ const routes: Routes = [
   { path: 'Recette', component: RecetteRechercheComponent },
   { path: 'Frigo', component: FrigoComponent },
   { path: 'Panier', component: CreatePanierComponent },
-  // { path: 'Recette/:id', component: RecetteComponent },
+  { path: 'Recette/:id', component: RecetteComponent },
 ];
 
 @NgModule({
