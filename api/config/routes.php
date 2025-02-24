@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use amap\application\action\ChangeIngredientsProduit;
 use amap\application\action\CreateRecetteAction;
 use amap\application\action\DeleteRecetteAction;
 use amap\application\action\PostCreateRecetteAction;
@@ -79,6 +80,8 @@ return function (\Slim\App $app): \Slim\App {
         $group->get('[/]', GetProducteursList::class);
         $group->get('/{id}/paniers', GetProducteurPaniers::class)->add(AuthnMiddleware::class);
         $group->get('/{id}/ingredients', GetProducteurIngredients::class)->add(AuthnMiddleware::class);
+        $group->put('/ingredients[/]', ChangeIngredientsProduit::class)->add(AuthzProducteurMiddleware::class)
+            ->add(AuthnMiddleware::class);
     });
 
     $app->options('/{routes:.+}', function ($request, $response, $args) {
