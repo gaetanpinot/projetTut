@@ -29,7 +29,7 @@
                 <mat-icon>favorite</mat-icon>
                 <a href="/Favoris">Favoris</a>
               </li>
-              <li class="nav-item" *ngIf="isClientAuth()">
+              <li class="nav-item"  *ngIf="(authStore.token$ | async);">
                 <a href="/">Nouveau panier</a>
               </li>
               </ul>
