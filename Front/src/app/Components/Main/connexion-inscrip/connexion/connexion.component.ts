@@ -37,13 +37,7 @@ export class ConnexionComponent implements OnInit {
     this.connectServ.logIn(body).subscribe(
       {
         next: (data) => {
-          console.log(data);
-
-          this.authStore.setToken(data.token);
-          console.log(this.authStore);
-          
-          //token
-          console.log(this.authStore.getToken());
+          this.authStore.setUser(data.token, data.utilisateur.role);
         },
         error: (err) => {
           console.error(err);
