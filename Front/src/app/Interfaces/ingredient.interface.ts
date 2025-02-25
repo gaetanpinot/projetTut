@@ -18,3 +18,11 @@ export interface IngredientProduit {
   nom: string,
   ingredients: Ingredient[]
 }
+
+export interface IngredientFrigo {
+  id_ingredient: number,
+  nom: string,
+  url_photo: string,
+  quantite: string,
+  date_ajout: string,
+}

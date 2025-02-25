@@ -11,6 +11,6 @@
          {{ingred.ingredient.nom}}: {{ingred.quantite}}
       </p>
     </div>
-    <button (click)="publierPanier(panier.id)">Publier</button>
+    <button *ngIf="!panier.date_publication" (click)="publierPanier(panier.id)">Publier</button>
   </div>
 </div>
