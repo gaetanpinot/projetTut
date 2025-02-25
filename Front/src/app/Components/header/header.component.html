@@ -26,11 +26,23 @@
           </a>
             <a href="/panier/liste">
               <li class="nav-item">
-      <mat-icon>list</mat-icon>
+                <mat-icon>list</mat-icon>
                 Liste de vos paniers
               </li>
               </a>
+            <a [routerLink]="['/producteurs', authStore.getId(),'ingredients']">
+              <li class="nav-item">
+                <mat-icon>list</mat-icon>
+                Liste de vos ingredients
+              </li>
+            </a>
           </div>
+          <a routerLink="/producteurs/liste">
+            <li class="nav-item">
+              <mat-icon>person</mat-icon>
+              Liste des producteurs
+            </li>
+          </a>
           <li class="nav-item">
             <mat-icon>frigo</mat-icon>
             <a href="/Frigo">Frigo</a>

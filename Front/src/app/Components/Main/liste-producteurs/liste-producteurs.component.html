@@ -1,0 +1,8 @@
+<h2> Liste des producteurs </h2>
+<div id="liste-producteurs">
+  <div class="producteur" *ngFor="let producteur of producteurs">
+    <h3>{{producteur.nom_utilisateur}}</h3>
+    <button mat-flat-button
+      [routerLink]="['/producteurs', producteur.id,'ingredients']"
+      >Voir les ingredients produits</button>
+  </div>

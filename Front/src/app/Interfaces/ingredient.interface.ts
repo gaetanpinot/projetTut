@@ -13,3 +13,8 @@ export interface IngredientInput {
   id: number,
   quantite: string
 }
+export interface IngredientProduit {
+  id: string,
+  nom: string,
+  ingredients: Ingredient[]
+}
