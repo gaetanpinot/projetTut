@@ -5,11 +5,8 @@
       <div class="flex items-center">
         <div *ngFor="let tag of tags" class="tag">{{ tag.label }}</div>
         <span class="text-yellow-400">
-          <mat-icon>star</mat-icon>
-          <mat-icon>star</mat-icon>
-          <mat-icon>star</mat-icon>
-          <mat-icon>star</mat-icon>
-          <mat-icon>star_border</mat-icon>
+          <mat-icon *ngFor="let i of [].constructor(note);">star</mat-icon>
+          {{note}} / 5
         </span>
       </div>
       <p class="mt-8">Temps préparation: {{ temps_preparation }} minutes</p>
@@ -31,8 +28,8 @@
       <div *ngFor="let ingredient of ingredients"
         class="flex flex-col items-center text-center p-4"
       >
-        <img src="" class="w-24 h-24 object-cover rounded-lg" />
-        <p class="mt-2"> {{ ingredient.quantite }}</p>
+        <img src="{{ ingredient.ingredient.url_photo }}" class="w-24 h-24 object-cover rounded-lg" />
+        <p class="mt-2"> <small>{{ ingredient.ingredient.nom }}</small> {{ ingredient.quantite }}</p>
       </div>
     </div>
   </div>

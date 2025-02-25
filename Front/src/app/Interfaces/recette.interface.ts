@@ -32,6 +32,7 @@ export interface Recette{
     fin_saison: Date,
     id_recette_parente: number,
     url_photo: string,
+    note: number,
     tags : [
         {
             id: number,
@@ -39,10 +40,14 @@ export interface Recette{
         }
     ],
     ingredients: [
-        {
-            id_ingredient: number,
+      {
             quantite: string,
-            url_photo: string
+            ingredient: {
+              id_ingredient: number,
+              url_photo: string,
+              nom: string
+            }
+
         }
     ],
     ustensiles: [
@@ -60,4 +65,13 @@ export interface Tag {
 
 export interface Ingredient {
   quantite: string;
+  ingredient: IngredientDetail;
+}
+
+export interface IngredientDetail {
+  id: number;
+  nom: string;
+  debut_saison: number;
+  fin_saison: number;
+  url_photo: string;
 }
