@@ -1,0 +1,16 @@
+<h2>Liste de vos paniers</h2>
+<div class="paniers">
+  <div class="panier" *ngFor="let panier of paniers">
+    <h3>Panier n°{{panier.id}}</h3>
+    <p *ngIf="panier.date_publication!==null;else pasPublie">
+      Date de publication : {{panier.date_publication}}</p>
+    <ng-template #pasPublie>Non publié</ng-template>
+    <div class="ingredients-list">
+      <h4>Ingredients :</h4>
+      <p class="ingredient" *ngFor="let ingred of panier.ingredients">
+         {{ingred.ingredient.nom}}: {{ingred.quantite}}
+      </p>
+    </div>
+    <button (click)="publierPanier(panier.id)">Publier</button>
+  </div>
+</div>

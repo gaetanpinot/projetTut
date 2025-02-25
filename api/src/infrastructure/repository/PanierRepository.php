@@ -113,4 +113,11 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
         $this->getEntityManager()->persist($panier);
         $this->getEntityManager()->flush();
     }
+
+    /**
+     * @return array<Panier> $ingredients
+     */
+    public function getPanierProducteur(string $id_producteur):array{
+        return $this->findBy(['id_producteur' => $id_producteur],['id' => 'DESC']);
+    }
 }

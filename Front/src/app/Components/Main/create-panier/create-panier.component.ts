@@ -2,6 +2,10 @@ import { Component } from '@angular/core';
 import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
 import { Ingredient } from '../../../Interfaces/ingredient.interface';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { PanierInput } from '../../../Interfaces/panier.interface';
+import { PanierService } from '../../../Services/panier.service';
+import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-create-panier',
@@ -11,9 +15,23 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrl: './create-panier.component.scss'
 })
 export class CreatePanierComponent {
-  constructor(private ingredientService: IngredientsServicesService, private fb: FormBuilder) {
+  get formdata(): FormGroup {
+    return this.fb.group({
+      quantite: ['', [Validators.required, Validators.minLength(1)]],
+      id: ['', Validators.required]
+    })
+
+  }
+  constructor(private ingredientService: IngredientsServicesService,
+    private fb: FormBuilder,
+    private panierService: PanierService,
+    private router: Router,
+  ) {
+
     this.panierForm = this.fb.group({
-      ingredients: this.fb.array([this.fb.control('')])
+      ingredients: this.fb.array([
+        this.formdata
+      ])
     });
   }
   public ingredients: Ingredient[] = [];
@@ -29,10 +47,7 @@ export class CreatePanierComponent {
   }
 
   addIngredient() {
-    const ingredient = this.fb.group({
-      quantite: ['', Validators.required],
-      id_ingredient: ['', Validators.required]
-    });
+    const ingredient = this.formdata;
     this.ingredientsFormArray.push(ingredient);
   }
 
@@ -44,13 +59,27 @@ export class CreatePanierComponent {
     this.loadIngredients();
   }
 
+  creerPanier() {
+    const panier: PanierInput = { ingredients: this.panierForm.value.ingredients };
+    console.log("panier create:", panier);
+    this.panierService.createPanier(panier).subscribe(
+      {
+        next: (data) => {
+          console.log(data);
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      }
+    )
+    this.router.navigateByUrl('/panier/liste');
+  }
 
 
   loadIngredients(): void {
     this.ingredientService.getIngredients().subscribe({
       next: (data) => {
         this.ingredients = data;
-        console.log(this.ingredients);
       },
       error: (err) => {
         console.error(err);
