@@ -14,12 +14,16 @@ export class AuthStoreService {
   public setUser(token: string, role: number): void {
     localStorage.setItem('user_token', token);
     localStorage.setItem('user_role', role.toString());
-    this.tokenUser.next(token); 
+    this.tokenUser.next(token);
     this.roleUser.next(role);
   }
 
   public getRole(): number | null {
     return this.roleUser.value;
+  }
+
+  public isProducteur(): boolean {
+    return Number(this.roleUser.value) === 1;
   }
 
   public getToken(): string | null {
@@ -39,7 +43,7 @@ export class AuthStoreService {
 
   public isClient(): boolean {
     return Number(this.roleUser.value) === 0;
-  } 
+  }
 
   private getTokenObservable(): string | null {
     return localStorage.getItem('user_token');

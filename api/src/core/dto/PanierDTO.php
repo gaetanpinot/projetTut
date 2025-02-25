@@ -9,7 +9,7 @@ class PanierDTO extends DTO
 {
     protected int $id;
     protected string $id_producteur;
-    protected string $date_publication;
+    protected ?string $date_publication;
     /**
      * @var array<IngredientDTO>
      */
@@ -20,7 +20,8 @@ class PanierDTO extends DTO
         $panier = new PanierDTO();
         $panier->id = $pa->getId();
         $panier->id_producteur = $pa->getIdProducteur();
-        $panier->date_publication = $panier->dateFormat($pa->getDate());
+        $date_publi = $panier->dateFormat($pa->getDate());
+        $panier->date_publication = strlen($date_publi) > 0 ?$date_publi:null;
         $panier->ingredients = IngredientPanierDTO::fromArrayToDTO($pa->getIngredients());
         return $panier;
     }

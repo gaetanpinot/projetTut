@@ -1,0 +1,20 @@
+.panier {
+  border: 1px solid black;
+  margin: 0.5em;
+
+  h3 {
+    font-size: 1.3em;
+    font-weight: bold;
+  }
+
+  button {
+    border: 1px outset black;
+    border-radius: 3px;
+    margin: 0.2em;
+    padding: 0.2em;
+  }
+
+  .ingredient {
+    margin-left: 1em;
+  }
+}

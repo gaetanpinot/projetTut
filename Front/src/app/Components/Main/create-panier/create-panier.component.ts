@@ -5,6 +5,7 @@ import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { PanierInput } from '../../../Interfaces/panier.interface';
 import { PanierService } from '../../../Services/panier.service';
 import { Router } from '@angular/router';
+import { Subject } from 'rxjs';
 
 @Component({
   selector: 'app-create-panier',
@@ -71,7 +72,7 @@ export class CreatePanierComponent {
         }
       }
     )
-    this.router.navigateByUrl('/');
+    this.router.navigateByUrl('/panier/liste');
   }
 
 
