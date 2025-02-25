@@ -14,7 +14,8 @@
               <mat-icon> fastfood</mat-icon>
               <a href="/Recette">Recettes</a>
             </li>
-            <li class="nav-item" *ngIf="isAuthenticated()">
+              <li class="nav-item" *ngIf="authStore.token$ | async">
+<mat-icon>expand_more</mat-icon>
               Autres
               <ul class="dropdown">
                 <li class="nav-item">
@@ -22,14 +23,14 @@
                 <a href="/Panier">Panier</a>
               </li>
               <li class="nav-item">
-                <mat-icon>frigo</mat-icon>
+                <mat-icon>kitchen</mat-icon>
                 <a href="/Frigo">Frigo</a>
               </li>
               <li class="nav-item">
                 <mat-icon>favorite</mat-icon>
                 <a href="/Favoris">Favoris</a>
               </li>
-              <li class="nav-item" *ngIf="isClientAuth()">
+              <li class="nav-item" *ngIf="authStore.token$ | async">
                 <a href="/">Nouveau panier</a>
               </li>
               </ul>
@@ -39,12 +40,12 @@
         </span>
     <span>
           <ul class="nav-list">
-            <li *ngIf="!isAuthenticated()"
+            <li *ngIf="!(authStore.token$ | async)"
                 class="nav-item">
               <mat-icon>account_circle</mat-icon>
               <a href="/Connexion">Connexion</a>
             </li>
-            <li *ngIf="isAuthenticated()"
+            <li *ngIf="authStore.token$ | async"
                 class="nav-item"><a href="/Deconnexion">Deconnexion</a></li>
             <li class="nav-item"><mat-slide-toggle (change)="switchTheme($event)"
                                   class="example-margin"></mat-slide-toggle></li>
