@@ -1,0 +1,38 @@
+<h2>Créer un panier</h2>
+
+<h3>Liste des ingredients qui seront dans le panier</h3>
+<!--<ul>-->
+<!--  @for(ingredient of ingredients; track ingredient.id){-->
+<!--    <li>-->
+<!--      <input type="checkbox" id="ingredient.id" name="ingredient.id" value="ingredient.id">-->
+<!--    <label for="ingredient.id">{{ingredient.nom}}</label>-->
+<!--    </li>-->
+<!--  }-->
+<!--</ul>-->
+
+<form class="create-panier" [formGroup]="panierForm">
+  <ng-container formArrayName="ingredients">
+    <ng-container *ngFor="let ingredientForm of ingredientsFormArrayControls; let i = index">
+      <div class="ingredient-form-field" [formGroup]="ingredientForm">
+        <mat-form-field>
+        <input matInput formControlName="quantite"
+            type="text" placeholder="quantite(ex:10g)">
+        </mat-form-field>
+        <mat-form-field>
+          <mat-select formControlName="ingredient" placeholder="Ingredient">
+            @for(ing of ingredients; track ing.id){
+              <mat-option [value]="ing.id">{{ing.nom}}</mat-option>
+            }
+            </mat-select>
+        </mat-form-field>
+        <mat-icon class="delete-btn" (click)="deleteIngredient(i)">
+          delete_forever
+        </mat-icon>
+      </div>
+    </ng-container>
+  </ng-container>
+  <button mat-mini-fab (click)="addIngredient()">
+    <mat-icon class="add-ingredient-btn">add</mat-icon>
+  </button>
+
+</form>

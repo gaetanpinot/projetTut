@@ -23,29 +23,41 @@ export interface GetRecetteResponse{
 
 
 export interface Recette{
-    nom: string,  
-    temps_preparation: number,  
-    complexite: number,  
-    description: string,  
-    id_createur : string,  
-    debut_saison: Date,  
-    fin_saison: Date,  
-    id_recette_parente: number,  
-    tag : [  
-        {  
-            id_tag: number,  
-        }  
-    ],  
-    ingredients: [  
-        {  
-            id_ingredient: number,  
-            quantite: string  
-        }  
-    ],  
-    ustensiles: [  
-        {  
-            id_ustensile: number,  
-            quantite : number  
-        }  
-    ]      
+    nom: string,
+    temps_preparation: number,
+    complexite: number,
+    description: string,
+    id_createur : string,
+    debut_saison: Date,
+    fin_saison: Date,
+    id_recette_parente: number,
+    url_photo: string,
+    tags : [
+        {
+            id: number,
+            label: string
+        }
+    ],
+    ingredients: [
+        {
+            id_ingredient: number,
+            quantite: string,
+            url_photo: string
+        }
+    ],
+    ustensiles: [
+        {
+            id_ustensile: number,
+            quantite : number
+        }
+    ]
+}
+
+export interface Tag {
+  label: string;
+  id: number;
+}
+
+export interface Ingredient {
+  quantite: string;
 }

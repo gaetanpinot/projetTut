@@ -14,13 +14,13 @@
               <mat-icon> fastfood</mat-icon>
               <a href="/Recette">Recettes</a>
             </li>
-              <li class="nav-item" *ngIf="authStore.token$ | async">
-<mat-icon>expand_more</mat-icon>
-              Autres
+            <li class="nav-item" *ngIf="(authStore.token$ | async);">
+                <mat-icon>keyboard_arrow_down</mat-icon>
+                Autres
               <ul class="dropdown">
                 <li class="nav-item">
                 <mat-icon>shopping_cart</mat-icon>
-                <a href="/Panier">Panier</a>
+                <a href="/Panier">Mes paniers</a>
               </li>
               <li class="nav-item">
                 <mat-icon>kitchen</mat-icon>
@@ -30,8 +30,9 @@
                 <mat-icon>favorite</mat-icon>
                 <a href="/Favoris">Favoris</a>
               </li>
-              <li class="nav-item" *ngIf="authStore.token$ | async">
-                <a href="/">Nouveau panier</a>
+              <li class="nav-item"  *ngIf="(authStore.token$ | async);">
+                <mat-icon>add_shopping_cart</mat-icon>
+                <a href="/Nouveau-panier">Nouveau panier</a>
               </li>
               </ul>
             </li>
@@ -40,12 +41,12 @@
         </span>
     <span>
           <ul class="nav-list">
-            <li *ngIf="!(authStore.token$ | async)"
+            <li *ngIf="!(authStore.token$ | async);"
                 class="nav-item">
               <mat-icon>account_circle</mat-icon>
               <a href="/Connexion">Connexion</a>
             </li>
-            <li *ngIf="authStore.token$ | async"
+            <li *ngIf="(authStore.token$ | async);"
                 class="nav-item"><a href="/Deconnexion">Deconnexion</a></li>
             <li class="nav-item"><mat-slide-toggle (change)="switchTheme($event)"
                                   class="example-margin"></mat-slide-toggle></li>

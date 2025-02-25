@@ -2,21 +2,31 @@
 
 namespace amap\core\service;
 
+use amap\core\dto\input\InputRecetteDTO;
 use amap\core\dto\RecetteDTO;
 use amap\core\service\interfaces\ServiceRecettesInterface;
+use amap\infrastructure\entities\Recette;
+use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
+use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 class ServiceRecettes implements ServiceRecettesInterface
 {
     private RecetteRepositoryInterface $recetteRepository;
-    public function __construct(RecetteRepositoryInterface $r)
+    private UtilisateurRepositoryInterface $utilisateurRepository;
+
+
+    public function __construct(RecetteRepositoryInterface $recetteRepository, UtilisateurRepositoryInterface $utilisateurRepository )
     {
-        $this->recetteRepository = $r;
+        $this->recetteRepository = $recetteRepository;
+        $this->utilisateurRepository = $utilisateurRepository;
     }
+
     public function getRecetteById($id): RecetteDTO
     {
         return RecetteDTO::fromRecette($this->recetteRepository->getRecetteById($id));
     }
+
     public function getRecettes($args)
     {
         $recettes = [];
@@ -26,15 +36,17 @@ class ServiceRecettes implements ServiceRecettesInterface
         return $recettes;
     }
 
-
     public function deleteRecette($id)
     {
         $this->recetteRepository->deleteRecette($id);
     }
 
-    public function createRecette($recetteInputDTO)
+    public function createRecette(InputRecetteDTO $inputRecette) : RecetteDTO
     {
-        // InputDTO to entity
-    }
+        $createur = $this->utilisateurRepository->getUtilisateurById($inputRecette->getIdCreateur());
+        $recette = Recette::fromInputRecetteDTO($inputRecette, $createur);
+        $res = $this->recetteRepository->createRecette($recette);
 
+        return RecetteDTO::fromRecette($res);
+    }
 }

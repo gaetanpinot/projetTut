@@ -1,0 +1,42 @@
+meta {
+  name: createpanier
+  type: http
+  seq: 2
+}
+
+post {
+  url: {{api}}/paniers
+  body: json
+  auth: none
+}
+
+body:json {
+  {
+    "ingredients":[
+      {
+        "id":1,
+        "quantite":"12g"
+      },
+      {
+        "id":8,
+        "quantite":"3kg"
+      },
+      {
+        "id":11,
+        "quantite": "4pc"
+      }
+    ]
+  }
+}
+
+assert {
+  res.status: eq 201
+}
+
+script:post-response {
+  if(res.body.panier!==undefined){
+    const id = res.body.panier.id;
+    bru.setVar('id_panier',id);
+  }
+  
+}

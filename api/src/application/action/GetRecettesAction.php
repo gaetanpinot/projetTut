@@ -81,7 +81,12 @@ class GetRecettesAction extends AbstractAction
                 'page' => (object)[
                     '$ref' => 'http://amap.fr/page#',
                     'default' => 1
-                ]
+                ],
+                'quantite' => (object)[
+                    '$ref' => 'http://amap.fr/quantite#',
+                    'type' => 'string',
+                    'minLength' => 1
+                ],
             ],
         ];
         if(!isset($data['page'])) {
@@ -94,10 +99,10 @@ class GetRecettesAction extends AbstractAction
             return $check;
         }
 
-        try {
+//        try {
             return JsonRenderer::render($rs, 200, $this->serviceRecette->getRecettes($data));
-        } catch (\Error $e) {
-            return JsonRenderer::render($rs, 500, $e->getMessage());
-        }
+//        } catch (\Error $e) {
+//            return JsonRenderer::render($rs, 500, $e->getMessage());
+//        }
     }
 }

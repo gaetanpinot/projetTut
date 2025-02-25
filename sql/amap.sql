@@ -125,7 +125,7 @@ CREATE TABLE "allergene" (
 CREATE TABLE "frigo" (
   "id_utilisateur" uuid,
   "id_ingredient" int,
-  "date_ajout" date,
+  "date_ajout" int,
   "quantite" varchar,
   PRIMARY KEY ("id_utilisateur", "id_ingredient", "date_ajout")
 );
@@ -187,29 +187,29 @@ ALTER TABLE "panier_utilisateur" ADD FOREIGN KEY ("id_panier") REFERENCES "panie
 
 ALTER TABLE "recette" ADD FOREIGN KEY ("id_createur") REFERENCES "utilisateur" ("id");
 
-ALTER TABLE "recette" ADD FOREIGN KEY ("id_recette_parente") REFERENCES "recette" ("id");
+ALTER TABLE "recette" ADD FOREIGN KEY ("id_recette_parente") REFERENCES "recette" ("id") ON DELETE SET NULL;
 
 ALTER TABLE "tag_recette" ADD FOREIGN KEY ("id_tag") REFERENCES "tag" ("id");
 
-ALTER TABLE "tag_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id");
+ALTER TABLE "tag_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "commentaire" ADD FOREIGN KEY ("id_utilisateur") REFERENCES "utilisateur" ("id");
+ALTER TABLE "commentaire" ADD FOREIGN KEY ("id_utilisateur") REFERENCES "utilisateur" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "commentaire" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id");
+ALTER TABLE "commentaire" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "favoris" ADD FOREIGN KEY ("id_utilisateur") REFERENCES "utilisateur" ("id");
 
-ALTER TABLE "favoris" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id");
+ALTER TABLE "favoris" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "note_recette" ADD FOREIGN KEY ("id_utilisateur") REFERENCES "utilisateur" ("id");
+ALTER TABLE "note_recette" ADD FOREIGN KEY ("id_utilisateur") REFERENCES "utilisateur" ("id") ON DELETE CASCADE;
 
-ALTER TABLE "note_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id");
+ALTER TABLE "note_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "frigo" ADD FOREIGN KEY ("id_utilisateur") REFERENCES "utilisateur" ("id");
 
 ALTER TABLE "frigo" ADD FOREIGN KEY ("id_ingredient") REFERENCES "ingredient" ("id");
 
-ALTER TABLE "ingredient_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id");
+ALTER TABLE "ingredient_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "ingredient_recette" ADD FOREIGN KEY ("id_ingredient") REFERENCES "ingredient" ("id");
 
@@ -217,7 +217,7 @@ ALTER TABLE "allergene_ingredient" ADD FOREIGN KEY ("id_ingredient") REFERENCES 
 
 ALTER TABLE "allergene_ingredient" ADD FOREIGN KEY ("id_allergene") REFERENCES "allergene" ("id");
 
-ALTER TABLE "ustensile_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id");
+ALTER TABLE "ustensile_recette" ADD FOREIGN KEY ("id_recette") REFERENCES "recette" ("id") ON DELETE CASCADE;
 
 ALTER TABLE "ustensile_recette" ADD FOREIGN KEY ("id_ustensile") REFERENCES "ustensile" ("id");
 

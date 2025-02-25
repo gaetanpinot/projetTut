@@ -1,0 +1,39 @@
+<section>
+  <div class="flex justify-between">
+    <span>
+      <h1>{{ nom }}</h1>
+      <div class="flex items-center">
+        <div *ngFor="let tag of tags" class="tag">{{ tag.label }}</div>
+        <span class="text-yellow-400">
+          <mat-icon>star</mat-icon>
+          <mat-icon>star</mat-icon>
+          <mat-icon>star</mat-icon>
+          <mat-icon>star</mat-icon>
+          <mat-icon>star_border</mat-icon>
+        </span>
+      </div>
+      <p class="mt-8">Temps préparation: {{ temps_preparation }} minutes</p>
+      <small></small>
+    </span>
+    <img
+      id="recette-img"
+      src="{{ url_photo }}"
+      alt=""
+    />
+  </div>
+  <div>
+    <h2>Instructions :</h2>
+    <p>{{ description }}</p>
+  </div>
+  <div class="mt-8">
+    <h2>Ingrédients :</h2>
+    <div class="grid grid-cols-2 md:grid-cols-5 gap-4">
+      <div *ngFor="let ingredient of ingredients"
+        class="flex flex-col items-center text-center p-4"
+      >
+        <img src="" class="w-24 h-24 object-cover rounded-lg" />
+        <p class="mt-2"> {{ ingredient.quantite }}</p>
+      </div>
+    </div>
+  </div>
+</section>

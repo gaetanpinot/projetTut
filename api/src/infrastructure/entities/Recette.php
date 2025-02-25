@@ -2,10 +2,10 @@
 
 namespace amap\infrastructure\entities;
 
+use amap\core\dto\input\InputRecetteDTO;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
-use Doctrine\ORM\Query\Lexer;
 use amap\infrastructure\repository\RecetteRepository;
 
 #[ORM\Entity(repositoryClass: RecetteRepository::class)]
@@ -43,7 +43,8 @@ class Recette
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column(type: "integer")]
-    private int $id;
+    private ?int $id = null;
+
     public function getId(): int
     {
         return $this->id;
@@ -55,9 +56,9 @@ class Recette
     {
         return $this->nom;
     }
+
     #[ORM\Column(type: "integer", nullable: true, name: 'temps_preparation')]
     private ?int $tempsPreparation;
-
 
     public function getTempsPreparation(): ?int
     {
@@ -67,14 +68,15 @@ class Recette
     #[ORM\Column(type: "integer", nullable: true)]
     private ?int $complexite;
 
-    /*#[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "recettes")]*/
-    /*#[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id")]*/
-    #[ORM\Column(type: "string", nullable: true, name: 'id_createur')]
-    private ?string $id_createur;
-    public function getCreateur(): ?string
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: "recettes")]
+    #[ORM\JoinColumn(name: "id_createur", referencedColumnName: "id", onDelete: "SET NULL")]
+    private ?Utilisateur $createur;
+
+    public function getCreateur(): ?Utilisateur
     {
-        return $this->id_createur;
+        return $this->createur;
     }
+
 
     #[ORM\Column(type: "text", nullable: true)]
     private ?string $description;
@@ -88,6 +90,7 @@ class Recette
     #[ORM\ManyToOne(targetEntity: Recette::class)]
     #[ORM\JoinColumn(name: "id_recette_parente", referencedColumnName: "id", nullable: true)]
     private ?Recette $recetteParente;
+
     public function getRecetteParente(): ?Recette
     {
         return $this->recetteParente;
@@ -133,6 +136,19 @@ class Recette
         /*$this->ingredients = new ArrayCollection();*/
         $this->ingredients_recette = new ArrayCollection();
         $this->ustensiles = new ArrayCollection();
+    }
+
+    public static function fromInputRecetteDTO(InputRecetteDTO $inputRecetteDTO, Utilisateur $createur): self{
+        $recette = new Recette();
+        $recette->setNom($inputRecetteDTO->getNom());
+        $recette->setTempsPreparation($inputRecetteDTO->getTempsPreparation());
+        $recette->setComplexite($inputRecetteDTO->getComplexite());
+        $recette->setDescription($inputRecetteDTO->getDescription());
+        $recette->setDebutSaison($inputRecetteDTO->getDebutSaison());
+        $recette->setFinSaison($inputRecetteDTO->getFinSaison());
+        $recette->setUrlPhoto($inputRecetteDTO->getUrlPhoto());
+        $recette->setCreateur($createur);
+        return $recette;
     }
 
     public function getTags(): Collection
@@ -204,5 +220,4 @@ class Recette
     {
         $this->createur = $createur;
     }
-
 }
