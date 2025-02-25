@@ -14,18 +14,18 @@ import { Router } from '@angular/router';
   styleUrl: './create-panier.component.scss'
 })
 export class CreatePanierComponent {
-  formdata: FormGroup;
+  get formdata(): FormGroup {
+    return this.fb.group({
+      quantite: ['', [Validators.required, Validators.minLength(1)]],
+      id: ['', Validators.required]
+    })
 
+  }
   constructor(private ingredientService: IngredientsServicesService,
     private fb: FormBuilder,
     private panierService: PanierService,
     private router: Router,
   ) {
-
-    this.formdata = this.fb.group({
-      quantite: ['', [Validators.required, Validators.minLength(1)]],
-      id: ['', Validators.required]
-    })
 
     this.panierForm = this.fb.group({
       ingredients: this.fb.array([

@@ -23,7 +23,7 @@
       </div>
     </ng-container>
   </ng-container>
-  <button mat-mini-fab (click)="addIngredient()">
+  <button type="button" mat-mini-fab (click)="addIngredient()">
     <mat-icon class="add-ingredient-btn">add</mat-icon>
   </button>
   <button type="submit" [disabled]="!panierForm.valid" >Créer le panier</button>
