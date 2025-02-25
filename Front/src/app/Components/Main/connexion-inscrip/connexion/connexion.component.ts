@@ -18,13 +18,13 @@ export class ConnexionComponent implements OnInit {
     mot_de_passe: new FormControl('', [Validators.required])
   })
 
-  constructor(private connectServ: ConnexionService, private authStore: AuthStoreService){
+  constructor(private connectServ: ConnexionService, private authStore: AuthStoreService) {
   }
 
   ngOnInit(): void {
 
   }
-  
+
   onSubmit() {
     console.log("ok")
     const body: LogInRequestBody = {
@@ -37,7 +37,7 @@ export class ConnexionComponent implements OnInit {
     this.connectServ.logIn(body).subscribe(
       {
         next: (data) => {
-          this.authStore.setUser(data.token, data.utilisateur.role);
+          this.authStore.setUser(data.token, data.utilisateur.role, data.utilisateur.id);
         },
         error: (err) => {
           console.error(err);

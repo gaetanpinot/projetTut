@@ -6,6 +6,7 @@ use amap\core\dto\AllergenesDTO;
 use amap\core\dto\FrigoDTO;
 use amap\core\dto\FrigoInputDTO;
 use amap\core\dto\IngredientDTO;
+use amap\core\dto\IngredientProduitsDTO;
 use amap\core\dto\PanierDTO;
 use amap\core\dto\ProfileDTO;
 use amap\core\dto\UstensileDTO;
@@ -157,12 +158,14 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
         return $paniersDTO;
     }
 
-    public function getIngredientProducteur(string $id_producteur): array
+    public function getIngredientProducteur(string $id_producteur): IngredientProduitsDTO
     {
+        $producteur = $this->utilisateurRepository->getProducteur($id_producteur);
         $ingredients = $this->utilisateurRepository->getIngredientProducteur($id_producteur);
         $ingredientsDTO = array_map(
         fn ($i) => IngredientDTO::fromIngredient($i),$ingredients);
-        return $ingredientsDTO;
+        $ingredientProduit = new IngredientProduitsDTO($producteur->getId(), $producteur->getNomUtilisateur(), $ingredientsDTO);
+        return $ingredientProduit;
     }
 
     public function addProducteurToUtilisateur(string $id_utilisateur, string $id_producteur): void

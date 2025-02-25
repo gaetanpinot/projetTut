@@ -13,6 +13,7 @@ interface UtilisateurRepositoryInterface
 {
     public function getUtilisateurById(string $id): Utilisateur;
     public function getUtilisateurByNom(string $nomUtilisateur): Utilisateur;
+    public function getProducteur(string $id_producteur): Utilisateur;
     public function createUtilisateur(Utilisateur $utilisateur): Utilisateur;
     public function addAllergies(string $id_utilisateur, Allergene $allergie): void;
     public function deleteAllergies(string $id_utilisateur, Allergene $allergie): void;

@@ -35,7 +35,7 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
         //si la date est null le panier n'est pas publié
         $panier = $this->getPanierById($id_panier);
         if($panier->getDate() !== null) {
-            /*return;*/
+            return;
         }
 
         $date_panier = new DateIdType();

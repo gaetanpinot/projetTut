@@ -7,19 +7,25 @@ import { BehaviorSubject } from 'rxjs';
 export class AuthStoreService {
   private tokenUser = new BehaviorSubject<string | null>(this.getTokenObservable());
   private roleUser = new BehaviorSubject<number | null>(this.getRoleObservable());
-
+  private idUser = new BehaviorSubject<string | null>(this.getIdObservable());
   public token$ = this.tokenUser.asObservable();
   public role$ = this.roleUser.asObservable();
 
-  public setUser(token: string, role: number): void {
+  public setUser(token: string, role: number, id: string): void {
     localStorage.setItem('user_token', token);
     localStorage.setItem('user_role', role.toString());
+    localStorage.setItem('user_id', id);
     this.tokenUser.next(token);
     this.roleUser.next(role);
+    this.idUser.next(id);
   }
 
   public getRole(): number | null {
     return this.roleUser.value;
+  }
+
+  public getId(): string | null {
+    return this.idUser.value;
   }
 
   public isProducteur(): boolean {
@@ -33,8 +39,10 @@ export class AuthStoreService {
   public clearUser(): void {
     localStorage.removeItem('user_token');
     localStorage.removeItem('user_role');
+    localStorage.removeItem('user_id');
     this.tokenUser.next(null);
     this.roleUser.next(null);
+    this.idUser.next(null);
   }
 
   public isAuthenticated(): boolean {
@@ -52,5 +60,9 @@ export class AuthStoreService {
   private getRoleObservable(): number | null {
     const role = localStorage.getItem('user_role');
     return role !== null ? Number(role) : null;
+  }
+  private getIdObservable(): string | null {
+    const id = localStorage.getItem('user_id');
+    return id !== null ? id : null;
   }
 }
