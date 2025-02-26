@@ -193,4 +193,17 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
     {
         $this->nbPagination = $nb;
     }
+
+    public function getRandomRecettes(int $count): array
+    {
+        $qb = $this->createQueryBuilder('r');
+
+
+        $qb->orderBy('RAND()')
+        ->setMaxResults($count);
+
+        $query = $qb->getQuery();
+        return $query->getResult();
+    }
+
 }

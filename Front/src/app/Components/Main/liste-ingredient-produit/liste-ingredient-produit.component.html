@@ -1,7 +1,12 @@
 <h2 mat-card-title> Liste des ingredients produits par le producteur {{ingredients_produit.nom}} </h2>
 <div id="liste-ingredients-produit">
-  <div class="ingredient" *ngFor="let ingredient of ingredients_produit.ingredients">
-    <h3>{{ingredient.nom}}</h3>
+  <div class="flex items-center gap-4 text-center">
+    <div class="ingredient" *ngFor="let ingredient of ingredients_produit.ingredients">
+      <div>
+        <h3>{{ingredient.nom}}</h3>
+        <img style="border-radius: 50%" src="{{ingredient.url_photo}}" height="64" width="64">
+      </div>
+    </div>
   </div>
   <button mat-flat-button (click)="abonnerAProducteur()" >S'abonner</button>
 </div>
