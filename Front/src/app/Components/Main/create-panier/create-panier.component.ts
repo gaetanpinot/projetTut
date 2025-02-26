@@ -65,6 +65,7 @@ export class CreatePanierComponent {
     this.panierService.createPanier(panier).subscribe(
       {
         next: (data) => {
+          this.router.navigateByUrl('/panier/liste');
           console.log(data);
         },
         error: (err) => {
@@ -72,7 +73,6 @@ export class CreatePanierComponent {
         }
       }
     )
-    this.router.navigateByUrl('/panier/liste');
   }
 
 

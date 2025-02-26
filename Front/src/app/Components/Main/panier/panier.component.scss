@@ -1,0 +1,281 @@
+/*  Conteneur principal des paniers */
+
+.liste-paniers {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 20px;
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+
+/*  Style général d'un panier */
+
+.panier {
+    background-color: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 12px;
+    padding: 15px;
+    transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+    position: relative;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.panier:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+}
+
+
+/*  Alignement du Titre et Bouton Supprimer */
+
+.header-panier {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+
+/*  Style du titre */
+
+.header-panier h3 {
+    color: #1B1519;
+    font-size: 1.3rem;
+    font-weight: bold;
+    margin: 0;
+}
+
+
+/*  Description du panier */
+
+.panier p {
+    font-size: 1rem;
+    color: #555;
+    margin-bottom: 10px;
+}
+
+
+/*  Liste des items */
+
+.liste-items {
+    background-color: #f8f9fa;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    overflow-y: auto;
+    max-height: 300px;
+}
+
+.liste-items ul {
+    list-style: none;
+    padding: 0;
+}
+
+.liste-items li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background-color: #e5f2e9;
+    padding: 8px;
+    border-radius: 6px;
+    transition: transform 0.3s ease-in-out;
+    margin-bottom: 5px;
+    font-size: 0.95rem;
+}
+
+.liste-items li:hover {
+    transform: scale(1.03);
+}
+
+
+/*  Quantité et Poids */
+
+.item-quantity {
+    font-weight: bold;
+    color: #18A362;
+    font-size: 0.9rem;
+    padding: 3px 7px;
+    background: #dff3e9;
+    border-radius: 4px;
+}
+
+
+/*  Nom de l'item */
+
+.item-name {
+    margin: 0;
+    flex-grow: 1;
+    font-size: 0.95rem;
+    font-weight: 500;
+}
+
+
+/*  Informations supplémentaires */
+
+.infos {
+    margin-top: 10px;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.infos ul {
+    list-style: none;
+    padding: 0;
+}
+
+.infos li {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin-bottom: 5px;
+}
+
+.infos li span {
+    font-weight: bold;
+    color: #18A362;
+}
+
+
+/*  Boutons */
+
+.buttons {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 10px;
+}
+
+
+/*  Style des boutons */
+
+.btn {
+    background-color: #18A362;
+    color: white;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.btn:hover {
+    background-color: #128a50;
+}
+
+
+/*  Bouton Supprimer */
+
+.btn-supprimer {
+    background-color: #e63946;
+    color: white;
+    padding: 6px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    font-size: 0.9rem;
+}
+
+.btn-supprimer:hover {
+    background-color: #c92a36;
+}
+
+
+/*  Responsive - Deux colonnes sur tablettes */
+
+@media (min-width: 768px) {
+    .liste-paniers {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+
+/*  Responsive - Trois colonnes sur écrans larges */
+
+@media (min-width: 1200px) {
+    .liste-paniers {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+
+/*  Responsive - Format colonne unique pour mobile */
+
+@media (max-width: 767px) {
+    .liste-paniers {
+        display: flex;
+        flex-direction: column;
+    }
+}
+
+
+/*  Overlay du popup */
+
+.popup-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+
+/*  Contenu du popup */
+
+.popup {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    width: 350px;
+}
+
+
+/*  Boutons dans le popup */
+
+.popup-buttons {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+
+
+/*  Style des boutons du popup */
+
+.btn {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+    font-size: 0.9rem;
+    font-weight: 500;
+}
+
+.confirm-btn {
+    background-color: #e63946;
+    color: white;
+}
+
+.confirm-btn:hover {
+    background-color: #c92a36;
+}
+
+.cancel-btn {
+    background-color: #d1d5db;
+    color: #333;
+}
+
+.cancel-btn:hover {
+    background-color: #b0b4b8;
+}

@@ -1,24 +1,23 @@
 <section class="auth-wrapper">
-    <div *ngIf="!(authStore.token$ | async); else loggedIn"
-         class="auth-container p-8 shadow-lg rounded-lg">
+    <div *ngIf="!(authStore.token$ | async); else loggedIn" class="auth-container p-8 shadow-lg rounded-lg">
         <div class="auth-tabs">
-            <button class="tab-button"
-                    [class.active]="activeTab === 'login'"
-                    (click)="switchTab('login')">Connexion</button>
-            <button class="tab-button"
-                    [class.active]="activeTab === 'signup'"
-                    (click)="switchTab('signup')">Inscription</button>
-
+            <button class="tab-button" [class.active]="activeTab === 'login'" (click)="switchTab('login')">
+                Connexion
+            </button>
+            <button class="tab-button" [class.active]="activeTab === 'signup'" (click)="switchTab('signup')">
+                Inscription
+            </button>
         </div>
-        <div class="auth-content">
-            <app-connexion *ngIf="activeTab === 'login'"></app-connexion>
-            <app-inscription *ngIf="activeTab === 'signup'"></app-inscription>
+        <div class="auth-content" [ngSwitch]="activeTab">
+            <app-connexion *ngSwitchCase="'login'"></app-connexion>
+            <app-inscription *ngSwitchCase="'signup'"></app-inscription>
         </div>
     </div>
 
     <ng-template #loggedIn>
         <div>
-            Vous-etes auth
+            Vous êtes authentifié ! {{ authStore.token$ | async }}
         </div>
+        <app-deconnexion></app-deconnexion>
     </ng-template>
 </section>

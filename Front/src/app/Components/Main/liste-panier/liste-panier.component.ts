@@ -3,7 +3,7 @@ import { Panier, PanierResponse, PaniersResponse } from '../../../Interfaces/pan
 import { PanierService } from '../../../Services/panier.service';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subject, takeUntil } from 'rxjs';
-import { filter } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-liste-panier',
@@ -15,8 +15,10 @@ import { filter } from 'rxjs/operators';
 export class ListePanierComponent {
   public paniers: Panier[] = [];
 
-  private destroy$: Subject<void> = new Subject<void>();
-  constructor(private panierService: PanierService, private router: Router) { }
+  constructor(private panierService: PanierService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) { }
 
   private loadPanier() {
     this.panierService.getPaniers().subscribe(
@@ -33,15 +35,29 @@ export class ListePanierComponent {
 
   public publierPanier(id: number) {
     this.panierService.publierPanier(id).subscribe(
-      {
-        next: () => {
-          this.loadPanier();
-        },
+      (res: Response) => {
+        if (res.status !== 201) {
+          this.snackBar.open('Erreur lors de la publication du panier', 'Fermer', {
+            duration: 10000
+          })
+          return;
+        }
+        this.loadPanier();
+        this.snackBar.open('Panier publié', 'Fermer', {
+          duration: 10000
+        })
+
       }
     );
   }
+  test() {
+    this.snackBar.open('Panier publié', 'Fermer', {
+      duration: 1000
+    })
+  }
 
   ngOnInit(): void {
+    this.paniers = [];
     this.loadPanier();
   }
 

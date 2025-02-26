@@ -33,7 +33,8 @@ export class PanierService {
       {
         headers: {
           'Authorization': 'Bearer ' + this.authStore.getToken()
-        }
+        },
+        observe: 'response'
       }
     )
   }

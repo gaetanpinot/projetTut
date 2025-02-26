@@ -1,0 +1,91 @@
+<div class="account-container">
+    <section id="info">
+        <h2 class="section-title">Informations du compte</h2>
+        <div class="account-info">
+            <div>
+                <p><strong>Nom :</strong> {{ user.nom }}</p>
+                <p><strong>Email :</strong> {{ user.email }}</p>
+                <p><strong>Rôle :</strong> {{ user.role }}</p>
+            </div>
+            <mat-icon class="edit-icon" (click)="toggleForm()">create</mat-icon>
+        </div>
+
+        <div *ngIf="showForm" class="form-container">
+            <h2 class="section-title">Modification des informations</h2>
+            <form (ngSubmit)="updateUser($event)">
+                <label>Nom</label>
+                <input type="text" [(ngModel)]="user.nom" name="nom" class="input-field" required />
+
+                <label>Email</label>
+                <input type="email" [(ngModel)]="user.email" name="email" class="input-field" required />
+
+                <button type="submit" class="btn save-btn">Enregistrer</button>
+            </form>
+
+            <h2 class="section-title">Changement de mot de passe</h2>
+            <form (ngSubmit)="changePassword($event)">
+                <label>Ancien mot de passe</label>
+                <input type="password" [(ngModel)]="password.old" name="oldPassword" class="input-field" required />
+
+                <label>Nouveau mot de passe</label>
+                <input type="password" [(ngModel)]="password.new" name="newPassword" class="input-field" required />
+
+                <label>Confirmer le mot de passe</label>
+                <input type="password" [(ngModel)]="password.confirm" name="confirmPassword" class="input-field" required />
+
+                <button type="submit" class="btn change-password-btn">Modifier</button>
+            </form>
+        </div>
+
+        <h2 class="section-title">Mes Paniers</h2>
+        <a [href]="isClient ? '/Panier/user' : '/panier/liste'" class="link">Voir mes paniers</a>
+    </section>
+
+    <!-- Chargement des préférences -->
+    <div *ngIf="isLoading" class="loading-container">
+        <p>Chargement des préférences...</p>
+    </div>
+
+    <section id="preference" *ngIf="!isLoading">
+        <div class="preferences-container">
+            <div class="preferences-column">
+                <h2 class="section-title">Allergies</h2>
+                <form>
+                    <label *ngFor="let allergie of allergies" class="checkbox-group">
+                        <input type="checkbox" [(ngModel)]="allergie.checked" name="{{ allergie.nom }}" />
+                        <span>{{ allergie.nom }}</span>
+                    </label>
+                </form>
+                <button (click)="saveAllergies()" class="btn save-btn">Enregistrer les allergies</button>
+            </div>
+
+            <div class="preferences-column">
+                <h2 class="section-title">Ustensiles de cuisine</h2>
+                <form class="list-pref">
+                    <label *ngFor="let ustensile of ustensiles" class="checkbox-group">
+                        <input type="checkbox" [(ngModel)]="ustensile.checked" name="{{ ustensile.nom }}" />
+                        <span>{{ ustensile.nom }}</span>
+                    </label>
+                </form>
+                <button (click)="saveUstensiles()" class="btn save-btn">Enregistrer les ustensiles</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Popup de confirmation pour la déconnexion -->
+    <div *ngIf="showLogoutPopup" class="popup-overlay">
+        <div class="popup">
+            <h3> Confirmation</h3>
+            <p>Êtes-vous sûr de vouloir vous déconnecter ?</p>
+            <div class="popup-buttons">
+                <button class="confirm" (click)="logout()">Oui, me déconnecter</button>
+                <button class="cancel" (click)="closeLogoutPopup()">Annuler</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bouton de déconnexion -->
+    <button id="Deconnexion" class="btn logout-btn" (click)="openLogoutPopup()">
+    Déconnexion
+</button>
+</div>
