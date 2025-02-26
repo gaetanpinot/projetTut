@@ -1,1 +1,74 @@
-<p>frigo works!</p>
+<h2>Mon Frigo</h2>
+
+<!-- Barre de recherche pour ajouter des ingrédients -->
+<div class="search-bar">
+    <select [(ngModel)]="selectedIngredient">
+        <option value="" disabled selected hidden>Rechercher un ingrédient</option>
+        <option *ngFor="let ingredient of filteredIngredients" [value]="ingredient.nom">
+            {{ ingredient.nom }}
+        </option>
+    </select>
+    <div class="quantity">
+        <input type="number" [(ngModel)]="newItemQuantite" min="0" step="1" placeholder="Quantité">
+        <input type="number" [(ngModel)]="newItemPoids" min="0" step="20" placeholder="Poids (g)">
+        <button id="add-ingredient" (click)="ajouterItem()">Ajouter</button>
+    </div>
+</div>
+
+<!-- Bouton pour activer/désactiver le mode simulation -->
+<button id="fake" (click)="toggleFakeMode()">
+    {{ fakeMode ? 'Désactiver' : 'Activer' }} le mode simulation
+</button>
+
+<!-- Mode Simulation -->
+<div *ngIf="fakeMode; else realFrigo">
+    <h3 class="info-message">🧊 Simulation : Voici le contenu de votre frigo !</h3>
+
+    <div class="container-frigo">
+        <ul id="liste-frigo">
+            <li class="item-frigo" *ngFor="let item of fakeFrigo; let i = index">
+                <mat-icon (click)="supprimerItem(i)">close</mat-icon>
+                <span *ngIf="item.quantite" class="item-quantity">{{ item.quantite }}x</span>
+                <span *ngIf="item.poids" class="item-weight">{{ item.poids }}g</span>
+                <p class="item-name">{{ item.nom }}</p>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+<!-- Bouton pour vider le frigo avec confirmation -->
+<button id="clear-frigo" (click)="ouvrirPopup('clear')">Vider le frigo</button>
+
+<!-- Popup de confirmation (vider le frigo ou supprimer un ingrédient) -->
+<div class="popup-overlay" *ngIf="popupVisible">
+    <div class="popup">
+        <h3>⚠️ Confirmation</h3>
+        <p *ngIf="popupType === 'clear'">Êtes-vous sûr de vouloir vider tout le frigo ?</p>
+        <p *ngIf="popupType === 'delete'">Voulez-vous vraiment supprimer cet ingrédient ?</p>
+        <div class="popup-buttons">
+            <button class="confirm" (click)="confirmerAction()">Oui</button>
+            <button class="cancel" (click)="fermerPopup()">Annuler</button>
+        </div>
+    </div>
+</div>
+
+<!-- Mode Réel -->
+<ng-template #realFrigo>
+    <h3 class="info-message">⚠️ Aucun ingrédient ajouté pour le moment.</h3>
+
+    <div class="container-frigo">
+        <ul id="liste-frigo">
+            <li class="item-frigo" *ngFor="let item of ingredientsFormArrayControls; let i = index">
+                <mat-icon (click)="ouvrirPopup('delete', i)">close</mat-icon>
+                <span *ngIf="item.get('quantite')?.value" class="item-quantity">
+                    {{ item.get('quantite')?.value }}x
+                </span>
+                <span *ngIf="item.get('poids')?.value" class="item-weight">
+                    {{ item.get('poids')?.value }}g
+                </span>
+                <p class="item-name">{{ item.get('nom')?.value }}</p>
+            </li>
+        </ul>
+    </div>
+</ng-template>

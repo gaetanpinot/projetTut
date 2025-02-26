@@ -1,3 +1,60 @@
-<div>
+<div class="footer-container">
+    <!-- Message principal -->
+    <p>Rejoignez-nous et soutenez une agriculture locale et responsable ! 🌿</p>
 
+    <br>
+
+    <div class="footer-grid">
+
+        <!-- Colonne 1 : Navigation -->
+        <div class="footer-section">
+            <h3>Navigation</h3>
+            <ul class="nav-list">
+                <li class="nav-item">
+                    <a href="/Home">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a href="/Recette">Recettes</a>
+                </li>
+                <li class="nav-item" *ngIf="(authStore.token$ | async);">
+                    <a href="/Panier">Panier</a>
+                </li>
+                <li class="nav-item" *ngIf="(authStore.token$ | async);">
+                    <a href="/Frigo">Frigo</a>
+                </li>
+                <li class="nav-item" *ngIf="(authStore.token$ | async);">
+                    <a href="/">Nouveau panier</a>
+                </li>
+                <li class="nav-item" *ngIf="(authStore.token$ | async);">
+                    <a href="/Favoris">Favoris</a>
+                </li>
+            </ul>
+        </div>
+
+        <!-- Colonne 2 : Participants -->
+        <div class="footer-section">
+            <h3>Participants du projet</h3>
+            <ul class="project-participants">
+                <li>DAZA Sasha</li>
+                <li>PEROT Mathis</li>
+                <li>PINOT Gaëtan</li>
+                <li>PRYKHODKO Yehor</li>
+            </ul>
+        </div>
+
+        <!-- Colonne 3 : Liens utiles -->
+        <div class="footer-section">
+            <h3>Liens utiles</h3>
+            <ul class="project-links">
+                <li><a href="https://github.com/gaetanpinot/projetTut" target="_blank">GitHub du projet</a></li>
+                <li><a href="https://webetu.iutnc.univ-lorraine.fr/www/daza2u/Projet_DWM_AMAP_2024_2025/" target="_blank">Documentation</a></li>
+                <li><a href="http://docketu.iutnc.univ-lorraine.fr:12200" target="_blank">API</a></li>
+                <li><a href="http://docketu.iutnc.univ-lorraine.fr:12201" target="_blank">Adminer</a></li>
+            </ul>
+        </div>
+
+    </div>
+
+    <!-- Copyright -->
+    <p class="footer-bottom">© 2024 Amap - Tous droits réservés.</p>
 </div>

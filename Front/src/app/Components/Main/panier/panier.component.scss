@@ -1,0 +1,128 @@
+/* Conteneur principal */
+
+.liste-paniers {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    padding: 20px;
+    max-width: 600px;
+    margin: auto;
+}
+
+
+/* Style de chaque panier */
+
+.panier {
+    background-color: #f8f9fa;
+    border: 2px solid #386641;
+    border-radius: 8px;
+    padding: 15px;
+    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    position: relative;
+}
+
+.panier:hover {
+    transform: scale(1.02);
+}
+
+
+/* Style du titre */
+
+.panier h3 {
+    color: #1B1519;
+    font-size: 1.2rem;
+    margin-bottom: 8px;
+}
+
+
+/* Bouton voir le panier */
+
+.btn {
+    background-color: #18A362;
+    color: white;
+    padding: 8px 12px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.btn:hover {
+    background-color: #128a50;
+}
+
+
+/* Liste des items */
+
+.liste-items ul {
+    list-style: none;
+    padding: 0;
+}
+
+.liste-items li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 5px;
+    background-color: #e5f2e9;
+    padding: 5px;
+    border-radius: 5px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.liste-items li:hover {
+    transform: scale(1.05);
+}
+
+
+/* Nom et quantité des items */
+
+.item-quantity {
+    font-weight: bold;
+    color: #128a50;
+}
+
+.item-name {
+    margin: 0;
+    flex-grow: 1;
+}
+
+
+/* Icône supprimer un item */
+
+mat-icon {
+    cursor: pointer;
+    transition: transform 0.2s ease-in-out;
+}
+
+mat-icon:hover {
+    transform: scale(1.2);
+    color: red;
+}
+
+
+/* Supprimer un panier */
+
+.clear {
+    text-align: right;
+    margin-top: 10px;
+    cursor: pointer;
+}
+
+.clear mat-icon {
+    font-size: 24px;
+    color: red;
+    transition: transform 0.3s ease-in-out;
+}
+
+.clear mat-icon:hover {
+    transform: scale(1.2);
+}
+
+
+/* Animation de suppression */
+
+.remove {
+    transform: translateX(100%);
+    opacity: 0;
+}
