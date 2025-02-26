@@ -82,13 +82,11 @@ export class FrigoComponent implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
-  // Convert date string to formatted date string for input
   formatApiDateForInput(dateString: string): string {
     const date = new Date(dateString);
     return this.formatDateForInput(date);
   }
 
-  // Convert Date to timestamp in seconds
   convertDateToTimestamp(dateString: string): number {
     const date = new Date(dateString);
     return Math.floor(date.getTime() / 1000);
@@ -98,16 +96,14 @@ export class FrigoComponent implements OnInit {
     this.utilisateurService.getFrigo().subscribe({
       next: (data) => {
         this.frigoUtilisateur = data;
-        // Clear the current form array
         while (this.ingredientsFormArray.length !== 0) {
-          this.ingredientsFormArray.removeAt(0);
+          //this.ingredientsFormArray.removeAt(0);
+          this.ingredientsFormArray.clear()
         }
 
-        // If frigo is empty, add one empty form group
         if (data.length === 0) {
           this.ingredientsFormArray.push(this.formdata);
         } else {
-          // Add form groups for each ingredient in frigo
           data.forEach(ingredient => {
             const formattedDate = this.formatApiDateForInput(ingredient.date_ajout);
             const ingredientForm = this.fb.group({
@@ -121,6 +117,9 @@ export class FrigoComponent implements OnInit {
       },
       error: (err) => {
         console.error('Erreur lors du chargement du frigo', err);
+        this.snackBar.open('Erreur lors du chargement du frigo', 'Fermer', {
+          duration: 10000
+        });
       }
     });
   }
@@ -139,6 +138,7 @@ export class FrigoComponent implements OnInit {
       return acc;
     }, {});
   };
+
   enregistrerFrigo() {
     try {
       this.checkDuplicateFrigoIngredient();
@@ -148,6 +148,7 @@ export class FrigoComponent implements OnInit {
       });
       return;
     }
+
     const frigoData = this.frigoForm.value.ingredients.map((item: any) => {
       const timestamp = this.convertDateToTimestamp(item.date_ajout);
       return {
