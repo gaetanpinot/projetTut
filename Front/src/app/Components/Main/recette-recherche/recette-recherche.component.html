@@ -1,25 +1,69 @@
-<div fxLayout="row"
+<div class="text-center mt-4" fxLayout="row"
      fxLayoutGap="16px"
      fxLayoutAlign="start center">
-  <form class="search-form">
-    <mat-form-field>
-      <mat-label>Nom recette</mat-label>
-      <input matInput
-             placeholder="Lasagnes"
-             value=""
-             (input)="searchByName($event)">
-    </mat-form-field>
-  </form>
-
   <mat-form-field>
-    <mat-label>Favorite food</mat-label>
-    <mat-select>
-      <mat-option>coucou</mat-option>
-      <mat-option>coucou</mat-option>
-      <mat-option>coucou</mat-option>
-      <mat-option [value]="">coucou</mat-option>
+    <mat-label>Nom recette</mat-label>
+    <input matInput
+           placeholder="Lasagnes"
+           value=""
+           (input)="searchByName($event)">
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Choisir un  Ingrédient</mat-label>
+    <mat-select [(value)]="selectedVegetableIds" (selectionChange)="loadRecettes()" multiple>
+      <mat-option *ngFor="let vegetable of vegetables" [value]="vegetable.id">
+        {{ vegetable.nom }}
+      </mat-option>
     </mat-select>
   </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Bannir un Ingrédient</mat-label>
+    <mat-select [(value)]="bannedVegetableIds" (selectionChange)="loadRecettes()" multiple>
+      <mat-option *ngFor="let vegetable of bannedvegetables" [value]="vegetable.id">
+        {{ vegetable.nom }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Début Saison</mat-label>
+    <mat-select [(value)]="startSaisonId" (selectionChange)="loadRecettes()">
+      <mat-option *ngFor="let saison of saisons" [value]="saison.id">
+        {{ saison.nom }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <mat-form-field appearance="fill">
+    <mat-label>Fin Saison</mat-label>
+    <mat-select [(value)]="endSaisonId" (selectionChange)="loadRecettes()">
+      <mat-option *ngFor="let saison of saisons" [value]="saison.id">
+        {{ saison.nom }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <div class="selectIngredients" *ngIf="selectedVegetableIds.length">
+    <div class="flex gap-3 items-center">
+      <p>Ingrédients Choisis</p>
+      <div class="ingre" *ngFor="let vegetable of getSelectedVegetables()">
+        <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
+        <p>{{ vegetable.nom }}</p>
+      </div>
+      </div>
+  </div>
+
+  <div class="selectIngredients" *ngIf="bannedVegetableIds.length">
+    <div class="flex gap-3 items-center">
+      <p>Ingrédients Exclus</p>
+      <div class="ingre" *ngFor="let vegetable of getBannedVegetables()">
+        <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
+        <p>{{ vegetable.nom }}</p>
+      </div>
+    </div>
+  </div>
 </div>
 
 <mat-table [dataSource]="dataSource">

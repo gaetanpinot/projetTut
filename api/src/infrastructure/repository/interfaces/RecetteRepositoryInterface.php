@@ -22,4 +22,6 @@ interface RecetteRepositoryInterface
     public function addRecetteCommentaires(): array;
 
     public function setRecetteNote(): array;
+
+    public function getRandomRecettes(int $count);
 }

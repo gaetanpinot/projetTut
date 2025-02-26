@@ -19,6 +19,12 @@ export interface GetRecetteResponse{
     urlPhoto: string
 }
 
+export interface GetIngredientsResponse{
+  id: number,
+  nom: string,
+  url_photo: string
+}
+
 
 
 
@@ -73,5 +79,11 @@ export interface IngredientDetail {
   nom: string;
   debut_saison: number;
   fin_saison: number;
+  url_photo: string;
+}
+
+export interface Vegetable {
+  nom: string;
+  id: number;
   url_photo: string;
 }

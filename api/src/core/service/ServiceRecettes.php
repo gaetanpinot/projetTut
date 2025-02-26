@@ -49,4 +49,13 @@ class ServiceRecettes implements ServiceRecettesInterface
 
         return RecetteDTO::fromRecette($res);
     }
+
+    public function getRandomRecettes(int $count)
+    {
+        $recettes = [];
+        foreach ($this->recetteRepository->getRandomRecettes($count) as $rec) {
+            array_push($recettes, RecetteDTO::fromRecette($rec));
+        }
+        return $recettes;
+    }
 }
