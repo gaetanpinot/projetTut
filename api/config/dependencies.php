@@ -18,6 +18,7 @@ use amap\infrastructure\entities\Panier;
 use amap\infrastructure\entities\Recette;
 use amap\infrastructure\entities\Ustensile;
 use amap\infrastructure\repository\AllergenesRepository;
+use amap\infrastructure\repository\doctrine\Rand;
 use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
 use amap\infrastructure\repository\interfaces\IngredientRepositoryInterface;
 use amap\core\service\ServiceUtilisateur;
@@ -54,7 +55,9 @@ return [
 
     //doctrine:
     'doctrine.config' => function (ContainerInterface $c) {
-        return ORMSetup::createAttributeMetadataConfiguration([$c->get('doctrine.entities')], true);
+        $config =  ORMSetup::createAttributeMetadataConfiguration([$c->get('doctrine.entities')], true);
+        $config->addCustomNumericFunction('RAND', Rand::class);
+        return $config;
     } ,
     Connection::class => function (ContainerInterface $c) {
         return DriverManager::getConnection($c->get('db.config'), $c->get('doctrine.config'));

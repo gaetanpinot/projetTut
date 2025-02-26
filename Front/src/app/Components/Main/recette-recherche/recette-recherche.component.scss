@@ -6,3 +6,18 @@
   align-items: center;
   padding: 12px;
 }
+
+.selectIngredients {
+  padding: 12px;
+  text-align: center;
+}
+
+.selectIngredients .ingre img {
+  border-radius: 50%;
+  height: 70px;
+  width: 70px;
+}
+
+.selectIngredients .ingre p {
+  font-size: 12px;
+}
