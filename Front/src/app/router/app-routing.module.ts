@@ -12,7 +12,7 @@ import { ListePanierComponent } from '../Components/Main/liste-panier/liste-pani
 import { ListeIngredientProduitComponent } from '../Components/Main/liste-ingredient-produit/liste-ingredient-produit.component';
 import { ListeProducteursComponent } from '../Components/Main/liste-producteurs/liste-producteurs.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
-
+import { AccountComponent } from '../Components/Main/account/account.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
@@ -28,6 +28,7 @@ const routes: Routes = [
   { path: 'producteurs/:id/ingredients', component: ListeIngredientProduitComponent, title: 'Liste des ingredients du producteur' },
   { path: 'producteurs/liste', component: ListeProducteursComponent, title: 'Liste des producteurs' },
   { path: 'Recette/:id', component: RecetteComponent },
+  { path: 'Account', component: AccountComponent }
 ];
 
 @NgModule({

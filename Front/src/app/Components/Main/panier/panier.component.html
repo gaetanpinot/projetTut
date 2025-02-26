@@ -1,20 +1,45 @@
-<h2>Mes Paniers</h2>
-
-<div class="liste-paniers">
+<div class="liste-paniers" *ngIf="paniers.length > 0; else emptyState">
     <div class="panier" *ngFor="let panier of paniers">
-        <h3 class="text-lg font-bold">{{ panier.nom }}</h3>
+        <div class="header-panier">
+            <h3>{{ panier.nom }}</h3>
+            <button class="btn-supprimer" (click)="openDeletePopup(panier.id)"><mat-icon>delete_forever</mat-icon></button>
+        </div>
+
         <p>{{ panier.description }}</p>
+
+        <div class="infos">
+            <ul>
+                <li>Panier de <span>{{ panier.producteur }}</span></li>
+                <li>Prix : <strong>{{ panier.prix }}€</strong></li>
+                <li>Date : {{ panier.date }}</li>
+            </ul>
+        </div>
+
         <div class="liste-items">
             <ul>
                 <li *ngFor="let item of panier.items">
-                    <span class="item-quantity">{{ item.quantite }}</span>
+                    <span *ngIf="item.quantite" class="item-quantity">{{ item.quantite }}x</span>
+                    <span *ngIf="item.poids" class="item-quantity">{{ item.poids }}kg</span>
                     <p class="item-name">{{ item.nom }}</p>
                 </li>
             </ul>
         </div>
+    </div>
+</div>
 
-        <div class="clear">
-            <mat-icon (click)="supprimerPanier(panier.id)">delete_sweep</mat-icon>
+<!-- Popup de confirmation de suppression -->
+<div class="popup-overlay" *ngIf="showDeletePopup">
+    <div class="popup">
+        <h3>Confirmation</h3>
+        <p>Êtes-vous sûr de vouloir supprimer ce panier ?</p>
+        <div class="popup-buttons">
+            <button class="btn confirm-btn" (click)="deletePanier()">Oui, supprimer</button>
+            <button class="btn cancel-btn" (click)="closeDeletePopup()">Annuler</button>
         </div>
     </div>
 </div>
+
+<!-- Message si aucun panier disponible -->
+<ng-template #emptyState>
+    <p class="empty-message">Aucun panier disponible.</p>
+</ng-template>

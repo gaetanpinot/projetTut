@@ -17,7 +17,7 @@ export class DeconnexionComponent implements OnInit {
 
     // Ajout d'un léger délai avant la redirection pour un effet plus fluide
     setTimeout(() => {
-      this.router.navigate(['/']);
+      this.router.navigate(['/Home']);
     }, 1000);
   }
 }
