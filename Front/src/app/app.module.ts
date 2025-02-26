@@ -38,6 +38,7 @@ import { ListePanierComponent } from './Components/Main/liste-panier/liste-panie
 import { ListeIngredientProduitComponent } from './Components/Main/liste-ingredient-produit/liste-ingredient-produit.component';
 import { ListeProducteursComponent } from './Components/Main/liste-producteurs/liste-producteurs.component';
 import { AccountComponent } from './Components/Main/account/account.component';
+import {HomeComponent} from './Components/Main/home/home.component';
 
 // @ts-ignore
 @NgModule({
@@ -61,7 +62,8 @@ import { AccountComponent } from './Components/Main/account/account.component';
     ListePanierComponent,
     ListeIngredientProduitComponent,
     ListeProducteursComponent,
-    AccountComponent
+    AccountComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,

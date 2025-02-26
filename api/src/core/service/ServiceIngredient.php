@@ -33,4 +33,9 @@ class ServiceIngredient implements ServiceIngredientInterface
 
         return IngredientDTO::fromIngredient($ingredient);
     }
+
+    public function getRandomIngredients()
+    {
+        return IngredientDTO::fromArrayToDTO($this->ingredientRepository->getRandomIngredients());
+    }
 }

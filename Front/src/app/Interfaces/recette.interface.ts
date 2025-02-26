@@ -29,6 +29,7 @@ export interface GetIngredientsResponse{
 
 
 export interface Recette{
+    id: number,
     nom: string,
     temps_preparation: number,
     complexite: number,

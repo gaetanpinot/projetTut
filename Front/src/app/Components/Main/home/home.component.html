@@ -19,18 +19,11 @@
         <h2 class="text-xl font-semibold text-center mb-4">Découvrez une recette aléatoire :</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-            <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <h3 class="text-lg font-bold">Recette 1</h3>
-                <p>Une délicieuse recette bio avec des légumes de saison.</p>
-            </div>
-            <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <h3 class="text-lg font-bold">Recette 2</h3>
-                <p>Une cuisine saine et locale pour toute la famille.</p>
-            </div>
-            <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                <h3 class="text-lg font-bold">Recette 3</h3>
-                <p>Inspirée par nos producteurs partenaires.</p>
-            </div>
+          <div *ngFor="let recette of recettes" class="shadow-md p-4 rounded-lg text-center">
+            <a [routerLink]="['/Recette', recette.id]"><h3 class="text-lg font-bold">{{ recette.nom }}</h3></a>
+            <p>{{ recette.description }}</p>
+            <img style="border-radius: 10px" class="m-auto mt-2.5" src="{{recette.url_photo}}" width="64" height="64">
+          </div>
         </div>
 
         <!-- Calendrier des distributions -->
@@ -63,21 +56,9 @@
         <section class="mt-8">
             <h2 class="text-xl font-semibold text-center mb-4">Produits de saison</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                    <h3 class="text-lg font-bold">Carottes</h3>
-                    <p>Riches en vitamines</p>
-                </div>
-                <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                    <h3 class="text-lg font-bold">Poireaux</h3>
-                    <p>Idéals pour les soupes</p>
-                </div>
-                <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                    <h3 class="text-lg font-bold">Choux</h3>
-                    <p>Délicieux en gratin</p>
-                </div>
-                <div class="bg-white shadow-md p-4 rounded-lg text-center">
-                    <h3 class="text-lg font-bold">Pommes</h3>
-                    <p>Parfaites pour les desserts</p>
+                <div *ngFor="let ingredient of ingredients" class="bg-white shadow-md p-4 rounded-lg text-center">
+                    <h3 class="text-lg font-bold">{{ ingredient.nom }}</h3>
+                    <img style="border-radius: 10px" class="m-auto mt-2.5" src="{{ ingredient.url_photo}}" height="64" width="64">
                 </div>
             </div>
         </section>

@@ -35,5 +35,13 @@ class IngredientRepository extends EntityRepository implements IngredientReposit
         return $ingredients;
     }
 
+    public function getRandomIngredients()
+    {
+        $query=$this->getEntityManager()->createQuery('SELECT r, RAND() as hidden rand FROM  amap\infrastructure\entities\Ingredient r 
+            ORDER BY rand ')
+            ->setMaxResults(4);
+
+        return $query->getResult();
+    }
 }
 

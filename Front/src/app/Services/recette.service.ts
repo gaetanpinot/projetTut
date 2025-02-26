@@ -35,4 +35,8 @@ export class RecetteService {
   getRecetteById(id: number) {
     return this.http.get<Recette>(this.apiServerUrl + '/recettes/' + id);
   }
+
+  getRandomRecettes() {
+    return this.http.get<Recette[]>(this.apiServerUrl + '/recettes/random');
+  }
 }

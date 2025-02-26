@@ -8,4 +8,6 @@ interface ServiceIngredientInterface
 {
     public function getAllIngredients(): array;
     public function createIngredient(array $data): IngredientDTO;
+
+    public function getRandomIngredients();
 }
