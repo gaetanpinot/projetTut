@@ -1,1 +1,7 @@
-<p>liste-ingredient-produit works!</p>
+<h2 mat-card-title> Liste des ingredients produits par le producteur {{ingredients_produit.nom}} </h2>
+<div id="liste-ingredients-produit">
+  <div class="ingredient" *ngFor="let ingredient of ingredients_produit.ingredients">
+    <h3>{{ingredient.nom}}</h3>
+  </div>
+  <button mat-flat-button (click)="abonnerAProducteur()" >S'abonner</button>
+</div>

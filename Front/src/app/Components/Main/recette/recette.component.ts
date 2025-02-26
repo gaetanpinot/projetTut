@@ -14,11 +14,14 @@ import {ActivatedRoute} from '@angular/router';
 export class RecetteComponent implements  OnInit {
 
   nom: string | undefined;
+  note: number | undefined;
+  remaining_note: number | undefined;
   temps_preparation: number | undefined;
   description: string | undefined;
   url_photo: string | undefined;
   tags: Tag[] | undefined;
-  ingredients: Ingredient[] | undefined;
+  ingredients: { quantite: string; ingredient: { url_photo: string, nom: string } }[] | undefined;
+
 
 
   constructor(private recetteService: RecetteService, private route: ActivatedRoute)
@@ -35,14 +38,22 @@ export class RecetteComponent implements  OnInit {
   private loadRecette(id: number) {
     this.recetteService.getRecetteById(id).subscribe({
       next: (data) => {
-        //console.log(data)
         this.nom = data.nom;
+        this.note = data.note;
+        this.remaining_note = this.note - 5;
         this.temps_preparation = data.temps_preparation;
         this.description = data.description;
         this.url_photo = data.url_photo;
 
         this.tags = data.tags;
-        this.ingredients = data.ingredients;
+
+        this.ingredients = data.ingredients.map((ing) => ({
+          quantite: ing.quantite,
+          ingredient: {
+            url_photo: ing.ingredient.url_photo,
+            nom: ing.ingredient.nom
+          }
+        }));
       },
       error: (err) => {
         console.error(err);

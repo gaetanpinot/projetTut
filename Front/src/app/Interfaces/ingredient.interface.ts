@@ -13,3 +13,16 @@ export interface IngredientInput {
   id: number,
   quantite: string
 }
+export interface IngredientProduit {
+  id: string,
+  nom: string,
+  ingredients: Ingredient[]
+}
+
+export interface IngredientFrigo {
+  id_ingredient: number,
+  nom: string,
+  url_photo: string,
+  quantite: string,
+  date_ajout: string,
+}

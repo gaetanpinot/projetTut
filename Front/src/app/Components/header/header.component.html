@@ -44,33 +44,44 @@
                                 Liste de vos paniers
                             </li>
                         </a>
+                        <a [routerLink]="['/producteurs', authStore.getId(),'ingredients']">
+                            <li class="nav-item">
+                                <mat-icon>list</mat-icon>
+                                Liste de vos ingredients
+                            </li>
+                        </a>
                     </div>
 
+                    <!-- Si l'utilisateur est un client -->
                     <div *ngIf="(authStore.isClient())">
-                      <!-- Frigo -->
-                      <li class="nav-item">
-                          <mat-icon>kitchen</mat-icon>
-                          <a href="/Frigo">Frigo</a>
-                      </li>
+                        <!-- Frigo -->
+                        <li class="nav-item">
+                            <mat-icon>kitchen</mat-icon>
+                            <a href="/Frigo">Frigo</a>
+                        </li>
+                        <a routerLink="/producteurs/liste">
+                            <li class="nav-item">
+                                <mat-icon>person</mat-icon>
+                                Liste des producteurs
+                            </li>
+                        </a>
+                        <!-- Favoris -->
+                        <li class="nav-item">
+                            <mat-icon>favorite</mat-icon>
+                            <a href="/Favoris">Favoris</a>
+                        </li>
 
-                      <!-- Favoris -->
-                      <li class="nav-item">
-                          <mat-icon>favorite</mat-icon>
-                          <a href="/Favoris">Favoris</a>
-                      </li>
-
-                      <!-- Nouveau panier (uniquement si connecté) -->
-                      <li class="nav-item" *ngIf="(authStore.token$ | async)">
-                          <mat-icon>add_shopping_cart</mat-icon>
-                          <a href="/Nouveau-panier">Nouveau panier</a>
-                      </li>
+                        <!-- Nouveau panier (uniquement si connecté) -->
+                        <li class="nav-item" *ngIf="(authStore.token$ | async)">
+                            <mat-icon>add_shopping_cart</mat-icon>
+                            <a href="/Nouveau-panier">Nouveau panier</a>
+                        </li>
                     </div>
 
                 </ul>
             </li>
         </ul>
     </span>
-
     <span>
         <ul class="nav-list">
             <!-- Connexion si l'utilisateur n'est pas connecté -->

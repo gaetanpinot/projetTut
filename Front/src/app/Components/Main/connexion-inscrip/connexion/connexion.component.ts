@@ -26,7 +26,7 @@ export class ConnexionComponent implements OnInit {
   constructor(
     private connectServ: ConnexionService,
     private authStore: AuthStoreService,
-    private router: Router
+    private router: Router // Injection de Router
   ) {}
 
   ngOnInit(): void {}
@@ -41,19 +41,22 @@ export class ConnexionComponent implements OnInit {
     this.errorMessage = null;
 
     const body: LogInRequestBody = {
-      nom_utilisateur: this.connectForm.value.nom_utilisateur ?? '',
-      mot_de_passe: this.connectForm.value.mot_de_passe ?? ''
+      nom_utilisateur: this.connectForm.value.nom_utilisateur!,
+      mot_de_passe: this.connectForm.value.mot_de_passe!
     };
 
+    console.log(body);
+
     this.connectServ.logIn(body).pipe(
-      catchError(err => {
+      catchError((err) => {
+        console.error("Erreur de connexion :", err);
         this.errorMessage = "Échec de la connexion. Vérifiez vos identifiants.";
         this.loading = false;
-        return of(null);
+        return of(null); // Évite que l'observable crashe
       })
     ).subscribe(data => {
       if (data) {
-        this.authStore.setUser(data.token, data.utilisateur.role);
+        this.authStore.setUser(data.token, data.utilisateur.role, data.utilisateur.id);
         this.router.navigate(['/']);
       }
       this.loading = false;
