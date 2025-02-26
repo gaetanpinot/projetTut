@@ -6,6 +6,7 @@ use amap\application\action\ChangeIngredientsProduit;
 use amap\application\action\CreateRecetteAction;
 use amap\application\action\DeleteRecetteAction;
 use amap\application\action\GetIngredientsAction;
+use amap\application\action\GetPanierByProducteurAction;
 use amap\application\action\GetRecetteByIdAction;
 use amap\application\action\PostCreateRecetteAction;
 use amap\application\action\PatchUtilisateurUstensiles;
@@ -82,6 +83,8 @@ return function (\Slim\App $app): \Slim\App {
 
     $app->group('/paniers', function (RouteCollectorProxy $group) {
         $group->post('[/]', CreatePanier::class)->add(AuthzProducteurMiddleware::class)
+            ->add(AuthnMiddleware::class);
+        $group->get('[/]', GetPanierByProducteurAction::class)->add(AuthzProducteurMiddleware::class)
             ->add(AuthnMiddleware::class);
         $group->post('/{id}[/]', PublierPanier::class)->add(AuthzProducteurMiddleware::class)
             ->add(AuthnMiddleware::class);

@@ -6,8 +6,9 @@ import { DeconnexionComponent } from '../Components/Main/connexion-inscrip/decon
 import { RecetteRechercheComponent } from '../Components/Main/recette-recherche/recette-recherche.component';
 import { CreatePanierComponent } from '../Components/Main/create-panier/create-panier.component';
 import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
-import {RecetteComponent} from '../Components/Main/recette/recette.component';
+import { RecetteComponent} from '../Components/Main/recette/recette.component';
 import { PanierComponent } from '../Components/Main/panier/panier.component';
+import { ListePanierComponent } from '../Components/Main/liste-panier/liste-panier.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
 
 
@@ -19,7 +20,9 @@ const routes: Routes = [
   { path: 'Recette', component: RecetteRechercheComponent },
   { path: 'Frigo', component: FrigoComponent },
   { path: 'Nouveau-panier', component: CreatePanierComponent },
-  {path: 'Panier', component: PanierComponent},
+  { path: 'Panier/user', component: PanierComponent},
+  { path: 'panier/create', component: CreatePanierComponent, title: 'Créer un panier' },
+  { path: 'panier/liste', component: ListePanierComponent, title: 'Liste des paniers' },
   { path: 'Recette/:id', component: RecetteComponent },
 ];
 

@@ -1,56 +1,93 @@
 <nav class="navbar">
     <span>
-          <ul class="nav-list">
+        <ul class="nav-list">
+            <!-- Logo -->
             <li class="nav-item">
                 <a href="/Home">
                     <img src="https://amap-idf.org/images/env/logo.svg">
                 </a>
             </li>
+
+            <!-- Accueil -->
             <li class="nav-item">
-              <mat-icon>home</mat-icon>
-              <a href="/Home">Acceuil</a>
+                <mat-icon>home</mat-icon>
+                <a href="/Home">Accueil</a>
             </li>
+
+            <!-- Recettes -->
             <li class="nav-item">
-              <mat-icon> fastfood</mat-icon>
-              <a href="/Recette">Recettes</a>
+                <mat-icon>fastfood</mat-icon>
+                <a href="/Recette">Recettes</a>
             </li>
-            <li class="nav-item" *ngIf="(authStore.token$ | async);">
-                <mat-icon>keyboard_arrow_down</mat-icon>
+
+            <!-- Section "Autres" visible uniquement si l'utilisateur est connecté -->
+            <li class="nav-item" *ngIf="(authStore.token$ | async)">
                 Autres
-              <ul class="dropdown">
-                <li class="nav-item">
-                <mat-icon>shopping_cart</mat-icon>
-                <a href="/Panier">Mes paniers</a>
-              </li>
-              <li class="nav-item">
-                <mat-icon>kitchen</mat-icon>
-                <a href="/Frigo">Frigo</a>
-              </li>
-              <li class="nav-item">
-                <mat-icon>favorite</mat-icon>
-                <a href="/Favoris">Favoris</a>
-              </li>
-              <li class="nav-item"  *ngIf="(authStore.token$ | async);">
-                <mat-icon>add_shopping_cart</mat-icon>
-                <a href="/Nouveau-panier">Nouveau panier</a>
-              </li>
-              </ul>
-            </li>
+                <ul class="dropdown">
+                    <!-- Si l'utilisateur est un producteur -->
+                    <div *ngIf="(authStore.isProducteur())">
+                        <a href="/panier/create">
+                            <li class="nav-item">
+                                <mat-icon>shopping_cart</mat-icon>
+                                Créer un panier
+                            </li>
+                        </a>
+                        <a href="/panier/liste">
+                            <li class="nav-item">
+                                <mat-icon>list</mat-icon>
+                                Liste de vos paniers
+                            </li>
+                        </a>
+                        <a href="/panier/user">
+                            <li class="nav-item">
+                                <mat-icon>list</mat-icon>
+                                Liste de vos paniers
+                            </li>
+                        </a>
+                    </div>
 
-          </ul>
-        </span>
+                    <div *ngIf="(authStore.isClient())">
+                      <!-- Frigo -->
+                      <li class="nav-item">
+                          <mat-icon>kitchen</mat-icon>
+                          <a href="/Frigo">Frigo</a>
+                      </li>
+
+                      <!-- Favoris -->
+                      <li class="nav-item">
+                          <mat-icon>favorite</mat-icon>
+                          <a href="/Favoris">Favoris</a>
+                      </li>
+
+                      <!-- Nouveau panier (uniquement si connecté) -->
+                      <li class="nav-item" *ngIf="(authStore.token$ | async)">
+                          <mat-icon>add_shopping_cart</mat-icon>
+                          <a href="/Nouveau-panier">Nouveau panier</a>
+                      </li>
+                    </div>
+
+                </ul>
+            </li>
+        </ul>
+    </span>
+
     <span>
-          <ul class="nav-list">
-            <li *ngIf="!(authStore.token$ | async);"
-                class="nav-item">
-              <mat-icon>account_circle</mat-icon>
-              <a href="/Connexion">Connexion</a>
+        <ul class="nav-list">
+            <!-- Connexion si l'utilisateur n'est pas connecté -->
+            <li *ngIf="!(authStore.token$ | async)" class="nav-item">
+                <mat-icon>account_circle</mat-icon>
+                <a href="/Connexion">Connexion</a>
             </li>
-            <li *ngIf="(authStore.token$ | async);"
-                class="nav-item"><a href="/Deconnexion">Deconnexion</a></li>
-            <li class="nav-item"><mat-slide-toggle (change)="switchTheme($event)"
-                                  class="example-margin"></mat-slide-toggle></li>
 
-          </ul>
-          </span>
+            <!-- Déconnexion si l'utilisateur est connecté -->
+            <li *ngIf="(authStore.token$ | async)" class="nav-item">
+                <a href="/Deconnexion">Déconnexion</a>
+            </li>
+
+            <!-- Mode Sombre / Clair -->
+            <li class="nav-item">
+                <mat-slide-toggle (change)="switchTheme($event)" class="example-margin"></mat-slide-toggle>
+            </li>
+        </ul>
+    </span>
 </nav>

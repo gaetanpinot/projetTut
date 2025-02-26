@@ -15,4 +15,5 @@ export class IngredientsServicesService {
   getIngredients(): Observable<Ingredient[]> {
     return this.http.get<Ingredient[]>(this.apiServerUrl + '/ingredients');
   }
+
 }
