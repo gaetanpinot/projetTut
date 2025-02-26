@@ -72,7 +72,7 @@
                         </li>
 
                         <!-- Nouveau panier (uniquement si connecté) -->
-                        <li class="nav-item" *ngIf="(authStore.token$ | async)">
+                        <li class="nav-item" *ngIf="(authStore.isProducteur())">
                             <mat-icon>add_shopping_cart</mat-icon>
                             <a href="/Nouveau-panier">Nouveau panier</a>
                         </li>

@@ -8,10 +8,12 @@
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
 
-<body class="bg-green-100 text-gray-800">
+<body>
 
     <!-- Bannière -->
-    <header class="w-full h-80 bg-cover bg-center" style="background-image: url('https://plus.unsplash.com/premium_photo-1674624682232-c9ced5360a2e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFybSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D');">
+    <header class="w-full h-80 bg-cover bg-center text-center flex flex-col items-center justify-center" style="background-image: url('https://plus.unsplash.com/premium_photo-1674624682232-c9ced5360a2e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFybSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D');">
+      <h3 class="text-5xl">Bienvenue sur notre AMAP !</h3>
+      <p class="text-2xl">Des produits et recettes de qualité toute l'année.</p>
     </header>
 
     <!-- Contenu principal -->
@@ -19,7 +21,7 @@
         <h2 class="text-xl font-semibold text-center mb-4">Découvrez une recette aléatoire :</h2>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
-          <div *ngFor="let recette of recettes" class="shadow-md p-4 rounded-lg text-center">
+          <div *ngFor="let recette of recettes" class="box shadow-md p-4 rounded-lg text-center">
             <a [routerLink]="['/Recette', recette.id]"><h3 class="text-lg font-bold">{{ recette.nom }}</h3></a>
             <p>{{ recette.description }}</p>
             <img style="border-radius: 10px" class="m-auto mt-2.5" src="{{recette.url_photo}}" width="64" height="64">
@@ -56,7 +58,7 @@
         <section class="mt-8">
             <h2 class="text-xl font-semibold text-center mb-4">Produits de saison</h2>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-                <div *ngFor="let ingredient of ingredients" class="bg-white shadow-md p-4 rounded-lg text-center">
+                <div *ngFor="let ingredient of ingredients" class="box shadow-md p-4 rounded-lg text-center">
                     <h3 class="text-lg font-bold">{{ ingredient.nom }}</h3>
                     <img style="border-radius: 10px" class="m-auto mt-2.5" src="{{ ingredient.url_photo}}" height="64" width="64">
                 </div>
