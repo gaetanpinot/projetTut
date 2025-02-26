@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
-import { Ingredient } from '../../../Interfaces/ingredient.interface';
+import { Ingredient, IngredientFrigo, IngredientFrigoInput } from '../../../Interfaces/ingredient.interface';
+import { UtilisateurService } from '../../../Services/utilisateur.service';
+import { FrigoInput } from '../../../Interfaces/ingredient.interface';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-frigo',
@@ -10,85 +13,60 @@ import { Ingredient } from '../../../Interfaces/ingredient.interface';
   styleUrls: ['./frigo.component.scss']
 })
 export class FrigoComponent implements OnInit {
+  frigoUtilisateur: IngredientFrigo[] = [];
   ingredients: Ingredient[] = [];
-  filteredIngredients: Ingredient[] = [];
-  selectedIngredient: string | null = null;
   frigoForm: FormGroup;
-  newItemQuantite: number | null = null;
-  newItemPoids: number | null = null;
-  fakeMode: boolean = true; // Active ou désactive le mode fake
-  fakeFrigo: any[] = [];
 
-  popupVisible: boolean = false;
-  popupType: 'clear' | 'delete' | null = null;
-  itemToDeleteIndex: number | null = null;
+  get formdata(): FormGroup {
+    // Set default date to today in YYYY-MM-DD format
+    const today = this.formatDateForInput(new Date());
 
-  constructor(private ingredientService: IngredientsServicesService, private fb: FormBuilder) {
-    this.frigoForm = this.fb.group({
-      ingredients: this.fb.array([])
+    return this.fb.group({
+      quantite: ['', [Validators.required, Validators.minLength(1)]],
+      id: ['', Validators.required],
+      date_ajout: [today, Validators.required]
     });
   }
 
-  get ingredientsFormArray(): FormArray {
-    return this.frigoForm.get('ingredients') as FormArray;
+  constructor(
+    private ingredientService: IngredientsServicesService,
+    private fb: FormBuilder,
+    private utilisateurService: UtilisateurService,
+    private snackBar: MatSnackBar
+  ) {
+    this.frigoForm = this.fb.group({
+      ingredients: this.fb.array([
+        this.formdata
+      ])
+    });
+  }
+
+  get ingredientsFormArray(): FormArray<any> {
+    return this.frigoForm.controls["ingredients"] as FormArray<any>;
   }
 
   get ingredientsFormArrayControls() {
     return this.ingredientsFormArray.controls as FormGroup[];
   }
 
+  addIngredient() {
+    const ingredient = this.formdata;
+    this.ingredientsFormArray.push(ingredient);
+  }
+
+  deleteIngredient(index: number) {
+    this.ingredientsFormArray.removeAt(index);
+  }
+
   ngOnInit(): void {
-    if (this.fakeMode) {
-      this.generateFakeFrigo();
-    } else {
-      this.loadIngredients();
-    }
-  }
-
-  toggleFakeMode(): void {
-    this.fakeMode = !this.fakeMode;
-    this.ingredientsFormArray.clear();
-
-    if (this.fakeMode) {
-      this.generateFakeFrigo();
-    } else {
-      this.loadIngredients();
-    }
-  }
-
-generateFakeFrigo(): void {
-    this.fakeFrigo = [
-      { nom: 'Fromage', quantite: null, poids: 500 },
-      { nom: 'Oeufs', quantite: 6, poids: null },
-      { nom: 'Carottes', quantite: 5, poids: null },
-      { nom: 'Lait', quantite: null, poids: 1000 },
-      { nom: 'Poulet', quantite: null, poids: 800 },
-      { nom: 'Pommes', quantite: 4, poids: null },
-      { nom: 'Pain', quantite: null, poids: 400 },
-      { nom: 'Poivrons', quantite: 3, poids: null },
-      { nom: 'Tomates', quantite: 6, poids: null },
-      { nom: 'Pâtes', quantite: null, poids: 500 },
-      { nom: 'Riz', quantite: null, poids: 600 },
-      { nom: 'Jambon', quantite: 2, poids: null },
-      { nom: 'Yaourt', quantite: 4, poids: null },
-      { nom: 'Beurre', quantite: null, poids: 250 },
-      { nom: 'Chocolat', quantite: null, poids: 200 },
-    ];
-
-    this.fakeFrigo.forEach(item => {
-      this.ingredientsFormArray.push(this.fb.group({
-        quantite: [item.quantite ?? null, [Validators.min(1)]],
-        poids: [item.poids ?? null, [Validators.min(1)]],
-        nom: [item.nom, Validators.required]
-      }));
-    });
+    this.loadIngredients();
+    this.loadFrigo();
   }
 
   loadIngredients(): void {
     this.ingredientService.getIngredients().subscribe({
       next: (data) => {
         this.ingredients = data;
-        this.filteredIngredients = data;
       },
       error: (err) => {
         console.error('Erreur lors du chargement des ingrédients', err);
@@ -96,63 +74,106 @@ generateFakeFrigo(): void {
     });
   }
 
-  ajouterItem(): void {
-    if (!this.selectedIngredient) {
-      alert('Veuillez sélectionner un ingrédient.');
+  // Format date as YYYY-MM-DD for input field
+  formatDateForInput(date: Date): string {
+    const year = date.getFullYear();
+    const month = (date.getMonth() + 1).toString().padStart(2, '0');
+    const day = date.getDate().toString().padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  // Convert date string to formatted date string for input
+  formatApiDateForInput(dateString: string): string {
+    const date = new Date(dateString);
+    return this.formatDateForInput(date);
+  }
+
+  // Convert Date to timestamp in seconds
+  convertDateToTimestamp(dateString: string): number {
+    const date = new Date(dateString);
+    return Math.floor(date.getTime() / 1000);
+  }
+
+  loadFrigo(): void {
+    this.utilisateurService.getFrigo().subscribe({
+      next: (data) => {
+        this.frigoUtilisateur = data;
+        // Clear the current form array
+        while (this.ingredientsFormArray.length !== 0) {
+          this.ingredientsFormArray.removeAt(0);
+        }
+
+        // If frigo is empty, add one empty form group
+        if (data.length === 0) {
+          this.ingredientsFormArray.push(this.formdata);
+        } else {
+          // Add form groups for each ingredient in frigo
+          data.forEach(ingredient => {
+            const formattedDate = this.formatApiDateForInput(ingredient.date_ajout);
+            const ingredientForm = this.fb.group({
+              quantite: [ingredient.quantite, [Validators.required, Validators.minLength(1)]],
+              id: [ingredient.id_ingredient, Validators.required],
+              date_ajout: [formattedDate, Validators.required]
+            });
+            this.ingredientsFormArray.push(ingredientForm);
+          });
+        }
+      },
+      error: (err) => {
+        console.error('Erreur lors du chargement du frigo', err);
+      }
+    });
+  }
+
+  checkDuplicateFrigoIngredient() {
+    this.frigoForm.value.ingredients.reduce((acc: any, curr: any) => {
+      if (!acc.hasOwnProperty(curr.id)) {
+        acc[curr.id] = [curr.date_ajout];
+        return acc;
+      }
+      console.log(acc[curr.id]);
+      if (acc[curr.id].includes(curr.date_ajout)) {
+        throw new Error("L'ingredient: " + curr.id + " existe déjà avec la date d'ajout: " + curr.date_ajout);
+      }
+      acc[curr.id].push(curr.date_ajout);
+      return acc;
+    }, {});
+  };
+  enregistrerFrigo() {
+    try {
+      this.checkDuplicateFrigoIngredient();
+    } catch (e: any) {
+      this.snackBar.open(e.message, 'Fermer', {
+        duration: 10000
+      });
       return;
     }
-
-    if ((this.newItemQuantite === null || this.newItemQuantite <= 0) &&
-        (this.newItemPoids === null || this.newItemPoids <= 0)) {
-      alert('Veuillez entrer soit une quantité, soit un poids valide.');
-      return;
-    }
-
-    const ingredientData = this.ingredients.find(ing => ing.nom === this.selectedIngredient);
-    if (!ingredientData) return;
-
-    const ingredient = this.fb.group({
-      quantite: [this.newItemQuantite ?? null, [Validators.min(1)]],
-      poids: [this.newItemPoids ?? null, [Validators.min(1)]],
-      id_ingredient: [ingredientData.id, Validators.required],
-      nom: [ingredientData.nom]
+    const frigoData = this.frigoForm.value.ingredients.map((item: any) => {
+      const timestamp = this.convertDateToTimestamp(item.date_ajout);
+      return {
+        id: item.id,
+        quantite: item.quantite,
+        timestamp_ajout: timestamp
+      };
     });
 
-    this.ingredientsFormArray.push(ingredient);
+    const frigoInput: FrigoInput = { frigo: frigoData };
+    console.log("frigo update:", frigoInput);
 
-    this.selectedIngredient = null;
-    this.newItemQuantite = null;
-    this.newItemPoids = null;
-    this.filteredIngredients = [...this.ingredients];
-  }
-
-  ouvrirPopup(type: 'clear' | 'delete', index?: number): void {
-    this.popupType = type;
-    this.popupVisible = true;
-    this.itemToDeleteIndex = index ?? null;
-  }
-
-  fermerPopup(): void {
-    this.popupVisible = false;
-    this.popupType = null;
-    this.itemToDeleteIndex = null;
-  }
-
-  confirmerAction(): void {
-    if (this.popupType === 'clear') {
-      this.viderFrigo();
-    } else if (this.popupType === 'delete' && this.itemToDeleteIndex !== null) {
-      this.supprimerItem(this.itemToDeleteIndex);
-    }
-    this.fermerPopup();
-  }
-
-  viderFrigo(): void {
-    this.fakeFrigo = [];
-    this.ingredientsFormArray.clear();
-  }
-
-  supprimerItem(index: number): void {
-    this.ingredientsFormArray.removeAt(index);
+    this.utilisateurService.remplacerFrigo(frigoInput).subscribe({
+      next: (data) => {
+        this.frigoUtilisateur = data;
+        this.snackBar.open('Frigo mis à jour avec succès', 'Fermer', {
+          duration: 10000
+        });
+        console.log('Frigo mis à jour avec succès', data);
+      },
+      error: (err) => {
+        this.snackBar.open('Erreur lors de la mise à jour du frigo', 'Fermer', {
+          duration: 10000
+        });
+        console.error('Erreur lors de la mise à jour du frigo', err);
+      }
+    });
   }
 }
