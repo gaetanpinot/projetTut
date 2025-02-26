@@ -5,6 +5,7 @@ import { Ingredient, IngredientFrigo, IngredientFrigoInput } from '../../../Inte
 import { UtilisateurService } from '../../../Services/utilisateur.service';
 import { FrigoInput } from '../../../Interfaces/ingredient.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
+import { MatDialog, MatDialogContent } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-frigo',
@@ -16,6 +17,7 @@ export class FrigoComponent implements OnInit {
   frigoUtilisateur: IngredientFrigo[] = [];
   ingredients: Ingredient[] = [];
   frigoForm: FormGroup;
+  isPanierModifiee: boolean = false;
 
   get formdata(): FormGroup {
     // Set default date to today in YYYY-MM-DD format
@@ -32,7 +34,8 @@ export class FrigoComponent implements OnInit {
     private ingredientService: IngredientsServicesService,
     private fb: FormBuilder,
     private utilisateurService: UtilisateurService,
-    private snackBar: MatSnackBar
+    private snackBar: MatSnackBar,
+    private dialog: MatDialog,
   ) {
     this.frigoForm = this.fb.group({
       ingredients: this.fb.array([
@@ -50,11 +53,13 @@ export class FrigoComponent implements OnInit {
   }
 
   addIngredient() {
+    this.isPanierModifiee = true;
     const ingredient = this.formdata;
     this.ingredientsFormArray.push(ingredient);
   }
 
   deleteIngredient(index: number) {
+    this.isPanierModifiee = true;
     this.ingredientsFormArray.removeAt(index);
   }
 
@@ -164,6 +169,7 @@ export class FrigoComponent implements OnInit {
     this.utilisateurService.remplacerFrigo(frigoInput).subscribe({
       next: (data) => {
         this.frigoUtilisateur = data;
+        this.isPanierModifiee = false;
         this.snackBar.open('Frigo mis à jour avec succès', 'Fermer', {
           duration: 10000
         });
@@ -176,5 +182,9 @@ export class FrigoComponent implements OnInit {
         console.error('Erreur lors de la mise à jour du frigo', err);
       }
     });
+  }
+  public changementFrigo() {
+    console.log("changement frigo");
+    this.isPanierModifiee = true;
   }
 }

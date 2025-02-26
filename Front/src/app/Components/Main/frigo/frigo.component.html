@@ -6,12 +6,12 @@
       <div class="ingredient-form-field" [formGroup]="ingredientForm">
         <mat-form-field>
           <mat-label>Quantité (ex: 10g)</mat-label>
-          <input matInput formControlName="quantite"
+          <input matInput formControlName="quantite" (change)="changementFrigo()"
               type="text" >
         </mat-form-field>
-        <mat-form-field>
+        <mat-form-field >
           <mat-label>Ingredient</mat-label>
-          <mat-select formControlName="id" >
+          <mat-select formControlName="id" (selectionChange)="changementFrigo()">
             @for(ing of ingredients; track ing.id){
               <mat-option [value]="ing.id">{{ing.nom}}</mat-option>
             }
@@ -19,7 +19,7 @@
         </mat-form-field>
         <mat-form-field>
           <mat-label>Date d'ajout</mat-label>
-          <input matInput formControlName="date_ajout" type="date">
+          <input matInput formControlName="date_ajout" type="date" (change)="changementFrigo()">
         </mat-form-field>
         <mat-icon class="delete-btn" (click)="deleteIngredient(i)">
           delete_forever
@@ -30,5 +30,5 @@
   <button type="button" mat-mini-fab (click)="addIngredient()">
     <mat-icon class="add-ingredient-btn">add</mat-icon>
   </button>
-  <button type="submit" [disabled]="!frigoForm.valid">Enregistrer mon frigo</button>
+  <button mat-flat-button type="submit" [disabled]="!frigoForm.valid">Enregistrer mon frigo</button>
 </form>
