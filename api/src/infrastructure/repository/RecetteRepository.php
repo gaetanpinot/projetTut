@@ -196,13 +196,13 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
 
     public function getRandomRecettes(int $count): array
     {
-        $qb = $this->createQueryBuilder('r');
 
+        $query=this->getEntityManager()->createQuery('SELECT r,
+            RAND() as hidden rand FROM
+            amap\infrastructure\entities\Recette r 
+            ORDER BY rand ')
+            ->setMaxResults($count);
 
-        $qb->orderBy('RAND()')
-        ->setMaxResults($count);
-
-        $query = $qb->getQuery();
         return $query->getResult();
     }
 
