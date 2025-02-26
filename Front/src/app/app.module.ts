@@ -33,7 +33,7 @@ import { MatRadioModule } from '@angular/material/radio';
 import { MatSlideToggleModule } from '@angular/material/slide-toggle';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { CreatePanierComponent } from './Components/Main/create-panier/create-panier.component';
-import {RecetteComponent} from './Components/Main/recette/recette.component';
+import { RecetteComponent } from './Components/Main/recette/recette.component';
 import { ListePanierComponent } from './Components/Main/liste-panier/liste-panier.component';
 import { ListeIngredientProduitComponent } from './Components/Main/liste-ingredient-produit/liste-ingredient-produit.component';
 import { ListeProducteursComponent } from './Components/Main/liste-producteurs/liste-producteurs.component';
