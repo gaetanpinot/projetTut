@@ -7,7 +7,19 @@
 }
 
 body {
-    background-color: var(--black-dark);
-    color: var(--white);
+    background-color: var();
+    color: var(--green-dark);
     font-family: Arial, sans-serif;
+}
+
+thead {
+  background-color: var(--green);
+}
+
+.box {
+  background: #ffffff;
+}
+
+main {
+  background: ghostwhite;
 }
