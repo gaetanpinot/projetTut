@@ -13,7 +13,7 @@ import { ListeIngredientProduitComponent } from '../Components/Main/liste-ingred
 import { ListeProducteursComponent } from '../Components/Main/liste-producteurs/liste-producteurs.component';
 // import {RecetteComponent} from '../Components/Main/recette/recette.component';
 import { AccountComponent } from '../Components/Main/account/account.component';
-import { gardeNonSaveGuard } from '../Guard/garde-non-save.guard';
+import { GardeNonSaveGuard } from '../Guard/garde-non-save.guard';
 
 const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
@@ -21,7 +21,7 @@ const routes: Routes = [
   { path: 'Connexion', component: ConnexionInscripComponent },
   { path: 'Deconnexion', component: DeconnexionComponent },
   { path: 'Recette', component: RecetteRechercheComponent },
-  { path: 'Frigo', component: FrigoComponent, canDeactivate: [gardeNonSaveGuard] },
+  { path: 'Frigo', component: FrigoComponent, canDeactivate: [GardeNonSaveGuard] },
   { path: 'Nouveau-panier', component: CreatePanierComponent },
   { path: 'Panier/user', component: PanierComponent },
   { path: 'panier/create', component: CreatePanierComponent, title: 'Créer un panier' },
@@ -34,6 +34,7 @@ const routes: Routes = [
 
 @NgModule({
   imports: [RouterModule.forRoot(routes, { bindToComponentInputs: true })],
+  providers: [GardeNonSaveGuard],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

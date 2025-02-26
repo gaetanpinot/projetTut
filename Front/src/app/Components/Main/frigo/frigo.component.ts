@@ -1,12 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit, Output, EventEmitter, Inject } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
 import { Ingredient, IngredientFrigo, IngredientFrigoInput } from '../../../Interfaces/ingredient.interface';
 import { UtilisateurService } from '../../../Services/utilisateur.service';
 import { FrigoInput } from '../../../Interfaces/ingredient.interface';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MatDialog, MatDialogContent } from '@angular/material/dialog';
-
+import {
+  MAT_DIALOG_DATA,
+  MatDialog,
+  MatDialogActions,
+  MatDialogClose,
+  MatDialogContent,
+  MatDialogRef,
+  MatDialogTitle,
+} from '@angular/material/dialog';
+import { MatButtonModule } from '@angular/material/button';
+import { inject } from '@angular/core/testing';
 @Component({
   selector: 'app-frigo',
   standalone: false,
@@ -17,7 +26,7 @@ export class FrigoComponent implements OnInit {
   frigoUtilisateur: IngredientFrigo[] = [];
   ingredients: Ingredient[] = [];
   frigoForm: FormGroup;
-  isPanierModifiee: boolean = false;
+  public isPanierModifiee: boolean = false;
 
   get formdata(): FormGroup {
     // Set default date to today in YYYY-MM-DD format
@@ -28,6 +37,19 @@ export class FrigoComponent implements OnInit {
       id: ['', Validators.required],
       date_ajout: [today, Validators.required]
     });
+  }
+
+  public dialogFrigoNonSauvegardee() {
+    this.dialog.open(DialogFrigoNonSauvegardee,
+      {
+        width: '20em',
+      }
+    ).afterClosed().subscribe((result) => {
+      if (result === "save") {
+        this.enregistrerFrigo()
+      }
+    })
+
   }
 
   constructor(
@@ -102,7 +124,6 @@ export class FrigoComponent implements OnInit {
       next: (data) => {
         this.frigoUtilisateur = data;
         while (this.ingredientsFormArray.length !== 0) {
-          //this.ingredientsFormArray.removeAt(0);
           this.ingredientsFormArray.clear()
         }
 
@@ -186,5 +207,35 @@ export class FrigoComponent implements OnInit {
   public changementFrigo() {
     console.log("changement frigo");
     this.isPanierModifiee = true;
+  }
+}
+
+@Component({
+  imports: [MatButtonModule, MatDialogActions, MatDialogClose, MatDialogTitle, MatDialogContent],
+  template: `
+ <h2 mat-dialog-title>Frigo non sauvegardée</h2>
+<mat-dialog-content>
+Vous avez des modifications non sauvegardées dans votre frigo. Voulez vous sauvegarder avant de quitter la page?
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button mat-button mat-dialog-close (click)="nePasSauvegarder()">Non</button>
+  <button mat-button mat-dialog-close cdkFocusInitial (click)="sauvegarder()">Oui</button>
+</mat-dialog-actions>
+  `,
+  changeDetection: ChangeDetectionStrategy.OnPush,
+})
+export class DialogFrigoNonSauvegardee {
+  constructor(
+    public dialogRef: MatDialogRef<DialogFrigoNonSauvegardee>,
+    @Inject(MAT_DIALOG_DATA) public data: any
+  ) { }
+  public dontexit() {
+    this.dialogRef.close("dontexit");
+  }
+  public sauvegarder() {
+    this.dialogRef.close("save");
+  }
+  public nePasSauvegarder() {
+    this.dialogRef.close("dontsave");
   }
 }
