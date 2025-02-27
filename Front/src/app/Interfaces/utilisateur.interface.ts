@@ -19,4 +19,5 @@ export interface Profile {
 export interface Allergie {
   id: number,
   label: string,
+  check: boolean
 }
