@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthStoreService } from './store/AuthStore.service';
 import { apiBaseUrl } from '../../environment';
-import {Allergie, Producteur, Profile} from '../Interfaces/utilisateur.interface';
+import { Allergie, Producteur, ProducteursList, Profile } from '../Interfaces/utilisateur.interface';
 import { Observable } from 'rxjs';
 import { FrigoInput, IngredientFrigo } from '../Interfaces/ingredient.interface';
 
@@ -68,9 +68,9 @@ export class UtilisateurService {
 
   public getAllergenes(): Observable<Allergie[]> {
     return this.http.get<Allergie[]>(this.apiServerUrl + '/allergenes', {
-    headers: {
-      'Authorization': 'Bearer ' + this.authStore.getToken()
-     }
+      headers: {
+        'Authorization': 'Bearer ' + this.authStore.getToken()
+      }
     });
   }
 
@@ -86,6 +86,22 @@ export class UtilisateurService {
 
   public deleteIngredient(id: number): Observable<any> {
     return this.http.delete<any>(this.apiServerUrl + '/utilisateurs/ingredients_exclus/' + id, {
+      headers: {
+        'Authorization': 'Bearer ' + this.authStore.getToken()
+      }
+    });
+  }
+
+  public getProducteursUtilisateurConnectee(): Observable<ProducteursList> {
+    return this.http.get<ProducteursList>(this.apiServerUrl + '/utilisateurs/producteurs', {
+      headers: {
+        'Authorization': 'Bearer ' + this.authStore.getToken()
+      }
+    });
+  }
+
+  public desabonneProducteur(id: string): Observable<any> {
+    return this.http.delete<any>(this.apiServerUrl + '/utilisateurs/producteurs/' + id, {
       headers: {
         'Authorization': 'Bearer ' + this.authStore.getToken()
       }

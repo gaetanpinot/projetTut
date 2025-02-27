@@ -8,5 +8,6 @@
       </div>
     </div>
   </div>
-  <button mat-flat-button (click)="abonnerAProducteur()" >S'abonner</button>
+  <button *ngIf="!isAbonne" mat-flat-button (click)="abonnerAProducteur()" >S'abonner</button>
+  <button *ngIf="isAbonne" mat-flat-button (click)="desabonneProducteur()" >Se désabonner</button>
 </div>

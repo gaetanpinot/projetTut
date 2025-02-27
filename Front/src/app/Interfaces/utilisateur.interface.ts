@@ -4,6 +4,10 @@ export interface Producteur {
   nom_utilisateur: string,
   id: string,
 }
+
+export interface ProducteursList {
+  producteurs: Producteur[]
+}
 export interface Utilisateur {
   id: string,
   nom_utilisateur: string,

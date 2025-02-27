@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStoreService } from '../../../Services/store/AuthStore.service';
-import {UtilisateurService} from '../../../Services/utilisateur.service';
-import {Allergie} from '../../../Interfaces/utilisateur.interface';
-import {Ingredient} from '../../../Interfaces/ingredient.interface';
-import {IngredientsServicesService} from '../../../Services/ingredients.services.service';
+import { UtilisateurService } from '../../../Services/utilisateur.service';
+import { Allergie, Producteur } from '../../../Interfaces/utilisateur.interface';
+import { Ingredient } from '../../../Interfaces/ingredient.interface';
+import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
 
 interface Preference {
   nom: string;
@@ -22,19 +22,17 @@ export class AccountComponent implements OnInit {
   isLoading: boolean = true; // État de chargement des préférences
   showLogoutPopup: boolean = false; // État du popup de déconnexion
 
-  constructor(private ingredientsService: IngredientsServicesService, private authStore: AuthStoreService, private router: Router, private utilisateurService: UtilisateurService) {}
+  constructor(private ingredientsService: IngredientsServicesService,
+    public authStore: AuthStoreService,
+    private router: Router,
+    private utilisateurService: UtilisateurService,
+  ) { }
 
   // Données utilisateur
   user = {
-    nom: "Jean Dupont",
+    nom: '',
   };
 
-  // Variables pour le changement de mot de passe
-  password = {
-    old: '',
-    new: '',
-    confirm: ''
-  };
 
   // Détection du type d'utilisateur (remplace par un service d'authentification si nécessaire)
   isClient: boolean = true;
@@ -50,6 +48,8 @@ export class AccountComponent implements OnInit {
     await this.loadIngredients();
     await this.loadAllergenes();
     await this.loadPreferences();
+    this.loadProducteursUtilisateurConnectee()
+
   }
 
   addAllergie(id: number): void {
@@ -69,7 +69,7 @@ export class AccountComponent implements OnInit {
   }
 
   changeAllergie(allergie: Allergie): void {
-    if(allergie.check) {
+    if (allergie.check) {
       this.addAllergie(allergie.id);
     }
     else {
@@ -94,44 +94,68 @@ export class AccountComponent implements OnInit {
   }
 
   changeIngredient(ingre: Ingredient): void {
-    if(ingre.check) {
+    if (ingre.check) {
       this.addIngredient(ingre.id);
     }
     else {
       this.deleteIngredient(ingre.id);
     }
   }
+  public producteursUtilisateur: Producteur[] = [];
+  loadProducteursUtilisateurConnectee(): void {
+    if (!this.authStore.isAuthenticated()) return;
+    this.utilisateurService.getProducteursUtilisateurConnectee().subscribe({
+      next: (data) => {
+        this.producteursUtilisateur = data.producteurs;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  desabonneProducteur(id: string): void {
+    this.utilisateurService.desabonneProducteur(id).subscribe({
+      next: () => {
+        this.loadProducteursUtilisateurConnectee();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
 
   async loadPreferences(): Promise<void> {
     try {
-        this.utilisateurService.getProfile().subscribe({
-          next: async (data) => {
+      this.utilisateurService.getProfile().subscribe({
+        next: async (data) => {
 
-            this.user.nom = data.utilisateur.nom_utilisateur;
-            this.ingre_exclus = data.ingredients_exclus;
+          this.user.nom = data.utilisateur.nom_utilisateur;
+          this.ingre_exclus = data.ingredients_exclus;
 
-            for(let i = 0; i < this.allergies.length; i++) {
-              for(let j = 0; j < data.allergies.length; j++) {
-                if (data.allergies[j].id === this.allergies[i].id) {
-                  this.allergies[i].check = true;
-                }
+          for (let i = 0; i < this.allergies.length; i++) {
+            for (let j = 0; j < data.allergies.length; j++) {
+              if (data.allergies[j].id === this.allergies[i].id) {
+                this.allergies[i].check = true;
               }
             }
-
-            for(let i = 0; i < this.ingredients.length; i++) {
-              for(let j = 0; j < data.ingredients_exclus.length; j++) {
-                if (data.ingredients_exclus[j].id === this.ingredients[i].id) {
-                  this.ingredients[i].check = true;
-                }
-              }
-            }
-          },
-          error: (err) => {
-            console.error(err);
           }
-        })
 
-        this.isLoading = false;
+          for (let i = 0; i < this.ingredients.length; i++) {
+            for (let j = 0; j < data.ingredients_exclus.length; j++) {
+              if (data.ingredients_exclus[j].id === this.ingredients[i].id) {
+                this.ingredients[i].check = true;
+              }
+            }
+          }
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      })
+
+      this.isLoading = false;
     } catch (error) {
       console.error("Erreur lors du chargement des préférences :", error);
     }

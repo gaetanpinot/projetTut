@@ -3,6 +3,7 @@ import { Ingredient, IngredientProduit } from '../../../Interfaces/ingredient.in
 import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
 import { UtilisateurService } from '../../../Services/utilisateur.service';
 import { Router } from '@angular/router';
+import { Producteur } from '../../../Interfaces/utilisateur.interface';
 
 @Component({
   selector: 'app-liste-ingredient-produit',
@@ -15,12 +16,43 @@ export class ListeIngredientProduitComponent {
   @Input() id: string = '';
   public ingredients_produit: IngredientProduit = Object();
 
+  public get isAbonne(): boolean {
+    return this.producteursUtilisateurConnectee.some((producteur) => producteur.id === this.id);
+  }
+
+  producteursUtilisateurConnectee: Producteur[] = [];
+
+  desabonneProducteur(): void {
+
+    this.utilisateurService.desabonneProducteur(this.id).subscribe({
+      next: () => {
+        this.loadProducteursUtilisateurConnectee();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  loadProducteursUtilisateurConnectee(): void {
+    this.utilisateurService.getProducteursUtilisateurConnectee().subscribe({
+      next: (data) => {
+        this.producteursUtilisateurConnectee = data.producteurs;
+        this.loadProducteursUtilisateurConnectee()
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
   constructor(private ingredientService: IngredientsServicesService,
     private utilisateurService: UtilisateurService,
-    private router: Router
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
+    this.loadProducteursUtilisateurConnectee();
     //  this.loadIngredients();
   }
 

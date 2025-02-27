@@ -57,7 +57,7 @@
     </span>
   </span>
 
-  <span>
+  <span class="selectandbutton">
     <mat-form-field appearance="fill">
       <mat-label>Début Saison</mat-label>
       <mat-select [(value)]="startSaisonId" (selectionChange)="loadRecettes()">
@@ -66,6 +66,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
+    <span *ngIf="authStore.isAuthenticated()">
+      <a [routerLink]="['/CreerRecette']"><button type="button" mat-flat-button>Créer une recette</button></a>
+    </span>
   </span>
 
   <span>
@@ -104,7 +107,7 @@
 
 </div>
 
-<mat-table [dataSource]="dataSource">
+<mat-table [dataSource]="dataSource" class="mt-2.5">
   <ng-container matColumnDef="IMAGE">
     <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
     <mat-cell *matCellDef="let element">
@@ -116,12 +119,19 @@
 
   <ng-container matColumnDef="NOM">
     <mat-header-cell *matHeaderCellDef> Recette </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.nom}} </mat-cell>
+    <mat-cell *matCellDef="let element">
+      <div class="flex flex-col gap-2">
+      <div>{{element.nom}}</div>
+      <div>
+        <mat-icon class="text-yellow-400" *ngFor="let i of [].constructor(element.note);">star</mat-icon>
+      </div>
+      </div>
+    </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="DESCR">
     <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.description}} </mat-cell>
+    <mat-cell *matCellDef="let element"> {{element.description.slice(0, 100)}}{{element.description.length > 100 ? "..." : ""}} </mat-cell>
   </ng-container>
 
   <ng-container matColumnDef="CONFIRM">

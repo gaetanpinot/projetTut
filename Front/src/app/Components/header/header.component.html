@@ -2,21 +2,26 @@
     <span class="burger-menu" (click)="toggleMenu()">
         <mat-icon>menu</mat-icon>
     </span>
-    <span class="desktop-menu">
+  <span class="desktop-menu">
         <ul class="nav-list">
-            <li class="nav-item">
-                <a routerLink="/Home">
-                    <img src="https://amap-idf.org/images/env/logo.svg">
-                </a>
-            </li>
-            <li class="nav-item">
-                <mat-icon>home</mat-icon>
-                <a routerLink="/Home">Accueil</a>
-            </li>
-            <li class="nav-item">
-                <mat-icon>fastfood</mat-icon>
-                <a routerLink="/Recette">Recettes</a>
-            </li>
+             <a routerLink="/Home">
+               <li class="nav-item">
+
+                    <img src="logo.png">
+               </li>
+             </a>
+            <a routerLink="/Home">
+              <li class="nav-item">
+                  <mat-icon>home</mat-icon>
+                  Accueil
+              </li>
+            </a>
+            <a routerLink="/Recette">
+              <li class="nav-item">
+                  <mat-icon>fastfood</mat-icon>
+                  Recettes
+              </li>
+            </a>
             <li class="nav-item" *ngIf="(authStore.token$ | async)">
                 Autres
                 <ul class="dropdown">
@@ -35,20 +40,16 @@
                         </a>
                     </div>
                     <div *ngIf="(authStore.isClient())">
-                        <li class="nav-item">
-                            <mat-icon>kitchen</mat-icon>
-                            <a routerLink="/Frigo">Frigo</a>
-                        </li>
+                        <a routerLink="/Frigo">
+                          <li class="nav-item">
+                              <mat-icon>kitchen</mat-icon>
+                             Frigo
+                          </li>
+                        </a>
                         <a routerLink="/producteurs/liste">
                             <li class="nav-item">
                                 <mat-icon>person</mat-icon>
                                 Liste des producteurs
-                            </li>
-                        </a>
-                        <a routerLink="/panier/user">
-                            <li class="nav-item">
-                                <mat-icon>shopping_cart</mat-icon>
-                                Mes paniers
                             </li>
                         </a>
                     </div>
@@ -56,7 +57,7 @@
             </li>
         </ul>
     </span>
-    <span>
+  <span>
         <ul class="nav-list">
             <li *ngIf="!(authStore.token$ | async)" class="nav-item">
                 <a routerLink="/Connexion"><mat-icon>login</mat-icon></a>
@@ -72,45 +73,45 @@
 </nav>
 
 <div class="mobile-menu" [class.open]="isMenuOpen">
-    <span class="close-btn" (click)="toggleMenu()">&times;</span>
-    <ul class="nav-list">
-        <li><a routerLink="/Home">Accueil</a></li>
-        <li><a routerLink="/Recette">Recettes</a></li>
-        <div *ngIf="(authStore.isProducteur())">
-            <a routerLink="/panier/create">
-                <li class="nav-item">
-                    <mat-icon>shopping_cart</mat-icon>
-                    Créer un panier
-                </li>
-            </a>
-            <a routerLink="/panier/liste">
-                <li class="nav-item">
-                    <mat-icon>list</mat-icon>
-                    Liste de vos paniers
-                </li>
-            </a>
-        </div>
-        <div *ngIf="(authStore.isClient())">
-            <li class="nav-item">
-                <mat-icon>kitchen</mat-icon>
-                <a routerLink="/Frigo">Frigo</a>
-            </li>
-            <a routerLink="/producteurs/liste">
-                <li class="nav-item">
-                    <mat-icon>person</mat-icon>
-                    Liste des producteurs
-                </li>
-            </a>
-            <a routerLink="/panier/user">
-                <li class="nav-item">
-                    <mat-icon>shopping_cart</mat-icon>
-                    Mes paniers
-                </li>
-            </a>
-        </div>
-        <li *ngIf="(authStore.token$ | async)"><a routerLink="/panier/create">Créer un panier</a></li>
-        <li *ngIf="(authStore.token$ | async)"><a routerLink="/Frigo">Frigo</a></li>
-        <li *ngIf="!(authStore.token$ | async)"><a routerLink="/Connexion">Connexion</a></li>
-        <li *ngIf="(authStore.token$ | async)"><a routerLink="/Account">Mon Compte</a></li>
-    </ul>
+  <span class="close-btn" (click)="toggleMenu()">&times;</span>
+  <ul class="nav-list">
+    <li><a routerLink="/Home">Accueil</a></li>
+    <li><a routerLink="/Recette">Recettes</a></li>
+    <div *ngIf="(authStore.isProducteur())">
+      <a routerLink="/panier/create">
+        <li class="nav-item">
+          <mat-icon>shopping_cart</mat-icon>
+          Créer un panier
+        </li>
+      </a>
+      <a routerLink="/panier/liste">
+        <li class="nav-item">
+          <mat-icon>list</mat-icon>
+          Liste de vos paniers
+        </li>
+      </a>
+    </div>
+    <div *ngIf="(authStore.isClient())">
+      <li class="nav-item">
+        <mat-icon>kitchen</mat-icon>
+        <a routerLink="/Frigo">Frigo</a>
+      </li>
+      <a routerLink="/producteurs/liste">
+        <li class="nav-item">
+          <mat-icon>person</mat-icon>
+          Liste des producteurs
+        </li>
+      </a>
+      <a routerLink="/panier/user">
+        <li class="nav-item">
+          <mat-icon>shopping_cart</mat-icon>
+          Mes paniers
+        </li>
+      </a>
+    </div>
+    <li *ngIf="(authStore.token$ | async)"><a routerLink="/panier/create">Créer un panier</a></li>
+    <li *ngIf="(authStore.token$ | async)"><a routerLink="/Frigo">Frigo</a></li>
+    <li *ngIf="!(authStore.token$ | async)"><a routerLink="/Connexion">Connexion</a></li>
+    <li *ngIf="(authStore.token$ | async)"><a routerLink="/Account">Mon Compte</a></li>
+  </ul>
 </div>

@@ -40,6 +40,8 @@ import { ListeProducteursComponent } from './Components/Main/liste-producteurs/l
 import { AccountComponent } from './Components/Main/account/account.component';
 import {HomeComponent} from './Components/Main/home/home.component';
 import { CreateRecetteComponent } from './Components/Main/create-recette/create-recette.component';
+import { MatDatepickerModule } from '@angular/material/datepicker'; // Import MatDatepickerModule
+import { MatNativeDateModule } from '@angular/material/core'; // Import MatNativeDateModule
 
 // @ts-ignore
 @NgModule({
@@ -86,6 +88,8 @@ import { CreateRecetteComponent } from './Components/Main/create-recette/create-
     MatRadioModule,
     MatCheckboxModule,
     MatSlideToggleModule,
+    MatDatepickerModule, // Add this line
+    MatNativeDateModule // Add this line
   ],
   providers: [
     provideAnimationsAsync(),
