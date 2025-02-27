@@ -121,6 +121,12 @@ export class RecetteRechercheComponent implements OnInit {
     if (load) this.loadRecettes();
   }
 
+  appliquerAllergenes(load: boolean = true) {
+    const allergies = this.profileUtilisateur.allergies.map(f => f.id);
+    this.allergenesId = allergies;
+    if (load) this.loadRecettes();
+  }
+
   appliquerIngredientsExclus(load: boolean = true) {
     const ing = this.profileUtilisateur.ingredients_exclus.map(f => f.id);
     this.bannedVegetableIds = ing;

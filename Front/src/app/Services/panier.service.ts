@@ -28,8 +28,8 @@ export class PanierService {
     });
   }
 
-  publierPanier(id: number): any {
-    return this.http.post(this.apiServerUrl + '/paniers/' + id, {},
+  publierPanier(id: number): Observable<any> {
+    return this.http.post<any>(this.apiServerUrl + '/paniers/' + id, {},
       {
         headers: {
           'Authorization': 'Bearer ' + this.authStore.getToken()
