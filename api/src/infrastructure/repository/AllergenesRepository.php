@@ -11,6 +11,10 @@ use amap\infrastructure\repository\interfaces\AllergieRepositoryInterface;
  */
 class AllergenesRepository extends EntityRepository implements AllergieRepositoryInterface
 {
+    public function getAllergies(): array
+    {
+        return $this->findAll();
+    }
     public function getAllergieById(int $id): Allergene
     {
         $allergie =

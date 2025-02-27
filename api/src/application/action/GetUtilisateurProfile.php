@@ -12,10 +12,9 @@ use amap\core\service\interfaces\ServiceUtilisateurInterface;
 class GetUtilisateurProfile extends AbstractAction
 {
     protected ServiceUtilisateurInterface $serviceUtilisateur;
-    public function __construct(ServiceUtilisateurInterface $service, LoggerInterface $l)
+    public function __construct(ServiceUtilisateurInterface $service)
     {
         $this->serviceUtilisateur = $service;
-        parent::__construct($l);
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
