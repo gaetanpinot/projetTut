@@ -57,7 +57,7 @@ export class ConnexionComponent implements OnInit {
     ).subscribe(data => {
       if (data) {
         this.authStore.setUser(data.token, data.utilisateur.role, data.utilisateur.id);
-        this.router.navigate(['/']);
+        this.router.navigate(['/Home']);
       }
       this.loading = false;
     });

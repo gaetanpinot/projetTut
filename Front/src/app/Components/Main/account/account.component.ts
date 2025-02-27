@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-
+import { AuthStoreService } from '../../../Services/store/AuthStore.service';
 interface Preference {
   nom: string;
   checked: boolean;
@@ -17,7 +17,7 @@ export class AccountComponent implements OnInit {
   isLoading: boolean = true; // État de chargement des préférences
   showLogoutPopup: boolean = false; // État du popup de déconnexion
 
-  constructor(private router: Router) {} // Injection du Router
+  constructor(private authStore: AuthStoreService, private router: Router) {}
 
   // Données utilisateur
   user = {
@@ -164,7 +164,7 @@ export class AccountComponent implements OnInit {
    */
   logout(): void {
     this.showLogoutPopup = false;
-
+    this.authStore.clearUser(); // Suppression des données utilisateur
     this.router.navigate(['/Home']); // Redirection via Angular Router
   }
 }

@@ -23,7 +23,7 @@ const routes: Routes = [
   { path: 'Recette', component: RecetteRechercheComponent },
   { path: 'Frigo', component: FrigoComponent, canDeactivate: [GardeNonSaveGuard] },
   { path: 'Nouveau-panier', component: CreatePanierComponent },
-  { path: 'Panier/user', component: PanierComponent },
+  { path: 'panier/user', component: PanierComponent },
   { path: 'panier/create', component: CreatePanierComponent, title: 'Créer un panier' },
   { path: 'panier/liste', component: ListePanierComponent, title: 'Liste des paniers' },
   { path: 'producteurs/:id/ingredients', component: ListeIngredientProduitComponent, title: 'Liste des ingredients du producteur' },

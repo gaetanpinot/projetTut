@@ -93,3 +93,65 @@
 .dropdown li a {
     color: var(--white);
 }
+
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    background-color: var(--green);
+}
+
+.nav-list {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+    align-items: center;
+}
+
+.burger-menu {
+    display: none;
+    cursor: pointer;
+}
+
+.mobile-menu {
+    position: fixed;
+    top: 0;
+    left: -100%;
+    width: 250px;
+    height: 100%;
+    background: var(--green);
+    padding: 20px;
+    transition: left 0.3s ease-in-out;
+}
+
+.mobile-menu.open {
+    left: 0;
+}
+
+.close-btn {
+    font-size: 24px;
+    cursor: pointer;
+}
+
+@media (max-width: 768px) {
+    .desktop-menu {
+        display: none;
+    }
+    .burger-menu {
+        display: block;
+    }
+}
+
+@media (min-width: 769px) {
+    .desktop-menu {
+        display: flex;
+        flex-direction: column;
+    }
+    .burger-menu {
+        display: none;
+    }
+    .mobile-menu {
+        display: none;
+    }
+}
