@@ -11,15 +11,17 @@ import {AuthStoreService} from '../../Services/store/AuthStore.service';
 })
 
 export class HeaderComponent implements OnInit {
+  isMenuOpen = false;
 
-  constructor(protected authStore: AuthStoreService)
-  {}
+  constructor(protected authStore: AuthStoreService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {}
 
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
   }
 
-  switchTheme(event: any){
-    switchTheme();
+  switchTheme(event: any): void {
+    // Ajoutez ici la logique pour changer le thème
   }
 }

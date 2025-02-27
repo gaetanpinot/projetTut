@@ -6,6 +6,11 @@ PRYKHODKO Yehor
 
 Retro planning (gant)
 
+# log 
+
+client     -- alice   1234
+producteur -- charlie 1234
+
 # Liens:
 ## Docketu:
 Api: <http://docketu.iutnc.univ-lorraine.fr:12200>
