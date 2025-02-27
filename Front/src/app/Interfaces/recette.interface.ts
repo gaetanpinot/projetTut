@@ -1,25 +1,25 @@
-export interface GetRecettes{
-    recettes: Recette[],
-    links : {
-            next : string,
-            prev : string
-        }
+export interface GetRecettes {
+  recettes: Recette[],
+  links: {
+    next: string,
+    prev: string
+  }
 }
 
 
-export interface GetRecetteResponse{
-    id: number,
-    nom: string,
-    tempsPreparation: number,
-    complexite: number,
-    idCreateur: string,
-    description: string,
-    debutSaison: number,
-    finSaison: number,
-    urlPhoto: string
+export interface GetRecetteResponse {
+  id: number,
+  nom: string,
+  tempsPreparation: number,
+  complexite: number,
+  idCreateur: string,
+  description: string,
+  debutSaison: number,
+  finSaison: number,
+  urlPhoto: string
 }
 
-export interface GetIngredientsResponse{
+export interface GetIngredientsResponse {
   id: number,
   nom: string,
   url_photo: string
@@ -28,41 +28,41 @@ export interface GetIngredientsResponse{
 
 
 
-export interface Recette{
-    id: number,
-    nom: string,
-    temps_preparation: number,
-    complexite: number,
-    description: string,
-    id_createur : string,
-    debut_saison: Date,
-    fin_saison: Date,
-    id_recette_parente: number,
-    url_photo: string,
-    note: number,
-    tags : [
-        {
-            id: number,
-            label: string
-        }
-    ],
-    ingredients: [
-      {
-            quantite: string,
-            ingredient: {
-              id_ingredient: number,
-              url_photo: string,
-              nom: string
-            }
+export interface Recette {
+  id: number,
+  nom: string,
+  temps_preparation: number,
+  complexite: number,
+  description: string,
+  id_createur: string,
+  debut_saison: Date,
+  fin_saison: Date,
+  id_recette_parente: number,
+  url_photo: string,
+  note: number,
+  tags: [
+    {
+      id: number,
+      label: string
+    }
+  ],
+  ingredients: [
+    {
+      quantite: string,
+      ingredient: {
+        id_ingredient: number,
+        url_photo: string,
+        nom: string
+      }
 
-        }
-    ],
-    ustensiles: [
-        {
-            id_ustensile: number,
-            quantite : number
-        }
-    ]
+    }
+  ],
+  ustensiles: [
+    {
+      id_ustensile: number,
+      quantite: number
+    }
+  ]
 }
 
 export interface Tag {
@@ -87,4 +87,20 @@ export interface Vegetable {
   nom: string;
   id: number;
   url_photo: string;
+}
+
+export interface RecetteInput {
+
+  nom: string,
+  temps_preparation: number,
+  complexite: number,
+  description: string,
+  debut_saison: number,
+  fin_saison: number,
+  url_photo: string,
+  id_recette_parente: number | null,
+  tags: number[],
+  ingredients_recette: number[],
+  ustensiles: number[],
+  notes: number[],
 }

@@ -21,13 +21,15 @@ class PostCreateRecetteAction extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
+
+        $id_utilisateur = $rq->getAttribute('idutilisateur');
         $data = $rq->getParsedBody();
         $inputDto = new InputRecetteDTO
         (
             $data['nom'] ?? null,
             $data['temps_preparation'] ?? null,
             $data['complexite'] ?? null,
-            $data['id_createur'] ?? null,
+$id_utilisateur,
             $data['description'] ?? null,
             $data['debut_saison'] ?? null,
             $data['fin_saison'] ?? null,

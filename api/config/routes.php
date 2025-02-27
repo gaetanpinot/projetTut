@@ -53,10 +53,10 @@ return function (\Slim\App $app): \Slim\App {
     $app->get('/recettes/random[/]', GetRandomRecettes::class);
     $app->get('/ingredients/random[/]', GetRandomIngredients::class);
 
-    $app->post('/recettes[/]', PostCreateRecetteAction::class);
+    $app->post('/recettes[/]', PostCreateRecetteAction::class)->add(AuthnMiddleware::class);
     $app->get('/recettes[/]', GetRecettesAction::class);
     $app->get('/recettes/{id}', GetRecetteByIdAction::class);
-    $app->delete('/recettes/{id}', DeleteRecetteAction::class);
+    $app->delete('/recettes/{id}', DeleteRecetteAction::class)->add(AuthnMiddleware::class);
 
 
     $app->post('/tag', CreateTagAction::class);

@@ -52,9 +52,9 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    <!--<span *ngIf="authStore.isAuthenticated()" id="appliquerIngredientExclus">-->
-    <!--  <button type="button" mat-flat-button (click)="appliquerIngredientsExclus()">Appliquer les préférences</button>-->
-    <!--</span>-->
+    <span *ngIf="authStore.isAuthenticated()" id="appliquerAllergenes">
+      <button type="button" mat-flat-button (click)="appliquerAllergenes()">Appliquer les allergies</button>
+    </span>
   </span>
 
   <span>

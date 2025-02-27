@@ -39,6 +39,7 @@ import { ListeIngredientProduitComponent } from './Components/Main/liste-ingredi
 import { ListeProducteursComponent } from './Components/Main/liste-producteurs/liste-producteurs.component';
 import { AccountComponent } from './Components/Main/account/account.component';
 import {HomeComponent} from './Components/Main/home/home.component';
+import { CreateRecetteComponent } from './Components/Main/create-recette/create-recette.component';
 
 // @ts-ignore
 @NgModule({
@@ -63,7 +64,8 @@ import {HomeComponent} from './Components/Main/home/home.component';
     ListeIngredientProduitComponent,
     ListeProducteursComponent,
     AccountComponent,
-    HomeComponent
+    HomeComponent,
+    CreateRecetteComponent
   ],
   imports: [
     BrowserModule,
