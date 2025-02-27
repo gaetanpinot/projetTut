@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStoreService } from '../../../Services/store/AuthStore.service';
 import { UtilisateurService } from '../../../Services/utilisateur.service';
-import { Allergie } from '../../../Interfaces/utilisateur.interface';
+import { Allergie, Producteur } from '../../../Interfaces/utilisateur.interface';
 import { Ingredient } from '../../../Interfaces/ingredient.interface';
 import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
 
@@ -23,9 +23,9 @@ export class AccountComponent implements OnInit {
   showLogoutPopup: boolean = false; // État du popup de déconnexion
 
   constructor(private ingredientsService: IngredientsServicesService,
-    private authStore: AuthStoreService,
+    public authStore: AuthStoreService,
     private router: Router,
-    private utilisateurService: UtilisateurService
+    private utilisateurService: UtilisateurService,
   ) { }
 
   // Données utilisateur
@@ -48,6 +48,8 @@ export class AccountComponent implements OnInit {
     await this.loadIngredients();
     await this.loadAllergenes();
     await this.loadPreferences();
+    this.loadProducteursUtilisateurConnectee()
+
   }
 
   addAllergie(id: number): void {
@@ -99,6 +101,30 @@ export class AccountComponent implements OnInit {
       this.deleteIngredient(ingre.id);
     }
   }
+  public producteursUtilisateur: Producteur[] = [];
+  loadProducteursUtilisateurConnectee(): void {
+    if (!this.authStore.isAuthenticated()) return;
+    this.utilisateurService.getProducteursUtilisateurConnectee().subscribe({
+      next: (data) => {
+        this.producteursUtilisateur = data.producteurs;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
+  desabonneProducteur(id: string): void {
+    this.utilisateurService.desabonneProducteur(id).subscribe({
+      next: () => {
+        this.loadProducteursUtilisateurConnectee();
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
 
   async loadPreferences(): Promise<void> {
     try {
