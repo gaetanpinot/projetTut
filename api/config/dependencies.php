@@ -1,5 +1,7 @@
 <?php
 
+use amap\core\service\ServiceAllergie;
+use amap\core\service\interfaces\ServiceAllergenesInterface;
 use amap\core\service\interfaces\ServiceAuthInterface;
 use amap\core\service\interfaces\ServiceIngredientInterface;
 use amap\core\service\interfaces\ServiceNoteInterface;
@@ -48,6 +50,7 @@ use Opis\JsonSchema\Validator;
 use Psr\Container\ContainerInterface;
 
 use Psr\Log\LoggerInterface;
+use function DI\autowire;
 use function DI\create;
 use function DI\get;
 
@@ -224,6 +227,15 @@ return [
         return $repo;
     },
 
+    AllergieRepositoryInterface::class => get(AllergenesRepository::class),
+    AllergenesRepository::class => function(ContainerInterface $c) {
+        $em = $c->get(EntityManager::class);
+        $repo = $em->getRepository(Allergene::class);
+        return $repo;
+    },
+
+    ServiceAllergenesInterface::class => DI\autowire(ServiceAllergie::class),
+    ServiceAllergie::class=> autowire(),
 
     StreamHandler::class => DI\create(StreamHandler::class)
         ->constructor(DI\get('logs.dir'), Level::Debug)
