@@ -1,3 +1,29 @@
+.selectandbutton {
+  display: flex;
+  flex-direction: column;
+}
+
+#filtre-list {
+  display: flex;
+  flex-direction: row;
+
+  >span {
+    margin: 0.5em;
+  }
+}
+
+#affichageFiltres {
+  display: flex;
+  flex-direction: column;
+
+  >div {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0.5em;
+  }
+}
 
 .pages {
   display: flex;
