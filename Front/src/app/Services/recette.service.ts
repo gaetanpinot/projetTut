@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { apiBaseUrl } from '../../environment';
-import { GetIngredientsResponse, GetRecetteResponse, Recette } from '../Interfaces/recette.interface';
+import { GetIngredientsResponse, GetRecetteResponse, Recette, RecetteInput } from '../Interfaces/recette.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -57,5 +57,15 @@ export class RecetteService {
 
   getRandomRecettes() {
     return this.http.get<Recette[]>(this.apiServerUrl + '/recettes/random');
+  }
+
+  createRecette(recette: RecetteInput) {
+    return this.http.post(this.apiServerUrl + '/recettes', recette,
+      {
+        headers: {
+          'Authorization': 'Bearer ' + localStorage.getItem('token')
+        },
+      }
+    );
   }
 }

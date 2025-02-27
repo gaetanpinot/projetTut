@@ -8,6 +8,7 @@ use amap\application\action\DeleteRecetteAction;
 use amap\application\action\GetAllergenes;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetPanierByProducteurAction;
+use amap\application\action\GetProducteursUtilisateurList;
 use amap\application\action\GetRandomIngredients;
 use amap\application\action\GetRandomRecettes;
 use amap\application\action\GetRecetteByIdAction;
@@ -86,6 +87,8 @@ return function (\Slim\App $app): \Slim\App {
 
         $group->get('/frigo[/]', GetUserFrigo::class)->add(AuthnMiddleware::class);
         $group->put('/frigo[/]', ReplaceUserFrigo::class)->add(AuthnMiddleware::class);
+
+        $group->get('/producteurs[/]', GetProducteursUtilisateurList::class)->add(AuthnMiddleware::class);
         $group->post('/producteurs/{id}[/]', AbonnerUtilisateurAProducteur::class)->add(AuthnMiddleware::class);
         $group->delete('/producteurs/{id}[/]', DesabonnerUtilisateurAProducteur::class)->add(AuthnMiddleware::class);
     });

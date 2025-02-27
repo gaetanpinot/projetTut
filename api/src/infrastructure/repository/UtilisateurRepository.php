@@ -22,6 +22,15 @@ use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
  */
 class UtilisateurRepository extends EntityRepository implements UtilisateurRepositoryInterface
 {
+
+    /**
+     * @return Utilisateur[]
+     */
+    public function getProduceursOfUtilisateur(string $id_utilisateur): array
+    {
+        $utilisateur = $this->getUtilisateurById($id_utilisateur);
+        return $utilisateur->getProducteurs()->toArray();
+    }
     public function getProducteurs(): array
     {
         $producteurs = $this->findBy(['role' => 1]);

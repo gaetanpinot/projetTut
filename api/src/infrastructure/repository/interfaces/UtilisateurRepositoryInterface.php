@@ -11,6 +11,7 @@ use amap\infrastructure\entities\Utilisateur;
 
 interface UtilisateurRepositoryInterface
 {
+    public function getProduceursOfUtilisateur(string $id_utilisateur): array;
     public function getUtilisateurById(string $id): Utilisateur;
     public function getUtilisateurByNom(string $nomUtilisateur): Utilisateur;
     public function getProducteur(string $id_producteur): Utilisateur;

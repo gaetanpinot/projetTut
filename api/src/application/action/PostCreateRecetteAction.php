@@ -29,7 +29,7 @@ class PostCreateRecetteAction extends AbstractAction
             $data['nom'] ?? null,
             $data['temps_preparation'] ?? null,
             $data['complexite'] ?? null,
-$id_utilisateur,
+            $id_utilisateur,
             $data['description'] ?? null,
             $data['debut_saison'] ?? null,
             $data['fin_saison'] ?? null,
