@@ -1,49 +1,72 @@
-<div class="text-center mt-4" fxLayout="row"
-     fxLayoutGap="16px"
-     fxLayoutAlign="start center">
-  <mat-form-field>
-    <mat-label>Nom recette</mat-label>
-    <input matInput
-           placeholder="Lasagnes"
-           value=""
-           (input)="searchByName($event)">
-  </mat-form-field>
+<div id="filtre-list" class="text-center mt-4"
+  fxLayoutGap="16px"
+  fxLayoutAlign="start center">
 
-  <mat-form-field appearance="fill">
-    <mat-label>Choisir un  Ingrédient</mat-label>
-    <mat-select [(value)]="selectedVegetableIds" (selectionChange)="loadRecettes()" multiple>
-      <mat-option *ngFor="let vegetable of vegetables" [value]="vegetable.id">
-        {{ vegetable.nom }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Bannir un Ingrédient</mat-label>
-    <mat-select [(value)]="bannedVegetableIds" (selectionChange)="loadRecettes()" multiple>
-      <mat-option *ngFor="let vegetable of bannedvegetables" [value]="vegetable.id">
-        {{ vegetable.nom }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <span>
+    <mat-form-field>
+      <mat-label>Nom recette</mat-label>
+      <input matInput
+        placeholder="Lasagnes"
+        value=""
+        (input)="searchByName($event)">
+    </mat-form-field>
+  </span>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Début Saison</mat-label>
-    <mat-select [(value)]="startSaisonId" (selectionChange)="loadRecettes()">
-      <mat-option *ngFor="let saison of saisons" [value]="saison.id">
-        {{ saison.nom }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <span class="selectandbutton" >
+    <span>
+    <mat-form-field appearance="fill">
+      <mat-label>Choisir un  Ingrédient</mat-label>
+      <mat-select [(value)]="selectedVegetableIds" (selectionChange)="loadRecettes()" multiple>
+        <mat-option *ngFor="let vegetable of vegetables" [value]="vegetable.id">
+          {{ vegetable.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    </span>
+    <span *ngIf="authStore.isAuthenticated()" id="appliquerIngredientFrigo">
+      <button type="button" mat-flat-button (click)="appliquerFrigo()">Appliquer le frigo</button>
+    </span>
+  </span>
 
-  <mat-form-field appearance="fill">
-    <mat-label>Fin Saison</mat-label>
-    <mat-select [(value)]="endSaisonId" (selectionChange)="loadRecettes()">
-      <mat-option *ngFor="let saison of saisons" [value]="saison.id">
-        {{ saison.nom }}
-      </mat-option>
-    </mat-select>
-  </mat-form-field>
+  <span class="selectandbutton" >
+    <mat-form-field appearance="fill">
+      <mat-label>Bannir un Ingrédient</mat-label>
+      <mat-select [(value)]="bannedVegetableIds" (selectionChange)="loadRecettes()" multiple>
+        <mat-option *ngFor="let vegetable of bannedvegetables" [value]="vegetable.id">
+          {{ vegetable.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <span *ngIf="authStore.isAuthenticated()" id="appliquerIngredientExclus">
+      <button type="button" mat-flat-button (click)="appliquerIngredientsExclus()">Appliquer les préférences</button>
+    </span>
+  </span>
+
+  <span>
+    <mat-form-field appearance="fill">
+      <mat-label>Début Saison</mat-label>
+      <mat-select [(value)]="startSaisonId" (selectionChange)="loadRecettes()">
+        <mat-option *ngFor="let saison of saisons" [value]="saison.id">
+          {{ saison.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </span>
+
+  <span>
+    <mat-form-field appearance="fill">
+      <mat-label>Fin Saison</mat-label>
+      <mat-select [(value)]="endSaisonId" (selectionChange)="loadRecettes()">
+        <mat-option *ngFor="let saison of saisons" [value]="saison.id">
+          {{ saison.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+  </span>
+</div>
+
+<div id="affichageFiltres">
 
   <div class="selectIngredients" *ngIf="selectedVegetableIds.length">
     <div class="flex gap-3 items-center">
@@ -52,7 +75,7 @@
         <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
         <p>{{ vegetable.nom }}</p>
       </div>
-      </div>
+    </div>
   </div>
 
   <div class="selectIngredients" *ngIf="bannedVegetableIds.length">
@@ -64,6 +87,7 @@
       </div>
     </div>
   </div>
+
 </div>
 
 <mat-table [dataSource]="dataSource">
@@ -71,7 +95,7 @@
     <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
     <mat-cell *matCellDef="let element">
       <img src="{{element.url_photo}}"
-           style="width: 100px;">
+        style="width: 100px;">
     </mat-cell>
   </ng-container>
 
@@ -99,16 +123,16 @@
 
 <div class="pages">
   <button (click)="setPage(-1)"
-          mat-mini-fab
-          aria-label="Example icon button with a menu icon">
+    mat-mini-fab
+    aria-label="Example icon button with a menu icon">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
   <span>
     Page: {{ currentPage }}
   </span>
   <button (click)="setPage(1)"
-          mat-mini-fab
-          aria-label="Example icon button with a menu icon">
+    mat-mini-fab
+    aria-label="Example icon button with a menu icon">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
 </div>

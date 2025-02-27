@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { AuthStoreService } from './store/AuthStore.service';
 import { apiBaseUrl } from '../../environment';
-import { Producteur } from '../Interfaces/utilisateur.interface';
+import { Producteur, Profile } from '../Interfaces/utilisateur.interface';
 import { Observable } from 'rxjs';
 import { FrigoInput, IngredientFrigo } from '../Interfaces/ingredient.interface';
 
@@ -34,6 +34,14 @@ export class UtilisateurService {
   }
   public remplacerFrigo(ingredients: FrigoInput): Observable<IngredientFrigo[]> {
     return this.http.put<IngredientFrigo[]>(this.apiServerUrl + '/utilisateurs/frigo', ingredients, {
+      headers: {
+        'Authorization': 'Bearer ' + this.authStore.getToken()
+      }
+    });
+  }
+
+  public getProfile(): Observable<Profile> {
+    return this.http.get<Profile>(this.apiServerUrl + '/utilisateurs', {
       headers: {
         'Authorization': 'Bearer ' + this.authStore.getToken()
       }
