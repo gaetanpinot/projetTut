@@ -5,6 +5,7 @@ declare(strict_types=1);
 use amap\application\action\ChangeIngredientsProduit;
 use amap\application\action\CreateRecetteAction;
 use amap\application\action\DeleteRecetteAction;
+use amap\application\action\GetAllergenes;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetPanierByProducteurAction;
 use amap\application\action\GetRandomIngredients;
@@ -69,6 +70,8 @@ return function (\Slim\App $app): \Slim\App {
     $app->group('/ingredients', function (RouteCollectorProxy $group){
         $group->get('[/]', GetIngredientsAction::class);
     });
+
+    $app->get('/allergenes[/]', GetAllergenes::class);
 
     $app->group('/utilisateurs', function (RouteCollectorProxy $group) {
         $group->get('[/]', GetUtilisateurProfile::class)->add(AuthnMiddleware::class);
