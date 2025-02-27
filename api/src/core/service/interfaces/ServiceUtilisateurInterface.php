@@ -14,6 +14,7 @@ use amap\core\dto\UtilisateurDTO;
 
 interface ServiceUtilisateurInterface
 {
+    public function getProduceursOfUtilisateur(string $id_utilisateur): array;
     public function getUtilisateurById(string $id): UtilisateurDTO;
     public function getUtilisateurByNom(string $nom): UtilisateurDTO;
     public function getProfileUtilisateur(string $id): ProfileDTO;

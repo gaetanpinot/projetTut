@@ -19,6 +19,7 @@ use amap\infrastructure\repository\interfaces\UtilisateurRepositoryInterface;
 
 class ServiceUtilisateur implements ServiceUtilisateurInterface
 {
+
     private UtilisateurRepositoryInterface $utilisateurRepository;
     private AllergieRepositoryInterface $allergieRepo;
     private UstensileRepositoryInterface $ustensileRepository;
@@ -190,5 +191,13 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
     {
         $producteur = $this->utilisateurRepository->changerIngredientsProduits($id_producteur, $ingredients);
     }
+
+    public function getProduceursOfUtilisateur(string $id_utilisateur): array
+    {
+        $producteurs = $this->utilisateurRepository->getProduceursOfUtilisateur($id_utilisateur);
+        $producteursDTO = UtilisateurDTO::fromArrayUtilisateur($producteurs);
+return $producteursDTO;
+    }
+
 
 }
