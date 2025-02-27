@@ -5,13 +5,10 @@
             <button class="btn-supprimer" (click)="openDeletePopup(panier.id)"><mat-icon>delete_forever</mat-icon></button>
         </div>
 
-        <p>{{ panier.description }}</p>
-
         <div class="infos">
             <ul>
                 <li>Panier de <span>{{ panier.producteur }}</span></li>
-                <li>Prix : <strong>{{ panier.prix }}€</strong></li>
-                <li>Date : {{ panier.date }}</li>
+
             </ul>
         </div>
 

@@ -31,6 +31,12 @@ export class ListePanierComponent {
         }
       }
     );
+    // Tri des paniers par date_publication
+    this.paniers.sort((a, b) => {
+      const dateA = new Date(a.date_publication).getTime();
+      const dateB = new Date(b.date_publication).getTime();
+      return dateA - dateB; // Tri croissant (du plus ancien au plus récent)
+    });
   }
 
   public publierPanier(id: number) {

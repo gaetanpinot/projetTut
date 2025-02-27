@@ -4,7 +4,6 @@
         <div class="account-info">
             <div>
                 <p><strong>Nom :</strong> {{ user.nom }}</p>
-                <p><strong>Email :</strong> {{ user.email }}</p>
                 <p><strong>Rôle :</strong> {{ user.role }}</p>
             </div>
             <mat-icon class="edit-icon" (click)="toggleForm()">create</mat-icon>
@@ -15,9 +14,6 @@
             <form (ngSubmit)="updateUser($event)">
                 <label>Nom</label>
                 <input type="text" [(ngModel)]="user.nom" name="nom" class="input-field" required />
-
-                <label>Email</label>
-                <input type="email" [(ngModel)]="user.email" name="email" class="input-field" required />
 
                 <button type="submit" class="btn save-btn">Enregistrer</button>
             </form>
@@ -38,7 +34,8 @@
         </div>
 
         <h2 class="section-title">Mes Paniers</h2>
-        <a [href]="isClient ? '/Panier/user' : '/panier/liste'" class="link">Voir mes paniers</a>
+        <a *ngif='isClient' rooterLink="/panier/user" class="link">Voir mes paniers</a>
+        <a *ngif='isProducteur' rooterLink="panier/liste" class="link">Voir mes panier</a>
     </section>
 
     <!-- Chargement des préférences -->

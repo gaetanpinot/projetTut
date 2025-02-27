@@ -3,10 +3,7 @@ import { Component } from '@angular/core';
 interface Panier {
   id: number;
   nom: string;
-  description: string;
   producteur: string;
-  prix: number;
-  date: string;
   items: { nom: string; quantite?: number; poids?: number }[];
 }
 
@@ -21,10 +18,8 @@ export class PanierComponent {
     {
       id: 1,
       nom: 'Panier Famille',
-      description: 'Un panier varié pour toute la famille.',
       producteur: 'Ferme du Soleil',
-      prix: 29.99,
-      date: '2024-02-28',
+
       items: [
         { nom: 'Carottes', quantite: 7 },
         { nom: 'Pommes', quantite: 3 },
@@ -38,10 +33,7 @@ export class PanierComponent {
     {
       id: 2,
       nom: 'Panier Bio',
-      description: 'Un panier pour les amateurs de produits bio.',
       producteur: 'Bio Market',
-      prix: 35.50,
-      date: '2024-03-01',
       items: [
         { nom: 'Tomates', quantite: 5 },
         { nom: 'Salade verte', quantite: 2 },
@@ -55,10 +47,8 @@ export class PanierComponent {
     {
       id: 3,
       nom: 'Panier Gourmet',
-      description: 'Un panier pour les gourmets et cuisiniers passionnés.',
       producteur: 'Ferme des Délices',
-      prix: 42.75,
-      date: '2024-03-05',
+
       items: [
         { nom: 'Courgettes', quantite: 4 },
         { nom: 'Champignons', poids: 0.8 },
@@ -72,10 +62,8 @@ export class PanierComponent {
     {
       id: 4,
       nom: 'Panier Express',
-      description: 'Un panier rapide et équilibré pour la semaine.',
       producteur: 'Local Market',
-      prix: 25.90,
-      date: '2024-03-10',
+
       items: [
         { nom: 'Pâtes fraîches', poids: 1 },
         { nom: 'Sauce tomate maison', quantite: 1 },
@@ -89,10 +77,7 @@ export class PanierComponent {
     {
       id: 5,
       nom: 'Panier Végétarien',
-      description: 'Un panier riche en légumes et protéines végétales.',
       producteur: 'Green Farm',
-      prix: 38.50,
-      date: '2024-03-15',
       items: [
         { nom: 'Lentilles corail', poids: 1 },
         { nom: 'Tofu nature', poids: 0.5 },

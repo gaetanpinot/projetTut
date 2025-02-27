@@ -1,12 +1,156 @@
+/* Conteneur principal */
+
 section {
-  padding: 40px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 20px auto;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
+/* En-tête du formulaire */
+
 h2 {
-  font-size: 24px;
+    font-size: 24px;
+    font-weight: bold;
+    color: var(--dark);
+    text-align: center;
+    margin-bottom: 20px;
 }
 
 h3 {
-  font-size: 18px;
-  margin-bottom: 10px;
+    font-size: 18px;
+    color: var(--text);
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+
+/* Formulaire de création de panier */
+
+.create-panier {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+
+/* Champs du formulaire */
+
+.ingredient-form-field {
+    display: flex;
+    align-items: center;
+    padding: 12px 0 0 0;
+    border-bottom: 2px solid var(--green);
+}
+
+mat-form-field {
+    flex: 1;
+    min-width: 100px;
+    .mat-form-field-underline {
+        display: none;
+        /* Supprime la ligne de soulignement */
+    }
+    .mat-form-field-wrapper {
+        padding-bottom: 0;
+        /* Supprime l'espace réservé à la ligne de soulignement */
+    }
+}
+
+mat-form-field input,
+mat-form-field mat-select {
+    border: none !important;
+    outline: none !important;
+    background: transparent;
+    font-size: 1rem;
+    padding: 8px;
+}
+
+
+/* Bouton de suppression d'un ingrédient */
+
+.delete-btn {
+    color: red;
+    cursor: pointer;
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.delete-btn:hover {
+    transform: scale(1.2);
+}
+
+
+/* Pied de formulaire */
+
+#create-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    overflow-y: auto;
+}
+
+
+/* Bouton pour ajouter un ingrédient */
+
+#add {
+    width: 42px;
+    height: 42px;
+    background-color: var(--green);
+    color: white;
+    border-radius: 50%;
+    box-shadow: unset;
+}
+
+#add:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+
+/* Bouton pour créer le panier */
+
+button[type="submit"] {
+    background-color: var(--green);
+    color: var(--white);
+    padding: 10px 15px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 1rem;
+    font-weight: bold;
+    transition: background 0.3s ease-in-out;
+    border: 2px solid var(--green);
+}
+
+button[type="submit"]:hover {
+    background-color: var(--white);
+    color: var(--green);
+    border: 2px solid var(--green);
+}
+
+button[type="submit"]:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.create-panier {
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+
+/* Responsive */
+
+@media (max-width: 600px) {
+    .ingredient-form-field {
+        flex-direction: column;
+        align-items: flex-start;
+    }
 }
