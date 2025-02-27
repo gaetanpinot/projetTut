@@ -11,9 +11,27 @@ import { Producteur } from '../../../Interfaces/utilisateur.interface';
 })
 export class ListeProducteursComponent {
   public producteurs: Producteur[] = [];
+  public producteursUtilisateurConnectee: Producteur[] = [];
   constructor(private utilisateurService: UtilisateurService) { }
   ngOnInit(): void {
     this.loadProducteurs();
+    this.loadProducteursUtilisateurConnectee();
+  }
+
+  isAbonne(id_producteur: string): boolean {
+    return this.producteursUtilisateurConnectee.some((producteur) => producteur.id === id_producteur);
+  }
+
+
+  loadProducteursUtilisateurConnectee(): void {
+    this.utilisateurService.getProducteursUtilisateurConnectee().subscribe({
+      next: (data) => {
+        this.producteursUtilisateurConnectee = data.producteurs;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
   loadProducteurs(): void {
     this.utilisateurService.getProducteurs().subscribe({
