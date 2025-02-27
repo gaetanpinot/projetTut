@@ -43,6 +43,20 @@
     </span>
   </span>
 
+  <span class="selectandbutton" >
+    <mat-form-field appearance="fill">
+      <mat-label>Allergenes à exclure</mat-label>
+      <mat-select [(value)]="allergenesId" (selectionChange)="loadRecettes()" multiple>
+        <mat-option *ngFor="let allergie of allergenes" [value]="allergie.id">
+          {{ allergie.label }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <!--<span *ngIf="authStore.isAuthenticated()" id="appliquerIngredientExclus">-->
+    <!--  <button type="button" mat-flat-button (click)="appliquerIngredientsExclus()">Appliquer les préférences</button>-->
+    <!--</span>-->
+  </span>
+
   <span>
     <mat-form-field appearance="fill">
       <mat-label>Début Saison</mat-label>

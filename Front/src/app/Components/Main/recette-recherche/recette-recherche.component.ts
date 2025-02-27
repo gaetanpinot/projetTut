@@ -5,6 +5,8 @@ import { MatTableDataSource } from '@angular/material/table';
 import { UtilisateurService } from '../../../Services/utilisateur.service';
 import { Profile } from '../../../Interfaces/utilisateur.interface';
 import { AuthStoreService } from '../../../Services/store/AuthStore.service';
+import { Allergie } from '../../../Interfaces/allergies.interface';
+import { AllergiesService } from '../../../Services/allergies.service';
 
 @Component({
   selector: 'app-recette-recherche',
@@ -21,6 +23,7 @@ export class RecetteRechercheComponent implements OnInit {
   vegetables: Vegetable[] = [];
   bannedvegetables: Vegetable[] = [];
   profileUtilisateur: Profile = Object();
+  public allergenes: Allergie[] = [];
 
   saisons: { id: number; nom: string }[] = [];
 
@@ -30,6 +33,7 @@ export class RecetteRechercheComponent implements OnInit {
   constructor(private recetteService: RecetteService,
     private utilisateurService: UtilisateurService,
     public authStore: AuthStoreService,
+    private allergieService: AllergiesService,
   ) {
     this.saisons = [
       {
@@ -88,6 +92,7 @@ export class RecetteRechercheComponent implements OnInit {
 
   selectedVegetableIds: number[] = [];
   bannedVegetableIds: number[] = [];
+  allergenesId: number[] = [];
   startSaisonId: number = 1;
   endSaisonId: number = 12;
 
@@ -103,6 +108,7 @@ export class RecetteRechercheComponent implements OnInit {
   ngOnInit(): void {
     this.loadRecettes();
     this.loadIngredients();
+    this.loadAllergies();
     this.loadProfile();
   }
 
@@ -134,20 +140,33 @@ export class RecetteRechercheComponent implements OnInit {
     })
   }
 
+  loadAllergies() {
+    this.allergieService.getAllergies().subscribe({
+      next: (data) => {
+        this.allergenes = data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    });
+  }
+
   loadRecettes(): void {
     this.recetteService.getRecettes(this.currentPage,
       this.selectedVegetableIds,
       this.bannedVegetableIds,
       this.startSaisonId,
-      this.endSaisonId).subscribe({
-        next: (data) => {
-          console.log(data);
-          this.dataSource.data = data;
-        },
-        error: (err) => {
-          console.error(err);
-        }
-      })
+      this.endSaisonId,
+      this.allergenesId,
+    ).subscribe({
+      next: (data) => {
+        console.log(data);
+        this.dataSource.data = data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 
   loadIngredients(): void {

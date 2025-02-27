@@ -16,7 +16,7 @@ export class AllergiesService {
   ) { }
 
   public getAllergies(): Observable<Allergie[]> {
-    return this.http.get<Allergie[]>(this.apiServerUrl + '/allergies', {
+    return this.http.get<Allergie[]>(this.apiServerUrl + '/allergenes', {
       headers: {
         'Authorization': 'Bearer ' + this.authStore.getToken()
       }

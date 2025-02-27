@@ -22,27 +22,10 @@ class DeleteAllergeneUser extends AbstractAction
 
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
-        $data = $rq->getParsedBody();
+        $id = (int)$args['id'];
 
-        $validationSchema = (object)[
-            "type" => 'object',
-            "properties" => (object)[
-                "id_allergene" => (object)[
-                    'type' => 'integer',
-                    'minimum' => 0,
-
-                ],
-            ],
-            "required" => ['id_allergene']
-        ];
-
-        $resultValidation = $this->validator->validate((object)$data, $validationSchema);
-        $check = ValidationErrorRenderer::render($rs, $resultValidation);
-        if ($check != false) {
-            return $check;
-        }
         $user_id = $rq->getAttribute('idutilisateur');
-        $this->service->deleteAllergies($user_id, $data['id_allergene']);
+        $this->service->deleteAllergies($user_id, $id);
         return JsonRenderer::render($rs, 201, []);
     }
 }
