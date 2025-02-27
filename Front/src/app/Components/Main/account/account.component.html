@@ -6,9 +6,6 @@
                 <p><strong>Nom :</strong> {{ user.nom }}</p>
             </div>
         </div>
-
-        <h2 class="section-title">Mes Paniers</h2>
-        <a [href]="isClient ? '/Panier/user' : '/panier/liste'" class="link">Voir mes paniers</a>
     </section>
 
     <div *ngIf="isLoading" class="loading-container">
@@ -26,29 +23,17 @@
                     </label>
                 </form>
             </div>
-
-            <div class="preferences-column">
-                <h2 class="section-title">Ustensiles exclus</h2>
-                <form class="list-pref">
-                    <label *ngFor="let ustensile of ustensiles" class="checkbox-group">
-                        <input type="checkbox" [(ngModel)]="ustensile.checked" name="{{ ustensile.nom }}" />
-                        <span>{{ ustensile.nom }}</span>
-                    </label>
-                </form>
-            </div>
+          <div class="preferences-column">
+            <h2 class="section-title">Ingrédients Détéstés</h2>
+            <form class="list-pref">
+              <label *ngFor="let ingre of ingredients" class="checkbox-group">
+                <input (change)="changeIngredient(ingre)" type="checkbox" [(ngModel)]="ingre.check" name="{{ ingre.nom }}" />
+                <span>{{ ingre.nom }}</span>
+                <img src="{{ ingre.url_photo }}" width="40" height="40" style="border-radius: 50%">
+              </label>
+            </form>
+          </div>
         </div>
-      <div class="preferences-container">
-        <div class="preferences-column">
-          <h2 class="section-title">Ingrédients Détéstés</h2>
-          <form class="list-pref">
-            <label *ngFor="let ingre of ingredients" class="checkbox-group">
-              <input (change)="changeIngredient(ingre)" type="checkbox" [(ngModel)]="ingre.check" name="{{ ingre.nom }}" />
-              <span>{{ ingre.nom }}</span>
-              <img src="{{ ingre.url_photo }}" width="40" height="40" style="border-radius: 50%">
-            </label>
-          </form>
-        </div>
-      </div>
     </section>
 
     <div *ngIf="showLogoutPopup" class="popup-overlay">
