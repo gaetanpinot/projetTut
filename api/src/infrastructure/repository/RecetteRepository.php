@@ -71,15 +71,17 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         // on join les ingredients car on peut les utiliser dans les deux cas et on ne peut le faire qu'une fois
         $qb->leftJoin('r.ingredients_recette', 'i');
 
+        // on veut avoir toutes les recettes qui contienne un ou plus ingredients principaux
+        // et trié par le nombre d'ingredients principaux
         if (isset($args['id_ingredients_principaux'])) {
             $idIngredient = $args['id_ingredients_principaux'];
             $nbIngredient = count($idIngredient);
             $i = 0;
             $qb->andWhere("i.id_ingredient IN (:id_ingredient)")
-                ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER)
-                ->setParameter('nbIngredient', $nbIngredient);
-            $having[] = " COUNT(DISTINCT i.id_ingredient) = :nbIngredient";
+                ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER);
+                $qb->orderBy('SUM(CASE when i.id_ingredient IN(:id_ingredient)THEN 1 ELSE 0 END)', 'DESC');
         }
+
 
         //on exclus les ustensiles
         if(isset($args['id_ustensiles_exclus'])) {
@@ -110,7 +112,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
 
         $qb->setFirstResult(($args['page'] - 1) * $this->nbPagination)
             ->setMaxResults($this->nbPagination)
-        ->orderBy('r.id');
+        ->addOrderBy("r.id", "ASC");
 
         $ret = $qb->getQuery();
         /*echo $ret->getSQL();*/

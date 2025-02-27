@@ -1,143 +1,162 @@
+/* 🌟 Conteneur principal */
+
 section {
-  padding: 40px;
+    padding: 40px;
+    max-width: 700px;
+    margin: 20px auto;
+    background: var(--white);
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
+
+/* 🌟 Titres */
+
 h2 {
-  font-size: 24px;
+    font-size: 24px;
+    text-align: center;
+    font-weight: bold;
+    color: var(--dark);
 }
 
 h3 {
-  font-size: 18px;
-  margin-bottom: 30px;
+    font-size: 18px;
+    text-align: center;
+    margin-bottom: 20px;
+    color: var(--text);
 }
 
 
+/* 🌟 Formulaire */
 
-/* Centrage des titres */
-
-
-
-/* Barre de recherche */
-
-.search-bar {
+.frigo-form {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    justify-content: center;
-    align-items: center;
-    margin: 10px auto;
-    max-width: 500px;
-    select {
-        padding: 10px;
-        border: 1px solid var(--dark);
-        border-radius: 5px;
-        font-size: 1rem;
-        width: 100%;
-        max-width: 220px;
-        background-color: var(--white);
-        transition: border 0.3s ease-in-out;
-        text-align: center;
-        cursor: pointer;
-        &:focus {
-            border-color: var(--light);
-            outline: none;
-        }
-        option[value=""] {
-            color: var(--text);
-        }
-    }
+    gap: 15px;
 }
 
 
-/* Conteneur des quantités */
+/* 🌟 Conteneur des ingrédients */
 
-.quantity {
+.ingredient-form-field {
     display: flex;
-    gap: 10px;
-    justify-content: center;
     align-items: center;
-    width: 100%;
-    input {
-        padding: 10px;
-        border: 1px solid var(--dark);
-        border-radius: 5px;
-        font-size: 1rem;
-        width: 100%;
-        max-width: 100px;
-        text-align: center;
-        transition: border 0.3s ease-in-out;
-        &:focus {
-            border-color: var(--light);
-            outline: none;
-        }
-    }
+    transition: transform 0.3s ease-in-out;
+}
+
+.ingredient-form-field:hover {
+    transform: scale(1.02);
 }
 
 
-/* Centrage et style des boutons */
+/* 🌟 Champs de formulaire */
 
-button,
-#add-ingredient,
-#fake,
-#clear-frigo {
-    display: block;
-    padding: 10px 15px;
-    border: none;
-    border-radius: 5px;
+mat-form-field {
+    flex: 1;
+    min-width: 100px;
+}
+
+
+/* 🌟 Suppression d'un ingrédient */
+
+.delete-btn {
+    color: red;
     cursor: pointer;
-    transition: background 0.3s;
+    font-size: 24px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.delete-btn:hover {
+    transform: scale(1.2);
+}
+
+
+/* 🌟 Liste déroulante des ingrédients */
+
+.ingredient-choix {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+
+/* 🌟 Icône des ingrédients */
+
+.icon-ingred {
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+
+/* 🌟 Boutons */
+
+button {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 14px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
     font-size: 1rem;
-    text-align: center;
+    font-weight: bold;
 }
 
-#add-ingredient {
-    background-color: var(--light);
+button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+
+/* 🌟 Bouton ajouter un ingrédient */
+
+mat-mini-fab {
+    background-color: var(--green);
     color: var(--white);
-    &:hover {
-        background-color: var(--green);
-    }
 }
 
-#fake,
-#clear-frigo {
-    background-color: orange;
+mat-mini-fab:hover {
+    background-color: var(--light);
+}
+
+
+/* 🌟 Enregistrer le frigo */
+
+button[type="submit"] {
+    background-color: var(--light);
     color: white;
-    margin: 10px auto;
-    &:hover {
-        background-color: #e68900;
-    }
+    margin-top: 10px;
+}
+
+button[type="submit"]:hover {
+    background-color: var(--green);
 }
 
 
-/* Liste des ingrédients */
+/* 🌟 Conteneur du frigo */
+
+.container-frigo {
+    max-height: 500px;
+    overflow-y: auto;
+    padding: 10px;
+    border: 2px solid var(--green);
+    border-radius: 10px;
+    background: var(--white);
+}
+
+
+/* 🌟 Liste des ingrédients */
 
 #liste-frigo {
     list-style: none;
     padding: 0;
-    margin: 0;
 }
 
 
-/* Conteneur principal */
-
-.container-frigo {
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    padding: 20px;
-    max-width: 500px;
-    margin: auto;
-    background-color: var(--white);
-    border: 2px solid var(--green);
-    border-radius: 8px;
-    transition: transform 0.3s ease-in-out, opacity 0.3s ease-in-out;
-    max-height: 500px;
-    overflow-y: auto;
-}
-
-.item-frigo:not(:last-child) {
-    border-bottom: 2px solid var(--green);
-}
+/* 🌟 Style des ingrédients */
 
 .item-frigo {
     display: flex;
@@ -146,42 +165,27 @@ button,
     gap: 15px;
     background-color: var(--white);
     padding: 10px;
+    border-bottom: 1px solid var(--green);
     transition: transform 0.3s ease-in-out;
-    white-space: nowrap;
-    &:hover {
-        margin-left: -10px;
-        transform: margin-left 0.3s ease-in-out;
-    }
-    mat-icon {
-        cursor: pointer;
-        font-size: 20px;
-        transition: transform 0.2s ease-in-out;
-        &:hover {
-            transform: scale(1.2);
-            color: red;
-        }
-    }
-    .item-quantity,
-    .item-weight {
-        font-weight: bold;
-        color: var(--green);
-        min-width: 50px;
-        text-align: center;
-    }
-    .item-name {
-        flex-grow: 1;
-        font-weight: 500;
-        text-transform: capitalize;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+}
+
+.item-frigo:hover {
+    transform: translateX(-5px);
 }
 
 
-/* Icône de suppression */
+/* 🌟 Poids et Quantité */
+
+.item-quantity,
+.item-weight {
+    font-weight: bold;
+    color: var(--green);
+    min-width: 50px;
+    text-align: center;
+}
 
 
-/* Overlay du popup */
+/* 🌟 Popup de validation */
 
 .popup-overlay {
     position: fixed;
@@ -196,9 +200,6 @@ button,
     z-index: 1000;
 }
 
-
-/* Contenu du popup */
-
 .popup {
     background: var(--white);
     padding: 20px;
@@ -208,9 +209,6 @@ button,
     max-width: 350px;
     width: 90%;
 }
-
-
-/* Style des boutons du popup */
 
 .popup-buttons {
     display: flex;
@@ -247,64 +245,15 @@ button,
 }
 
 
-/* Message quand le frigo est vide */
-
-.empty-message {
-    text-align: center;
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: var(--text);
-}
-
-
-/* Responsive */
+/* 🌟 Responsive */
 
 @media (max-width: 600px) {
-    .search-bar {
+    .ingredient-form-field {
         flex-direction: column;
-        gap: 8px;
+        align-items: flex-start;
     }
-    .quantity {
-        flex-direction: column;
-        width: 100%;
-        input {
-            width: 100%;
-            max-width: 100%;
-        }
-    }
-    #liste-frigo {
-        max-width: 100%;
-    }
-    .item-frigo {
-        flex-direction: row;
-        align-items: center;
-        text-align: center;
-        white-space: normal;
-        gap: 5px;
-    }
-    .item-name {
-        max-width: 100%;
-    }
-}
-
-
-/* Bouton de réinitialisation */
-
-.reset-frigo {
-    display: flex;
-    justify-content: center;
-    margin-top: 20px;
-    button {
-        background-color: #ff9800;
-        color: var(--white);
-        padding: 10px 15px;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
-        transition: background 0.3s;
-        font-size: 1rem;
-        &:hover {
-            background-color: #e68900;
-        }
+    .icon-ingred {
+        width: 25px;
+        height: 25px;
     }
 }

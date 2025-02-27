@@ -1,7 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { RecetteService } from '../../../Services/recette.service';
-import {GetRecetteResponse, Vegetable} from '../../../Interfaces/recette.interface';
+import { GetRecetteResponse, Vegetable } from '../../../Interfaces/recette.interface';
 import { MatTableDataSource } from '@angular/material/table';
+import { UtilisateurService } from '../../../Services/utilisateur.service';
+import { Profile } from '../../../Interfaces/utilisateur.interface';
+import { AuthStoreService } from '../../../Services/store/AuthStore.service';
 
 @Component({
   selector: 'app-recette-recherche',
@@ -17,14 +20,17 @@ export class RecetteRechercheComponent implements OnInit {
 
   vegetables: Vegetable[] = [];
   bannedvegetables: Vegetable[] = [];
+  profileUtilisateur: Profile = Object();
 
   saisons: { id: number; nom: string }[] = [];
 
-  displayedColumns = ['IMAGE', 'NOM','DESCR', 'CONFIRM'];
+  displayedColumns = ['IMAGE', 'NOM', 'DESCR', 'CONFIRM'];
   dataSource: MatTableDataSource<GetRecetteResponse> = new MatTableDataSource();
 
-  constructor(private recetteService: RecetteService)
-  {
+  constructor(private recetteService: RecetteService,
+    private utilisateurService: UtilisateurService,
+    public authStore: AuthStoreService,
+  ) {
     this.saisons = [
       {
         nom: "Janvier",
@@ -80,8 +86,8 @@ export class RecetteRechercheComponent implements OnInit {
 
 
 
-  selectedVegetableIds: number[] = []; // Changed to an array
-  bannedVegetableIds: number[] = []; // Changed to an array
+  selectedVegetableIds: number[] = [];
+  bannedVegetableIds: number[] = [];
   startSaisonId: number = 1;
   endSaisonId: number = 12;
 
@@ -97,6 +103,22 @@ export class RecetteRechercheComponent implements OnInit {
   ngOnInit(): void {
     this.loadRecettes();
     this.loadIngredients();
+    this.loadProfile();
+  }
+
+
+
+  //applique les ingredients qu'il y a dans le frigo à la recherche
+  appliquerFrigo(load: boolean = true) {
+    const ing = this.profileUtilisateur.frigo.map(f => f.id_ingredient);
+    this.selectedVegetableIds = ing;
+    if (load) this.loadRecettes();
+  }
+
+  appliquerIngredientsExclus(load: boolean = true) {
+    const ing = this.profileUtilisateur.ingredients_exclus.map(f => f.id);
+    this.bannedVegetableIds = ing;
+    if (load) this.loadRecettes();
   }
 
   searchByName(event: Event) {
@@ -113,15 +135,19 @@ export class RecetteRechercheComponent implements OnInit {
   }
 
   loadRecettes(): void {
-    this.recetteService.getRecettes(this.currentPage, this.selectedVegetableIds, this.bannedVegetableIds, this.startSaisonId, this.endSaisonId).subscribe({
-      next: (data) => {
-        console.log(data);
-        this.dataSource.data = data;
-      },
-      error: (err) => {
-        console.error(err);
-      }
-    })
+    this.recetteService.getRecettes(this.currentPage,
+      this.selectedVegetableIds,
+      this.bannedVegetableIds,
+      this.startSaisonId,
+      this.endSaisonId).subscribe({
+        next: (data) => {
+          console.log(data);
+          this.dataSource.data = data;
+        },
+        error: (err) => {
+          console.error(err);
+        }
+      })
   }
 
   loadIngredients(): void {
@@ -137,8 +163,20 @@ export class RecetteRechercheComponent implements OnInit {
     })
   }
 
+  loadProfile(): void {
+    if (!this.authStore.isAuthenticated()) return;
+    this.utilisateurService.getProfile().subscribe({
+      next: (data) => {
+        this.profileUtilisateur = data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
+  }
+
   setPage(value: number): void {
-    if(this.currentPage + value < 1 || this.currentPage + value > this.maxPage)
+    if (this.currentPage + value < 1 || this.currentPage + value > this.maxPage)
       return;
 
     this.currentPage += value;
