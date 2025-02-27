@@ -1,6 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { AuthStoreService } from '../../../Services/store/AuthStore.service';
+import {UtilisateurService} from '../../../Services/utilisateur.service';
+import {Allergie} from '../../../Interfaces/utilisateur.interface';
+import {Ingredient} from '../../../Interfaces/ingredient.interface';
+import {IngredientsServicesService} from '../../../Services/ingredients.services.service';
+
 interface Preference {
   nom: string;
   checked: boolean;
@@ -17,13 +22,11 @@ export class AccountComponent implements OnInit {
   isLoading: boolean = true; // État de chargement des préférences
   showLogoutPopup: boolean = false; // État du popup de déconnexion
 
-  constructor(private authStore: AuthStoreService, private router: Router) {}
+  constructor(private ingredientsService: IngredientsServicesService, private authStore: AuthStoreService, private router: Router, private utilisateurService: UtilisateurService) {}
 
   // Données utilisateur
   user = {
     nom: "Jean Dupont",
-    email: "jean.dupont@example.com",
-    role: "Administrateur"
   };
 
   // Variables pour le changement de mot de passe
@@ -38,112 +41,125 @@ export class AccountComponent implements OnInit {
   isProducteur: boolean = false;
 
   // Initialisation des préférences
-  allergies: Preference[] = [];
+  allergies: Allergie[] = [];
   ustensiles: Preference[] = [];
+  ingre_exclus: Ingredient[] = [];
+  ingredients: Ingredient[] = [];
 
-  ngOnInit(): void {
-    this.loadPreferences();
+  async ngOnInit(): Promise<void> {
+    await this.loadIngredients();
+    await this.loadAllergenes();
+    await this.loadPreferences();
   }
 
-  /**
-   * Simule le chargement des préférences utilisateur (remplace `setTimeout` par une API en prod)
-   */
-  loadPreferences(): void {
+  addAllergie(id: number): void {
+    this.utilisateurService.addAllergene(id).subscribe({
+      next: () => {
+
+      }
+    });
+  }
+
+  deleteAllergie(id: number): void {
+    this.utilisateurService.deleteAllergene(id).subscribe({
+      next: () => {
+
+      }
+    });
+  }
+
+  changeAllergie(allergie: Allergie): void {
+    if(allergie.check) {
+      this.addAllergie(allergie.id);
+    }
+    else {
+      this.deleteAllergie(allergie.id);
+    }
+  }
+
+  addIngredient(id: number): void {
+    this.utilisateurService.addIngredient(id).subscribe({
+      next: () => {
+
+      }
+    });
+  }
+
+  deleteIngredient(id: number): void {
+    this.utilisateurService.deleteIngredient(id).subscribe({
+      next: () => {
+
+      }
+    });
+  }
+
+  changeIngredient(ingre: Ingredient): void {
+    if(ingre.check) {
+      this.addIngredient(ingre.id);
+    }
+    else {
+      this.deleteIngredient(ingre.id);
+    }
+  }
+
+  async loadPreferences(): Promise<void> {
     try {
-      setTimeout(() => {
-        this.allergies = [
-          { nom: "Gluten", checked: true },
-          { nom: "Lactose", checked: false },
-          { nom: "Noix", checked: true },
-          { nom: "Fruits de mer", checked: false },
-          { nom: "Oeufs", checked: false },
-          { nom: "Soja", checked: false },
-          { nom: "Arachides", checked: true },
-          { nom: "Sésame", checked: false },
-          { nom: "Moutarde", checked: false }
-        ];
+        this.utilisateurService.getProfile().subscribe({
+          next: async (data) => {
 
-        this.ustensiles = [
-          { nom: "Poêle", checked: false },
-          { nom: "Casserole", checked: true },
-          { nom: "Spatule", checked: false },
-          { nom: "Fouet", checked: false },
-          { nom: "Couteau de chef", checked: true },
-          { nom: "Couteau d'office", checked: false },
-          { nom: "Couteau à pain", checked: false },
-          { nom: "Four", checked: false },
-          { nom: "Micro-ondes", checked: true },
-          { nom: "Mixeur", checked: false },
-          { nom: "Balance", checked: false }
-        ];
+            this.user.nom = data.utilisateur.nom_utilisateur;
+            this.ingre_exclus = data.ingredients_exclus;
 
-        this.isLoading = false; // Fin du chargement
-      }, 1500);
+            for(let i = 0; i < this.allergies.length; i++) {
+              for(let j = 0; j < data.allergies.length; j++) {
+                if (data.allergies[j].id === this.allergies[i].id) {
+                  this.allergies[i].check = true;
+                }
+              }
+            }
+
+            for(let i = 0; i < this.ingredients.length; i++) {
+              for(let j = 0; j < data.ingredients_exclus.length; j++) {
+                if (data.ingredients_exclus[j].id === this.ingredients[i].id) {
+                  this.ingredients[i].check = true;
+                }
+              }
+            }
+          },
+          error: (err) => {
+            console.error(err);
+          }
+        })
+
+        this.isLoading = false;
     } catch (error) {
       console.error("Erreur lors du chargement des préférences :", error);
     }
   }
 
-  /**
-   * Affiche ou masque le formulaire de modification des informations
-   */
-  toggleForm(): void {
-    this.showForm = !this.showForm;
+  async loadAllergenes(): Promise<void> {
+    this.utilisateurService.getAllergenes().subscribe({
+      next: (data) => {
+        this.allergies = data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 
-  /**
-   * Enregistre les modifications de l'utilisateur (nom/email)
-   */
-  updateUser(event: Event): void {
-    event.preventDefault(); // Empêche le rechargement de la page
-
-    if (!this.user.nom.trim() || !this.user.email.trim()) {
-      alert("Veuillez remplir tous les champs avant d'enregistrer !");
-      return;
-    }
-
-
+  async loadIngredients() {
+    this.ingredientsService.getIngredients().subscribe({
+      next: (data) => {
+        this.ingredients = data;
+      },
+      error: (err) => {
+        console.error(err);
+      }
+    })
   }
 
-  /**
-   * Change le mot de passe de l'utilisateur après validation
-   */
-  changePassword(event: Event): void {
-    event.preventDefault(); // Empêche le rechargement de la page
 
-    if (!this.password.old.trim() || !this.password.new.trim() || !this.password.confirm.trim()) {
-      alert("Veuillez remplir tous les champs !");
-      return;
-    }
-
-    if (this.password.new.length < 6) {
-      alert("Le mot de passe doit contenir au moins 6 caractères !");
-      return;
-    }
-
-    if (this.password.new !== this.password.confirm) {
-      alert("Les nouveaux mots de passe ne correspondent pas !");
-      return;
-    }
-
-    this.password = { old: '', new: '', confirm: '' };
-  }
-
-  /**
-   * Valide et sauvegarde les allergies sélectionnées
-   */
-  saveAllergies(): void {
-    const selectedAllergies = this.allergies.filter(allergy => allergy.checked).map(allergy => allergy.nom);
-
-  }
-
-  /**
-   * Valide et sauvegarde les ustensiles sélectionnés
-   */
-  saveUstensiles(): void {
-    const selectedUstensiles = this.ustensiles.filter(ustensile => ustensile.checked).map(ustensile => ustensile.nom);
-
-  }
 
   /**
    * Ouvre le popup de confirmation de déconnexion
