@@ -82,7 +82,7 @@ return function (\Slim\App $app): \Slim\App {
 
         $group->get('/allergenes[/]', GetUserAllergensAction::class)->add(AuthnMiddleware::class);
         $group->post('/allergenes[/]', CreateAllergenesUser::class)->add(AuthnMiddleware::class);
-        $group->delete('/allergenes[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
+        $group->delete('/allergenes/{id}[/]', DeleteAllergeneUser::class)->add(AuthnMiddleware::class);
 
         $group->get('/frigo[/]', GetUserFrigo::class)->add(AuthnMiddleware::class);
         $group->put('/frigo[/]', ReplaceUserFrigo::class)->add(AuthnMiddleware::class);
