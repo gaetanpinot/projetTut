@@ -47,6 +47,6 @@ export class CreateRecetteComponent {
     this.recetteInput.id_recette_parente = null;
     this.recetteInput.url_photo = this.recetteForm.get('url_photo')?.value;
 
-    //this.recetteService.createRecette()
+    //this.recetteService.createRecette(this.recetteInput).subscribe({next: () => {}})
   }
 }
