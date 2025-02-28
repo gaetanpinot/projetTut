@@ -5,14 +5,14 @@ meta {
 }
 
 get {
-  url: {{api}}/recettes?page=1&id_ingredients_principaux=[1,4]
+  url: {{api}}/recettes?page=1&id_ingredients_principaux=[26]
   body: none
   auth: none
 }
 
 params:query {
   page: 1
-  id_ingredients_principaux: [1,4]
+  id_ingredients_principaux: [26]
   ~nom: sa
   ~id_allergenes: [4]
   ~id_tag: [2]

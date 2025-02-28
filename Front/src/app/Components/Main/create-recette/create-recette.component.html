@@ -1,11 +1,13 @@
-<form [formGroup]="recetteForm" (ngSubmit)="onSubmit()">
+<section>
+<form id="create-recette-form" [formGroup]="recetteForm" (ngSubmit)="onSubmit()">
+  <div class="champs-court">
   <mat-form-field>
     <mat-label>Nom</mat-label>
     <input matInput formControlName="nom">
   </mat-form-field>
 
   <mat-form-field>
-    <mat-label>Temps de préparation</mat-label>
+    <mat-label>Temps de préparation(minute)</mat-label>
     <input matInput type="number" formControlName="temps_preparation">
   </mat-form-field>
 
@@ -14,33 +16,57 @@
     <input matInput type="number" formControlName="complexite">
   </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Description</mat-label>
-    <input matInput formControlName="description">
-  </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Début Saison</mat-label>
-    <input matInput [matDatepicker]="picker" formControlName="debut_saison">
-    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-    <mat-datepicker #picker></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>
+      Début Saison
+    </mat-label>
+      <mat-select formControlName="debut_saison" >
+        <mat-option *ngFor="let saison of saisons" [value]="saison.id">
+          {{ saison.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
 
-  <mat-form-field>
-    <mat-label>Fin Saison</mat-label>
-    <input matInput [matDatepicker]="picker2" formControlName="fin_saison">
-    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
-    <mat-datepicker #picker2></mat-datepicker>
-  </mat-form-field>
+    <mat-form-field appearance="fill">
+      <mat-label>
+      Fin Saison
+    </mat-label>
+      <mat-select formControlName="fin_saison" >
+        <mat-option *ngFor="let saison of saisons" [value]="saison.id">
+          {{ saison.nom }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+  <!--<mat-form-field>-->
+  <!--  <mat-label>Fin Saison</mat-label>-->
+  <!--  <input matInput [matDatepicker]="picker2" formControlName="fin_saison">-->
+  <!--  <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>-->
+  <!--  <mat-datepicker #picker2></mat-datepicker>-->
+  <!--</mat-form-field>-->
 
   <mat-form-field>
     <mat-label>URL Photo</mat-label>
     <input matInput formControlName="url_photo">
   </mat-form-field>
 
-  <h3>Ingrédients</h3>
-<app-input-ingredient-quantite></app-input-ingredient-quantite>
-  <!--<button mat-button>Ajouter un Ingrédient</button>-->
+  </div>
 
-  <button mat-raised-button type="submit">Créer Recette</button>
+  <div id="div-description">
+
+  <mat-form-field id="form-field-description">
+    <mat-label>Description</mat-label>
+    <textarea  id="description-recette" matInput formControlName="description"></textarea>
+  </mat-form-field>
+
+  </div>
+  <div>
+  <h3>Ingrédients</h3>
+
+  <app-input-ingredient-quantite (ingredientQuantiteUpdated)="handleChangeIngredients($event)"></app-input-ingredient-quantite>
+  </div>
+
+  <button mat-raised-button [disabled]="!recetteForm.valid" type="submit">Créer Recette</button>
 </form>
+</section>

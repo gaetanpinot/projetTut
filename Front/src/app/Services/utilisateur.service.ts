@@ -108,4 +108,14 @@ export class UtilisateurService {
     });
   }
 
+  public setIngredientProduit(ingredients: number[]): Observable<any> {
+    return this.http.put<any>(this.apiServerUrl + '/producteurs/ingredients', {
+      id_ingredients: ingredients
+    }, {
+      headers: {
+        'Authorization': 'Bearer ' + this.authStore.getToken()
+      }
+    });
+  }
+
 }

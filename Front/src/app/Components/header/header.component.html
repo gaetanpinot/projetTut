@@ -38,6 +38,12 @@
                                 Liste de vos paniers
                             </li>
                         </a>
+                        <a routerLink="/production">
+                          <li class="nav-item">
+                            <mat-icon>save</mat-icon>
+                            Votre production
+                          </li>
+                        </a>
                     </div>
                     <div *ngIf="(authStore.isClient())">
                         <a routerLink="/Frigo">
@@ -88,6 +94,12 @@
         <li class="nav-item">
           <mat-icon>list</mat-icon>
           Liste de vos paniers
+        </li>
+      </a>
+      <a routerLink="/production">
+        <li class="nav-item">
+          <mat-icon>list</mat-icon>
+          Votre production
         </li>
       </a>
     </div>

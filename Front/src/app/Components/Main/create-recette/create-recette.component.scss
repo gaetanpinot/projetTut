@@ -1,0 +1,22 @@
+#create-recette-form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+#description-recette {
+  width: 100%;
+  height: 7em;
+}
+
+#form-field-description {
+  width: 100%;
+}
+
+section {
+  padding: 40px;
+}
+
+h3 {
+  margin-bottom: 20px;
+}

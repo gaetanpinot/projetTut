@@ -21,7 +21,7 @@ export class IngredientsServicesService {
     return this.http.get<Ingredient[]>(this.apiServerUrl + '/ingredients/random');
   }
 
-  getIngredientsProduit(id: string): Observable<IngredientProduit> {
+  getIngredientsProduit(id: string | null): Observable<IngredientProduit> {
     return this.http.get<IngredientProduit>(this.apiServerUrl + '/producteurs/' + id + '/ingredients', {
       headers: {
         'Authorization': 'Bearer ' + this.authStore.getToken()

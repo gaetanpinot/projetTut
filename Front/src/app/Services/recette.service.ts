@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { apiBaseUrl } from '../../environment';
 import { GetIngredientsResponse, GetRecetteResponse, Recette, RecetteInput } from '../Interfaces/recette.interface';
+import { AuthStoreService } from './store/AuthStore.service';
 
 @Injectable({
   providedIn: 'root'
@@ -10,7 +11,8 @@ import { GetIngredientsResponse, GetRecetteResponse, Recette, RecetteInput } fro
 export class RecetteService {
 
   private apiServerUrl = apiBaseUrl;
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient,
+    private authStore: AuthStoreService) { }
 
   getRecettes(page: number,
     selected: number[],
@@ -63,7 +65,7 @@ export class RecetteService {
     return this.http.post(this.apiServerUrl + '/recettes', recette,
       {
         headers: {
-          'Authorization': 'Bearer ' + localStorage.getItem('token')
+          'Authorization': 'Bearer ' + this.authStore.getToken(),
         },
       }
     );

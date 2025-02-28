@@ -17,6 +17,17 @@ import { MatSelect } from '@angular/material/select';
 export class InputIngredientQuantiteComponent {
   @Output() ingredientQuantiteUpdated = new EventEmitter<IngredientInput[]>();
 
+  handleChangeList() {
+    if (!this.ingredientsForm.valid) return;
+    const ingredients: IngredientInput[] = this.ingredientsFormArray.map((ingredient) => ({
+      "id": ingredient.get('id')?.value,
+      "quantite": ingredient.get('quantite')?.value
+    })
+    );
+    this.ingredientQuantiteUpdated.emit(ingredients);
+    //console.log(ingredients);
+  }
+
   get formdata(): FormGroup {
     return this.fb.group({
       quantite: ['', [Validators.required, Validators.minLength(1)]],
@@ -49,6 +60,7 @@ export class InputIngredientQuantiteComponent {
 
   deleteIngredient(index: number) {
     this.ingredientsForm.removeAt(index);
+    this.handleChangeList()
   }
 
   ngOnInit(): void {

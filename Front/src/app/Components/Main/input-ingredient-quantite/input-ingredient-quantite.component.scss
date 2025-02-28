@@ -1,0 +1,13 @@
+.icon-ingred {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.ingred-choix {
+  display: flex;
+  flex-direction: row;
+
+  gap: 10px;
+}
