@@ -1,6 +1,17 @@
-.login-form{
+.login-form {
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
+}
+
+.login-button:not(:disabled) {
+    background-color: var(--green);
+    color: white;
+    border: 2px solid var(--green);
+}
+
+.login-button:not(:disabled):hover {
+    background-color: white;
+    color: var(--green);
 }
