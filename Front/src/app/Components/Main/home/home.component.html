@@ -36,21 +36,22 @@
             <table class="w-full bg-white shadow-md rounded-lg text-center">
                 <thead class="bg-green-600 text-white">
                     <tr>
-                        <th class="p-2">Date</th>
-                        <th class="p-2">Heure</th>
-                        <th class="p-2">Lieu</th>
+                        <th class="p-2">Nom producteur</th>
+                        <th class="p-2">Date publication</th>
+                        <th class="p-2">Produits</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b">
-                        <td class="p-2">15 Février 2025</td>
-                        <td class="p-2">17h00 - 19h00</td>
-                        <td class="p-2">Ferme du Soleil</td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="p-2">22 Février 2025</td>
-                        <td class="p-2">17h00 - 19h00</td>
-                        <td class="p-2">Marché Local</td>
+                    <tr class="border-b" *ngFor="let panier of latestPaniers.paniers">
+                        <td class="p-2">{{ panier.nom_producteur }}</td>
+                        <td class="p-2">{{ panier.date_publication.split(' ')[0] }}</td>
+                        <td class="p-2">
+                          <ul>
+                            <li *ngFor="let ingre of panier.ingredients">
+                              {{ingre.ingredient.nom}}
+                            </li>
+                          </ul>
+                        </td>
                     </tr>
                 </tbody>
             </table>
