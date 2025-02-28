@@ -1,3 +1,5 @@
+import { IngredientInput, IngredientQuantite } from "./ingredient.interface"
+
 export interface GetRecettes {
   recettes: Recette[],
   links: {
@@ -100,7 +102,7 @@ export interface RecetteInput {
   url_photo: string,
   id_recette_parente: number | null,
   tags: number[],
-  ingredients_recette: number[],
+  ingredients_recette: IngredientInput[],
   ustensiles: number[],
   notes: number[],
 }

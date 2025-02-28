@@ -5,6 +5,7 @@ namespace amap\core\service;
 use amap\core\dto\input\InputRecetteDTO;
 use amap\core\dto\RecetteDTO;
 use amap\core\service\interfaces\ServiceRecettesInterface;
+use amap\infrastructure\entities\IngredientRecette;
 use amap\infrastructure\entities\Recette;
 use amap\infrastructure\entities\Utilisateur;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
@@ -45,7 +46,7 @@ class ServiceRecettes implements ServiceRecettesInterface
     {
         $createur = $this->utilisateurRepository->getUtilisateurById($inputRecette->getIdCreateur());
         $recette = Recette::fromInputRecetteDTO($inputRecette, $createur);
-        $res = $this->recetteRepository->createRecette($recette);
+        $res = $this->recetteRepository->createRecette($recette, $inputRecette->getIngredientsRecette());
 
         return RecetteDTO::fromRecette($res);
     }

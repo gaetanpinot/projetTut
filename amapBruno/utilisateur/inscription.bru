@@ -5,15 +5,15 @@ meta {
 }
 
 post {
-  url: http://localhost:1000/inscription
+  url: {{api}}/inscription
   body: json
   auth: none
 }
 
 body:json {
   {  
-      "nom_utilisateur": "safede",  
+      "nom_utilisateur": "sdafede",  
       "mot_de_passe": "quoifeur",
-      "role" : 1
+      "role" : 2
   }
 }
