@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "ingredient_recette")]
 class IngredientRecette
 {
+    /*#[ORM\Column(type: "integer", name: "id_recette" )]*/
+    /*private ?int $id_recette = null;*/
+    /**/
+    /*#[ORM\Column(type: "integer", name: "id_ingredient")]*/
+    /*private ?int $id_ingredient = null;*/
+
     public function getIdRecette(): int
     {
         return $this->id_recette;

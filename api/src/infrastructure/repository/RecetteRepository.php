@@ -74,7 +74,8 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         }
 
         // on join les ingredients car on peut les utiliser dans les deux cas et on ne peut le faire qu'une fois
-        $qb->leftJoin('r.ingredients_recette', 'i');
+        $qb->leftJoin('r.ingredients_recette', 'ir')
+            ->leftJoin('ir.ingredient', 'i');
 
         // on veut avoir toutes les recettes qui contienne un ou plus ingredients principaux
         // et trié par le nombre d'ingredients principaux
@@ -82,9 +83,9 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $idIngredient = $args['id_ingredients_principaux'];
             $nbIngredient = count($idIngredient);
             $i = 0;
-            $qb->andWhere("i.id_ingredient IN (:id_ingredient)")
+            $qb->andWhere("i.id IN (:id_ingredient)")
                 ->setParameter("id_ingredient", $idIngredient, ArrayParameterType::INTEGER);
-                $qb->orderBy('SUM(CASE when i.id_ingredient IN(:id_ingredient)THEN 1 ELSE 0 END)', 'DESC');
+                $qb->orderBy('SUM(CASE when i.id IN(:id_ingredient)THEN 1 ELSE 0 END)', 'DESC');
         }
 
 
@@ -98,7 +99,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         //on exclus les ingredients
         if(isset($args['id_ingredients_exclus'])) {
             $qb->setParameter('id_ingredients_exclus', $args['id_ingredients_exclus'], ArrayParameterType::INTEGER);
-            $having[] = "SUM(CASE WHEN i.id_ingredient IN (:id_ingredients_exclus) THEN 1 ELSE 0 END) = 0";
+            $having[] = "SUM(CASE WHEN i.id IN (:id_ingredients_exclus) THEN 1 ELSE 0 END) = 0";
         }
 
         if(isset($args['id_allergenes'])) {
@@ -131,7 +132,7 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
     {
         //return $this->findBy(["id" => $id]);
         /** @var Recette $recette */
-        $recette= $this->find($id);
+        $recette = $this->find($id);
         if($recette === null) {
             throw new EntityNotFoundException("Recette $id n'existe pas");
         }
