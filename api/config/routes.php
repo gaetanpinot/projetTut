@@ -8,6 +8,7 @@ use amap\application\action\DeleteRecetteAction;
 use amap\application\action\GetAllergenes;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetPanierByProducteurAction;
+use amap\application\action\GetPanierLatestAction;
 use amap\application\action\GetProducteursUtilisateurList;
 use amap\application\action\GetRandomIngredients;
 use amap\application\action\GetRandomRecettes;
@@ -94,6 +95,7 @@ return function (\Slim\App $app): \Slim\App {
     });
 
     $app->group('/paniers', function (RouteCollectorProxy $group) {
+        $group->get('/latest[/]', GetPanierLatestAction::class);
         $group->post('[/]', CreatePanier::class)->add(AuthzProducteurMiddleware::class)
             ->add(AuthnMiddleware::class);
         $group->get('[/]', GetPanierByProducteurAction::class)->add(AuthzProducteurMiddleware::class)

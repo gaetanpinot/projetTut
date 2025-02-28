@@ -1,11 +1,13 @@
 <ng-container *ngFor="let ingredientForm of ingredientsFormArray; let i = index">
   <div class="ingredient-form-field" [formGroup]="ingredientForm" (change)="handleChangeList()">
     <mat-form-field>
+      <mat-label>Quantité (ex: 10g)</mat-label>
       <input matInput formControlName="quantite"
-        type="text" placeholder="quantite(ex:10g)">
+        type="text" >
     </mat-form-field>
     <mat-form-field>
-      <mat-select formControlName="id" placeholder="Ingredient" (selectionChange)="handleChangeList()" >
+      <mat-label>Ingredient</mat-label>
+      <mat-select formControlName="id"  (selectionChange)="handleChangeList()" >
         @for(ing of ingredients; track ing.id){
         <mat-option [value]="ing.id">
           <div class="ingred-choix">
