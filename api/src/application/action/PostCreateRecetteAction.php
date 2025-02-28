@@ -13,9 +13,8 @@ class PostCreateRecetteAction extends AbstractAction
 {
     private ServiceRecettesInterface $serviceRecette;
 
-    public function __construct(ServiceRecettesInterface $serviceRecette, LoggerInterface $l)
+    public function __construct(ServiceRecettesInterface $serviceRecette)
     {
-        parent::__construct($l);
         $this->serviceRecette = $serviceRecette;
     }
 
