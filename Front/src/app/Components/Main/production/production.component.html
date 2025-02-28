@@ -1,0 +1,10 @@
+<section>
+  <h2>Que produisez vous ?</h2>
+  <form class="list-pref">
+    <label *ngFor="let ingre of ingredients" class="text-center checkbox-group flex flex-col items-center justify-center gap-2.5 m-4">
+      <input (change)="changeIngredient(ingre)" type="checkbox" [(ngModel)]="ingre.check" name="{{ ingre.nom }}" />
+      <span>{{ ingre.nom }}</span>
+      <img src="{{ ingre.url_photo }}" width="40" height="40" style="border-radius: 50%">
+    </label>
+  </form>
+</section>
