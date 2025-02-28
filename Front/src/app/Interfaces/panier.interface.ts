@@ -14,5 +14,6 @@ export interface Panier {
   id: number,
   id_producteur: string,
   date_publication: string,
+  nom_producteur: string,
   ingredients: IngredientQuantite[],
 }
