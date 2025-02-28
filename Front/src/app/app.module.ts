@@ -43,6 +43,7 @@ import { CreateRecetteComponent } from './Components/Main/create-recette/create-
 import { MatDatepickerModule } from '@angular/material/datepicker'; // Import MatDatepickerModule
 import { MatNativeDateModule } from '@angular/material/core';
 import { InputIngredientQuantiteComponent } from './Components/Main/input-ingredient-quantite/input-ingredient-quantite.component';
+import { ProductionComponent } from './Components/Main/production/production.component';
 
 // @ts-ignore
 @NgModule({
@@ -69,7 +70,8 @@ import { InputIngredientQuantiteComponent } from './Components/Main/input-ingred
     AccountComponent,
     HomeComponent,
     CreateRecetteComponent,
-    InputIngredientQuantiteComponent
+    InputIngredientQuantiteComponent,
+    ProductionComponent
   ],
   imports: [
     BrowserModule,

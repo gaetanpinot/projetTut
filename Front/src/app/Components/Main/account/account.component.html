@@ -41,7 +41,7 @@
     <div *ngFor="let prod of producteursUtilisateur">
       <h3>{{ prod.nom_utilisateur }}</h3>
       <button mat-flat-button (click)="desabonneProducteur(prod.id)">Se désabonner</button>
-    <button mat-flat-button
+    <button class="ml-2" mat-flat-button
       [routerLink]="['/producteurs', prod.id,'ingredients']"
       >Voir les ingrédients proposés</button>
     </div>

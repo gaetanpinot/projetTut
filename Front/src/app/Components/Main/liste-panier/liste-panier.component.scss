@@ -1,6 +1,8 @@
 .panier {
   border: 1px solid black;
-  margin: 0.5em;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
 
   h3 {
     font-size: 1.3em;
@@ -11,4 +13,12 @@
   .ingredient {
     margin-left: 1em;
   }
+}
+
+section {
+  padding: 40px;
+}
+
+h2 {
+  font-size: 24px;
 }
