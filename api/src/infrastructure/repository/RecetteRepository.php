@@ -116,9 +116,11 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
             $qb->having($having);
         }
 
+        $qb->leftJoin('r.notes','n');
         $qb->setFirstResult(($args['page'] - 1) * $this->nbPagination)
             ->setMaxResults($this->nbPagination)
-        ->addOrderBy("r.id", "ASC");
+            ->addOrderBy("case when avg(n.note) is null then 0 else avg(n.note) end", "DESC")
+            ->addOrderBy("r.id", "ASC");
 
         $ret = $qb->getQuery();
         /*echo $ret->getSQL();*/
