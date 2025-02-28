@@ -21,6 +21,17 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
     /**
  * @throws EntityNotFoundException
  */
+
+    public function getLatestPaniers(): array
+    {
+        $qb = $this->getEntityManager()->createQueryBuilder();
+        $qb = $qb->select('p')
+            ->from(Panier::class, 'p')
+            ->where('p.date IS NOT NULL')
+            ->orderBy('p.date', 'DESC')
+            ->setMaxResults(3);
+        return $qb->getQuery()->getResult();
+    }
     public function getPanierById(int $id): Panier
     {
         $panier = $this->find($id);

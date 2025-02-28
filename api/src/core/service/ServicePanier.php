@@ -49,4 +49,11 @@ class ServicePanier implements ServicePanierInterface
         $paniersDTO = array_map(fn(Panier $panier) => PanierDTO::fromEntity($panier), $paniers);
         return $paniersDTO;
     }
+
+    public function getLatestPaniers(): array
+    {
+        $paniers = $this->panierRepository->getLatestPaniers();
+        $paniersDTO = array_map(fn(Panier $panier) => PanierDTO::fromEntity($panier), $paniers);
+        return $paniersDTO;
+    }
 }

@@ -14,4 +14,5 @@ interface PanierRepositoryInterface
     public function createPanier(InputPanierDTO $panier): Panier;
     public function publierPanier(int $id_panier): void;
     public function getPanierProducteur(string $id_producteur):array;
+    public function getLatestPaniers(): array;
 }

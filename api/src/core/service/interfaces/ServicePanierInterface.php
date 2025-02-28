@@ -11,4 +11,5 @@ interface ServicePanierInterface
     public function createPanier(InputPanierDTO $panier): PanierDTO;
     public function publierPanier(int $id_panier): void;
     public function getPanierByProducteur(string $id_producteur): array;
+    public function getLatestPaniers(): array;
 }
