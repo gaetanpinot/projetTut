@@ -2,6 +2,11 @@
 
 namespace amap\infrastructure\repository;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
+use amap\infrastructure\entities\Ingredient;
+use amap\infrastructure\entities\IngredientRecette;
+use amap\infrastructure\repository\exceptions\EntityNotFoundException;
 use amap\infrastructure\repository\interfaces\RecetteRepositoryInterface;
 use Doctrine\DBAL\ArrayParameterType;
 use Doctrine\ORM\EntityRepository;
@@ -125,7 +130,12 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
     public function getRecetteById($id): Recette
     {
         //return $this->findBy(["id" => $id]);
-        return $this->find($id);
+        /** @var Recette $recette */
+        $recette= $this->find($id);
+        if($recette === null) {
+            throw new EntityNotFoundException("Recette $id n'existe pas");
+        }
+        return $recette;
     }
 
     public function deleteRecette(int $id): void
@@ -140,36 +150,31 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         $this->getEntityManager()->flush();
     }
 
-    public function createRecette(Recette $r): Recette
+    /**
+    * @param Recette $r
+    * @param IngredientRecette[] $ir
+    */
+    public function addIngredientRecette(Recette $r, array $ir): void
     {
-//        $data = $r;
-//        $recette = new Recette();
-//
-//        if (isset($data['nom'])) {
-//            $recette->setNom($data['nom']);
-//        }
-//        if (isset($data['tempsPreparation'])) {
-//            $recette->setTempsPreparation($data['tempsPreparation']);
-//        }
-//        if (isset($data['complexite'])) {
-//            $recette->setComplexite($data['complexite']);
-//        }
-//        if (isset($data['description'])) {
-//            $recette->setDescription($data['description']);
-//        }
-//        if (isset($data['debutSaison'])) {
-//            $recette->setDebutSaison($data['debutSaison']);
-//        }
-//        if (isset($data['finSaison'])) {
-//            $recette->setFinSaison($data['finSaison']);
-//        }
-//        if (isset($data['urlPhoto'])) {
-//            $recette->setUrlPhoto($data['urlPhoto']);
-//        }
-//        if (isset($data['createur'])) {
-//            $recette->setCreateur($data['createur']);
-//        }
+        foreach($ir as $ingredientRecette) {
+            $this->getEntityManager()->persist($ingredientRecette);
+        }
+        $r->setIngredientsRecette(new ArrayCollection($ir));
+        $this->getEntityManager()->persist($r);
+        $this->getEntityManager()->flush();
+    }
 
+    public function createRecette(Recette $r,array $ingredientsRecette): Recette
+    {
+        foreach($ingredientsRecette as $ir){
+            $ingredientRecette = new IngredientRecette();
+            $ingredientRecette->setRecette($r);
+            $ingredientRecette->setIngredient($this->getEntityManager()
+                ->getReference(Ingredient::class,$ir['id']));
+            $ingredientRecette->setQuantite($ir['quantite']);
+            $this->getEntityManager()->persist($ingredientRecette);
+            $r->getIngredientsRecette()->add($ingredientRecette);
+        }
         $this->getEntityManager()->persist($r);
         $this->getEntityManager()->flush();
 

@@ -14,11 +14,10 @@ class GetRecettesAction extends AbstractAction
 {
     public ServiceRecettesInterface $serviceRecette;
     private Validator $validator;
-    public function __construct(Validator $valid, ServiceRecettesInterface $u, LoggerInterface $l)
+    public function __construct(Validator $valid, ServiceRecettesInterface $u)
     {
         $this->validator = $valid;
         $this->serviceRecette = $u;
-        parent::__construct($l);
     }
     public function __invoke(ServerRequestInterface $rq, ResponseInterface $rs, array $args): ResponseInterface
     {
