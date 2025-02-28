@@ -1,17 +1,16 @@
-<p>input-ingredient-quantite works!</p>
 <ng-container *ngFor="let ingredientForm of ingredientsFormArray; let i = index">
-  <div class="ingredient-form-field" [formGroup]="ingredientForm">
+  <div class="ingredient-form-field" [formGroup]="ingredientForm" (change)="handleChangeList()">
     <mat-form-field>
       <input matInput formControlName="quantite"
         type="text" placeholder="quantite(ex:10g)">
     </mat-form-field>
     <mat-form-field>
-      <mat-select formControlName="id" placeholder="Ingredient">
+      <mat-select formControlName="id" placeholder="Ingredient" (selectionChange)="handleChangeList()" >
         @for(ing of ingredients; track ing.id){
         <mat-option [value]="ing.id">
-          <div>
-            <p>{{ing.nom}}</p>
+          <div class="ingred-choix">
             <img class="icon-ingred" [src]="ing.url_photo">
+            <p>{{ing.nom}}</p>
           </div>
         </mat-option>
         }

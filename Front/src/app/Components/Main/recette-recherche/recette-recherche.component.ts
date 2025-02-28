@@ -37,52 +37,29 @@ export class RecetteRechercheComponent implements OnInit {
   ) {
     this.saisons = [
       {
-        nom: "Janvier",
-        id: 1
-      },
-      {
-        nom: "Février",
-        id: 2
-      },
-      {
-        nom: "Mars",
-        id: 3
-      },
-      {
-        nom: "Avril",
-        id: 4
-      },
-      {
-        nom: "Mai",
-        id: 5
-      },
-      {
-        nom: "Juin",
-        id: 6
-      },
-      {
-        nom: "Juillet",
-        id: 7
-      },
-      {
-        nom: "Août",
-        id: 8
-      },
-      {
-        nom: "Septembre",
-        id: 9
-      },
-      {
-        nom: "Octobre",
-        id: 10
-      },
-      {
-        nom: "Novembre",
-        id: 11
-      },
-      {
-        nom: "Décembre",
-        id: 12
+        nom: "Janvier", id: 1
+      }, {
+        nom: "Février", id: 2
+      }, {
+        nom: "Mars", id: 3
+      }, {
+        nom: "Avril", id: 4
+      }, {
+        nom: "Mai", id: 5
+      }, {
+        nom: "Juin", id: 6
+      }, {
+        nom: "Juillet", id: 7
+      }, {
+        nom: "Août", id: 8
+      }, {
+        nom: "Septembre", id: 9
+      }, {
+        nom: "Octobre", id: 10
+      }, {
+        nom: "Novembre", id: 11
+      }, {
+        nom: "Décembre", id: 12
       }
     ];
 
