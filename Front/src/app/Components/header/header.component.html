@@ -30,6 +30,10 @@
                             <mat-icon>list</mat-icon>
                             <a routerLink="/panier/liste">Liste de vos paniers</a>
                         </li>
+                        <li class="nav-item">
+                            <mat-icon>list</mat-icon>
+                            <a routerLink="/production">Liste produits</a>
+                        </li>
                     </ng-container>
 
                     <ng-container *ngIf="authStore.isClient()">
@@ -98,6 +102,7 @@
             <ng-container *ngIf="authStore.isClient()">
                 <li class="nav-item"><a routerLink="/Frigo">Frigo</a></li>
                 <li class="nav-item"><a routerLink="/producteurs/liste">Liste des producteurs</a></li>
+                <li class="nav-item"><a routerLink="/production">Liste produits</a></li>
             </ng-container>
         </ng-container>
     </ul>
