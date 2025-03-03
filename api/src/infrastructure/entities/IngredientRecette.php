@@ -11,6 +11,12 @@ use Doctrine\ORM\Mapping as ORM;
 #[ORM\Table(name: "ingredient_recette")]
 class IngredientRecette
 {
+    /*#[ORM\Column(type: "integer", name: "id_recette" )]*/
+    /*private ?int $id_recette = null;*/
+    /**/
+    /*#[ORM\Column(type: "integer", name: "id_ingredient")]*/
+    /*private ?int $id_ingredient = null;*/
+
     public function getIdRecette(): int
     {
         return $this->id_recette;
@@ -51,16 +57,14 @@ class IngredientRecette
         $this->ingredient = $ingredient;
     }
 
-    #[ORM\Id]
-    #[ORM\Column(type: "integer", name: "id_recette")]
-    private int $id_recette;
-
-    #[ORM\Id]
-    #[ORM\Column(type: "integer")]
-    private int $id_ingredient;
+    /*#[ORM\Column(type: "integer", name: "id_recette")]*/
+    /*private ?int $id_recette;*/
+    /**/
+    /*#[ORM\Column(type: "integer")]*/
+    /*private ?int $id_ingredient;*/
 
     #[ORM\Column(type: "string")]
-    private string $quantite;
+    private ?string $quantite;
 
     public function getQuantite(): string
     {
@@ -72,11 +76,13 @@ class IngredientRecette
         $this->quantite = $quantite;
     }
 
+    #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Recette::class, inversedBy: "ingredient_recette")]
-    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "id_recette", referencedColumnName: "id",nullable: false)]
     private Recette $recette;
 
+    #[ORM\Id]
     #[ORM\ManyToOne(targetEntity: Ingredient::class, inversedBy: "ingredients")]
-    #[ORM\JoinColumn(name: "id_ingredient", referencedColumnName: "id")]
+    #[ORM\JoinColumn(name: "id_ingredient", referencedColumnName: "id",nullable: false)]
     private Ingredient $ingredient;
 }

@@ -1,4 +1,12 @@
+<<<<<<< HEAD
 /* Conteneur principal */
+=======
+.panier {
+  border: 1px solid black;
+  margin: 20px 0;
+  padding: 20px;
+  border-radius: 10px;
+>>>>>>> 7f9457f03d75a59ff55291f95b0dcb6f92ce93d3
 
 .paniers {
     display: grid;
@@ -88,4 +96,12 @@ button[mat-flat-button]:hover {
 button[mat-flat-button]:disabled {
     background-color: #ccc;
     cursor: not-allowed;
+}
+
+section {
+  padding: 40px;
+}
+
+h2 {
+  font-size: 24px;
 }

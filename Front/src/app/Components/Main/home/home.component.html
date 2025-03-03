@@ -12,8 +12,10 @@
 
     <!-- Bannière -->
     <header class="w-full h-80 bg-cover bg-center text-center flex flex-col items-center justify-center" style="background-image: url('https://plus.unsplash.com/premium_photo-1674624682232-c9ced5360a2e?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZmFybSUyMGJhY2tncm91bmR8ZW58MHx8MHx8fDA%3D');">
-      <h3 class="text-5xl">Bienvenue sur notre AMAP !</h3>
-      <p class="text-2xl">Des produits et recettes de qualité toute l'année.</p>
+      <div class="header-text">
+        <h3 class="text-5xl">Bienvenue sur notre AMAP !</h3>
+        <p class="text-2xl">Des produits et recettes de qualité toute l'année.</p>
+      </div>
     </header>
 
     <!-- Contenu principal -->
@@ -23,7 +25,7 @@
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div *ngFor="let recette of recettes" class="box shadow-md p-4 rounded-lg text-center">
             <a [routerLink]="['/Recette', recette.id]"><h3 class="text-lg font-bold">{{ recette.nom }}</h3></a>
-            <p>{{ recette.description }}</p>
+            <p>{{recette.description.slice(0, 100)}}{{recette.description.length > 100 ? "..." : ""}}</p>
             <img style="border-radius: 10px" class="m-auto mt-2.5" src="{{recette.url_photo}}" width="64" height="64">
           </div>
         </div>
@@ -34,21 +36,22 @@
             <table class="w-full bg-white shadow-md rounded-lg text-center">
                 <thead class="bg-green-600 text-white">
                     <tr>
-                        <th class="p-2">Date</th>
-                        <th class="p-2">Heure</th>
-                        <th class="p-2">Lieu</th>
+                        <th class="p-2">Nom producteur</th>
+                        <th class="p-2">Date publication</th>
+                        <th class="p-2">Produits</th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr class="border-b">
-                        <td class="p-2">15 Février 2025</td>
-                        <td class="p-2">17h00 - 19h00</td>
-                        <td class="p-2">Ferme du Soleil</td>
-                    </tr>
-                    <tr class="border-b">
-                        <td class="p-2">22 Février 2025</td>
-                        <td class="p-2">17h00 - 19h00</td>
-                        <td class="p-2">Marché Local</td>
+                    <tr class="border-b" *ngFor="let panier of latestPaniers.paniers">
+                        <td class="p-2">{{ panier.nom_producteur }}</td>
+                        <td class="p-2">{{ panier.date_publication.split(' ')[0] }}</td>
+                        <td class="p-2">
+                          <ul>
+                            <li *ngFor="let ingre of panier.ingredients">
+                              {{ingre.ingredient.nom}}
+                            </li>
+                          </ul>
+                        </td>
                     </tr>
                 </tbody>
             </table>

@@ -1,0 +1,29 @@
+<ng-container *ngFor="let ingredientForm of ingredientsFormArray; let i = index">
+  <div class="ingredient-form-field" [formGroup]="ingredientForm" (change)="handleChangeList()">
+    <mat-form-field>
+      <mat-label>Quantité (ex: 10g)</mat-label>
+      <input matInput formControlName="quantite"
+        type="text" >
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Ingredient</mat-label>
+      <mat-select formControlName="id"  (selectionChange)="handleChangeList()" >
+        @for(ing of ingredients; track ing.id){
+        <mat-option [value]="ing.id">
+          <div class="ingred-choix">
+            <img class="icon-ingred" [src]="ing.url_photo">
+            <p>{{ing.nom}}</p>
+          </div>
+        </mat-option>
+        }
+      </mat-select>
+    </mat-form-field>
+    <mat-icon class="delete-btn" (click)="deleteIngredient(i)">
+      delete_forever
+    </mat-icon>
+  </div>
+</ng-container>
+
+<button type="button" mat-mini-fab (click)="addIngredient()">
+  <mat-icon class="add-ingredient-btn">add</mat-icon>
+</button>

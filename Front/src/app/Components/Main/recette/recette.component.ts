@@ -1,8 +1,8 @@
-import {Component, OnInit} from '@angular/core';
-import {RecetteService} from '../../../Services/recette.service';
-import {MatTableDataSource} from '@angular/material/table';
-import {GetRecetteResponse, Ingredient, Recette, Tag} from '../../../Interfaces/recette.interface';
-import {ActivatedRoute} from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { RecetteService } from '../../../Services/recette.service';
+import { MatTableDataSource } from '@angular/material/table';
+import { GetRecetteResponse, Ingredient, Recette, Tag } from '../../../Interfaces/recette.interface';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recette',
@@ -11,7 +11,7 @@ import {ActivatedRoute} from '@angular/router';
   templateUrl: './recette.component.html',
   styleUrl: './recette.component.scss'
 })
-export class RecetteComponent implements  OnInit {
+export class RecetteComponent implements OnInit {
 
   nom: string | undefined;
   note: number | undefined;
@@ -24,8 +24,7 @@ export class RecetteComponent implements  OnInit {
 
 
 
-  constructor(private recetteService: RecetteService, private route: ActivatedRoute)
-  {}
+  constructor(private recetteService: RecetteService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(params => {

@@ -37,10 +37,12 @@ import { ListePanierComponent } from './Components/Main/liste-panier/liste-panie
 import { ListeIngredientProduitComponent } from './Components/Main/liste-ingredient-produit/liste-ingredient-produit.component';
 import { ListeProducteursComponent } from './Components/Main/liste-producteurs/liste-producteurs.component';
 import { AccountComponent } from './Components/Main/account/account.component';
-import {HomeComponent} from './Components/Main/home/home.component';
+import { HomeComponent } from './Components/Main/home/home.component';
 import { CreateRecetteComponent } from './Components/Main/create-recette/create-recette.component';
 import { MatDatepickerModule } from '@angular/material/datepicker'; // Import MatDatepickerModule
-import { MatNativeDateModule } from '@angular/material/core'; // Import MatNativeDateModule
+import { MatNativeDateModule } from '@angular/material/core';
+import { InputIngredientQuantiteComponent } from './Components/Main/input-ingredient-quantite/input-ingredient-quantite.component';
+import { ProductionComponent } from './Components/Main/production/production.component';
 
 // @ts-ignore
 @NgModule({
@@ -65,7 +67,9 @@ import { MatNativeDateModule } from '@angular/material/core'; // Import MatNativ
     ListeProducteursComponent,
     AccountComponent,
     HomeComponent,
-    CreateRecetteComponent
+    CreateRecetteComponent,
+    InputIngredientQuantiteComponent,
+    ProductionComponent
   ],
   imports: [
     BrowserModule,

@@ -23,3 +23,11 @@ thead {
 main {
   background: ghostwhite;
 }
+
+.header-text {
+  background: var(--green);
+  padding: 50px;
+  border-radius: 20px;
+  color: white;
+  opacity: 0.95;
+}

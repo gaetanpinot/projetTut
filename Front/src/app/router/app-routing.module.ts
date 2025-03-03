@@ -14,6 +14,7 @@ import { ListeProducteursComponent } from '../Components/Main/liste-producteurs/
 import { AccountComponent } from '../Components/Main/account/account.component';
 import { GardeNonSaveGuard } from '../Guard/garde-non-save.guard';
 import {CreateRecetteComponent} from '../Components/Main/create-recette/create-recette.component';
+import {ProductionComponent} from '../Components/Main/production/production.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'Home', pathMatch: 'full' },
@@ -29,7 +30,9 @@ const routes: Routes = [
   { path: 'producteurs/liste', component: ListeProducteursComponent, title: 'Liste des producteurs' },
   { path: 'Recette/:id', component: RecetteComponent },
   { path: 'Account', component: AccountComponent },
-  { path: 'CreerRecette', component: CreateRecetteComponent }
+  { path: 'CreerRecette', component: CreateRecetteComponent },
+  { path: 'production', component: ProductionComponent }
+
 ];
 
 @NgModule({
