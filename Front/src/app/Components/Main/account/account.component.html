@@ -36,12 +36,13 @@
         </div>
     </section>
 
-    <section id="producteurs" *ngIf="authStore.isAuthenticated()">
+    <section id="producteurs" *ngIf="authStore.isClient()">
         <h2 class="section-title">Producteurs</h2>
         <div *ngFor="let prod of producteursUtilisateur">
             <h3>{{ prod.nom_utilisateur }}</h3>
-            <button mat-flat-button (click)="desabonneProducteur(prod.id)">Se désabonner</button>
-            <button mat-flat-button [routerLink]="['/producteurs', prod.id,'ingredients']">Voir les ingrédients proposés</button>
+            <button class="ingredients" mat-flat-button [routerLink]="['/producteurs', prod.id,'ingredients']">Voir les ingrédients proposés</button>
+            <button class="desabo" mat-flat-button (click)="desabonneProducteur(prod.id)">Se désabonner</button>
+
         </div>
     </section>
 
@@ -58,6 +59,6 @@
 
     <!-- Bouton de déconnexion -->
     <button id="Deconnexion" class="btn logout-btn" (click)="openLogoutPopup()">
-    Déconnexion
-</button>
+      Déconnexion
+    </button>
 </div>

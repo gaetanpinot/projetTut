@@ -1,16 +1,48 @@
+/* HEADER */
+
+#header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 50px;
+    max-width: 800px;
+    margin: auto;
+    flex-direction: column;
+    h2 {
+        font-size: 22px;
+        color: var(--text);
+        text-align: center;
+    }
+    a {
+        margin: 10px;
+        padding: 10px 5px;
+        text-decoration: none;
+        color: var(--white);
+        font-weight: bold;
+        transition: color 0.3s ease-in-out;
+        background-color: var(--green);
+        border-radius: 8px;
+        border: 2px solid var(--green);
+        text-align: center;
+        &:hover {
+            color: var(--green);
+            background-color: var(--white);
+        }
+    }
+}
+
+
+/* CONTAINER PRINCIPAL */
+
 #liste-ingredients-produit {
     padding: 20px 50px;
     text-align: center;
     max-width: 800px;
-    /* Pour éviter que la liste soit trop large */
     margin: auto;
 }
 
-h2 {
-    margin: 20px 0;
-    font-size: 22px;
-    text-align: center;
-}
+
+/* GRILLE DES INGRÉDIENTS */
 
 .ingredients-container {
     display: flex;
@@ -20,29 +52,39 @@ h2 {
     margin-top: 20px;
 }
 
+
+/* STYLE POUR CHAQUE INGRÉDIENT */
+
 .ingredient {
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 10px;
     border-radius: 8px;
+    background: var(--white);
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+        transform: scale(1.05);
+    }
+    h3 {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--text);
+        margin-bottom: 10px;
+    }
+    img {
+        width: 64px;
+        height: 64px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid var(--green);
+        transition: transform 0.3s ease-in-out;
+    }
 }
 
-.ingredient h3 {
-    margin-bottom: 10px;
-    font-size: 16px;
-}
 
-.ingredient img {
-    border-radius: 50%;
-    border: 2px solid #ddd;
-    transition: transform 0.3s ease-in-out;
-}
-
-.ingredient img:hover {
-    transform: scale(1.1);
-}
+/* BOUTONS D'ABONNEMENT */
 
 #button-abonnement {
     width: 100%;
@@ -57,9 +99,51 @@ h2 {
     padding: 10px 20px;
     border: 2px solid var(--green);
     border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out, color 0.3s ease-in-out;
+    &:hover {
+        background-color: var(--white);
+        color: var(--green);
+    }
 }
 
-.btn:hover {
-    background-color: var(--white);
-    color: var(--green);
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 1024px) {
+    #header {
+        flex-direction: column;
+        gap: 10px;
+        text-align: center;
+    }
+    #liste-ingredients-produit {
+        padding: 20px;
+    }
+    .ingredient {
+        width: 180px;
+    }
+}
+
+@media (max-width: 768px) {
+    .ingredients-container {
+        flex-direction: column;
+        align-items: center;
+    }
+    .ingredient {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    #header {
+        padding: 15px;
+    }
+    .ingredient {
+        width: 100%;
+        padding: 15px;
+    }
+    .btn {
+        width: 100%;
+    }
 }

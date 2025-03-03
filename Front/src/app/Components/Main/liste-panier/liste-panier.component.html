@@ -1,20 +1,27 @@
 <section>
-  <h2>Liste de vos paniers</h2>
-  <div class="paniers">
-    <div class="panier" *ngFor="let panier of paniers">
-      <h3>Panier n°{{panier.id}}</h3>
-      <p *ngIf="panier.date_publication!==null;else pasPublie">
-        Date de publication : {{panier.date_publication}}</p>
-      <ng-template #pasPublie>Non publié</ng-template>
-      <div class="ingredients-list">
-        <h4>Ingredients :</h4>
-        <div class="ingredient" *ngFor="let ingred of panier.ingredients">
-           {{ingred.ingredient.nom}}: {{ingred.quantite}}
-          <img src="{{ingred.ingredient.url_photo }}" style="border-radius: 50%;" class="m-2" width="64" height="64">
-        </div>
-
-      </div>
-      <button mat-flat-button *ngIf="!panier.date_publication" (click)="publierPanier(panier.id)">Publier</button>
+    <div id="header">
+        <h2>Liste de vos paniers</h2>
+        <a routerLink="/panier/create"> Faire un nouveau panier</a>
     </div>
-  </div>
+    <div class="paniers">
+        <div class="panier" *ngFor="let panier of paniers">
+            <h3>Panier n°{{ panier.id }}</h3>
+
+            <p *ngIf="panier.date_publication">
+                Date de publication : {{ panier.date_publication }}
+            </p>
+
+            <button mat-flat-button *ngIf="!panier.date_publication" (click)="publierPanier(panier.id)">
+                Publier
+            </button>
+
+            <div class="ingredients-list" *ngIf="panier.ingredients.length > 0">
+                <h4>Ingrédients :</h4>
+                <div class="ingredient" *ngFor="let ingred of panier.ingredients">
+                    {{ ingred.ingredient.nom }}: {{ ingred.quantite }}
+                    <img [src]="ingred.ingredient.url_photo" class="m-2" width="64" height="64" style="border-radius: 50%;">
+                </div>
+            </div>
+        </div>
+    </div>
 </section>

@@ -1,4 +1,7 @@
-<h2 mat-card-title> Liste des ingredients produits par le producteur {{ingredients_produit.nom}} </h2>
+<div id="header">
+    <h2 mat-card-title> Liste des ingredients produits par le producteur {{ingredients_produit.nom}} </h2>
+    <a routerLink="/producteurs/liste">Liste des producteurs</a>
+</div>
 <div id="liste-ingredients-produit">
     <div class="flex items-center gap-4 text-center">
         <div class="ingredient" *ngFor="let ingredient of ingredients_produit.ingredients">

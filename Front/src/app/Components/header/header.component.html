@@ -19,15 +19,16 @@
             </li>
 
             <li class="nav-item" *ngIf="authStore.token$ | async">
+                <mat-icon>keyboard_arrow_down</mat-icon>
                 Autres
                 <ul class="dropdown">
                     <ng-container *ngIf="authStore.isProducteur()">
                         <li class="nav-item">
-                            <mat-icon>shopping_cart</mat-icon>
+                            <mat-icon>add_shopping_cart</mat-icon>
                             <a routerLink="/panier/create">Créer un panier</a>
                         </li>
                         <li class="nav-item">
-                            <mat-icon>list</mat-icon>
+                            <mat-icon>shopping_cart</mat-icon>
                             <a routerLink="/panier/liste">Liste de vos paniers</a>
                         </li>
                         <li class="nav-item">

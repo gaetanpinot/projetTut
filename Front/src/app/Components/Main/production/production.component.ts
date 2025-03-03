@@ -59,7 +59,6 @@ export class ProductionComponent implements OnInit {
       }
     });
   }
-
   changeIngredient(ingre: Ingredient) {
     if(ingre.check) {
       this.addIngredient(ingre.id);

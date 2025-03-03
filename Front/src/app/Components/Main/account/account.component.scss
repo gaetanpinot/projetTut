@@ -267,3 +267,93 @@ input[type="checkbox"] {
 .cancel:hover {
     background-color: var(--green);
 }
+
+
+/* SECTION PRODUCTEURS */
+
+#producteurs {
+    margin-top: 30px;
+    padding: 20px;
+    background: var(--white);
+    border-radius: 8px;
+    text-align: center;
+    h2 {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-bottom: 15px;
+        color: var(--text);
+    }
+    /* Conteneur des producteurs */
+    div {
+        display: flex;
+        flex-direction: row;
+        gap: 15px;
+        padding: 15px;
+        background: var(--light);
+        border-radius: 8px;
+        box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.05);
+        transition: transform 0.2sease-in-out;
+        margin-top: 10px;
+        justify-content: space-between;
+        align-items: center;
+        flex-wrap: wrap;
+        &:hover {
+            transform: scale(1.02);
+        }
+        h3 {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
+    }
+    /* Boutons */
+    .desabo,
+    .ingredients {
+        padding: 8px 12px;
+        font-size: 14px;
+        border-radius: 6px;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background 0.3s ease-in-out, transform 0.2s ease-in-out;
+        &:hover {
+            transform: scale(1.05);
+        }
+    }
+    .desabo {
+        background: red;
+        color: white;
+        border: 2px solid red;
+        &:hover {
+            background: var(--white);
+            color: red;
+        }
+    }
+    .ingredients {
+        background: var(--green);
+        color: var(--white);
+        border: 2px solid var(--green);
+        &:hover {
+            background: var(--white);
+            border-color: var(--green);
+            color: var(--green);
+        }
+    }
+}
+
+
+/* RESPONSIVE DESIGN */
+
+@media (max-width: 768px) {
+    #producteurs {
+        padding: 15px;
+    }
+    #producteurs div {
+        width: 100%;
+        padding: 12px;
+    }
+    .desabo,
+    .ingredients {
+        width: 100%;
+    }
+}
