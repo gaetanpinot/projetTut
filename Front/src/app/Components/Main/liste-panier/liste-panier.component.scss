@@ -1,107 +1,81 @@
-<<<<<<< HEAD
-/* Conteneur principal */
-=======
 .panier {
-  border: 1px solid black;
-  margin: 20px 0;
-  padding: 20px;
-  border-radius: 10px;
->>>>>>> 7f9457f03d75a59ff55291f95b0dcb6f92ce93d3
-
-.paniers {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    flex-direction: column;
-    gap: 20px;
+    border: 1px solid black;
+    margin: 20px 0;
     padding: 20px;
-    max-width: 1200px;
-    margin: auto;
-}
-
-
-/* Style de chaque panier */
-
-.panier {
-    background-color: #ffffff;
-    border: 2px solid var(--green);
-    border-radius: 8px;
-    padding: 15px;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-}
-
-.panier:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-}
-
-
-/* Titre du panier */
-
-.panier h3 {
-    font-size: 1.5em;
-    color: #333;
-    margin-bottom: 10px;
-}
-
-
-/* Date de publication */
-
-.panier p {
-    font-size: 0.9em;
-    color: #666;
-    margin-bottom: 15px;
-}
-
-
-/* Liste des ingrédients */
-
-.ingredients-list h4 {
-    font-size: 1.2em;
-    color: #444;
-    margin-bottom: 10px;
-}
-
-.ingredient {
-    font-size: 0.95em;
-    color: #555;
-    margin-left: 20px;
-    position: relative;
-}
-
-.ingredient::before {
-    content: '•';
-    color: #18A362;
-    position: absolute;
-    left: -10px;
-}
-
-
-/* Bouton Publier */
-
-button[mat-flat-button] {
-    background-color: #18A362;
-    color: #fff;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
-}
-
-button[mat-flat-button]:hover {
-    background-color: #128a50;
-}
-
-button[mat-flat-button]:disabled {
-    background-color: #ccc;
-    cursor: not-allowed;
-}
-
-section {
-  padding: 40px;
-}
-
-h2 {
-  font-size: 24px;
+    border-radius: 10px;
+    .paniers {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 20px;
+        flex-direction: column;
+        gap: 20px;
+        padding: 20px;
+        max-width: 1200px;
+        margin: auto;
+    }
+    /* Style de chaque panier */
+    .panier {
+        background-color: #ffffff;
+        border: 2px solid var(--green);
+        border-radius: 8px;
+        padding: 15px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .panier:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+    }
+    /* Titre du panier */
+    .panier h3 {
+        font-size: 1.5em;
+        color: #333;
+        margin-bottom: 10px;
+    }
+    /* Date de publication */
+    .panier p {
+        font-size: 0.9em;
+        color: #666;
+        margin-bottom: 15px;
+    }
+    /* Liste des ingrédients */
+    .ingredients-list h4 {
+        font-size: 1.2em;
+        color: #444;
+        margin-bottom: 10px;
+    }
+    .ingredient {
+        font-size: 0.95em;
+        color: #555;
+        margin-left: 20px;
+        position: relative;
+    }
+    .ingredient::before {
+        content: '•';
+        color: #18A362;
+        position: absolute;
+        left: -10px;
+    }
+    /* Bouton Publier */
+    button[mat-flat-button] {
+        background-color: #18A362;
+        color: #fff;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+    button[mat-flat-button]:hover {
+        background-color: #128a50;
+    }
+    button[mat-flat-button]:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+    section {
+        padding: 40px;
+    }
+    h2 {
+        font-size: 24px;
+    }
 }
