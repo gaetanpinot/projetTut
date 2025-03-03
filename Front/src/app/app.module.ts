@@ -19,7 +19,6 @@ import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { RecetteRechercheComponent } from './Components/Main/recette-recherche/recette-recherche.component';
 import { FrigoComponent } from './Components/Main/frigo/frigo.component';
-import { PanierComponent } from './Components/Main/panier/panier.component';
 import { ConnexionInscripComponent } from './Components/Main/connexion-inscrip/connexion-inscrip.component';
 import { TestHomeComponent } from './Components/TEST/test-home/test-home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -39,6 +38,9 @@ import { ListeIngredientProduitComponent } from './Components/Main/liste-ingredi
 import { ListeProducteursComponent } from './Components/Main/liste-producteurs/liste-producteurs.component';
 import { AccountComponent } from './Components/Main/account/account.component';
 import {HomeComponent} from './Components/Main/home/home.component';
+import { CreateRecetteComponent } from './Components/Main/create-recette/create-recette.component';
+import { MatDatepickerModule } from '@angular/material/datepicker'; // Import MatDatepickerModule
+import { MatNativeDateModule } from '@angular/material/core'; // Import MatNativeDateModule
 
 // @ts-ignore
 @NgModule({
@@ -52,7 +54,6 @@ import {HomeComponent} from './Components/Main/home/home.component';
     FooterComponent,
     RecetteRechercheComponent,
     FrigoComponent,
-    PanierComponent,
     ConnexionInscripComponent,
     ConnexionComponent,
     InscriptionComponent,
@@ -63,7 +64,8 @@ import {HomeComponent} from './Components/Main/home/home.component';
     ListeIngredientProduitComponent,
     ListeProducteursComponent,
     AccountComponent,
-    HomeComponent
+    HomeComponent,
+    CreateRecetteComponent
   ],
   imports: [
     BrowserModule,
@@ -84,6 +86,8 @@ import {HomeComponent} from './Components/Main/home/home.component';
     MatRadioModule,
     MatCheckboxModule,
     MatSlideToggleModule,
+    MatDatepickerModule, // Add this line
+    MatNativeDateModule // Add this line
   ],
   providers: [
     provideAnimationsAsync(),

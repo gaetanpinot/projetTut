@@ -137,3 +137,4 @@ dist
 .phpunit.result.cache
 .php-cs-fixer.cache
 api/composer.lock
+Front/src/environment.ts

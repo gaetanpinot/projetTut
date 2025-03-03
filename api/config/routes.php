@@ -8,6 +8,7 @@ use amap\application\action\DeleteRecetteAction;
 use amap\application\action\GetAllergenes;
 use amap\application\action\GetIngredientsAction;
 use amap\application\action\GetPanierByProducteurAction;
+use amap\application\action\GetProducteursUtilisateurList;
 use amap\application\action\GetRandomIngredients;
 use amap\application\action\GetRandomRecettes;
 use amap\application\action\GetRecetteByIdAction;
@@ -53,10 +54,10 @@ return function (\Slim\App $app): \Slim\App {
     $app->get('/recettes/random[/]', GetRandomRecettes::class);
     $app->get('/ingredients/random[/]', GetRandomIngredients::class);
 
-    $app->post('/recettes[/]', PostCreateRecetteAction::class);
+    $app->post('/recettes[/]', PostCreateRecetteAction::class)->add(AuthnMiddleware::class);
     $app->get('/recettes[/]', GetRecettesAction::class);
     $app->get('/recettes/{id}', GetRecetteByIdAction::class);
-    $app->delete('/recettes/{id}', DeleteRecetteAction::class);
+    $app->delete('/recettes/{id}', DeleteRecetteAction::class)->add(AuthnMiddleware::class);
 
 
     $app->post('/tag', CreateTagAction::class);
@@ -86,6 +87,8 @@ return function (\Slim\App $app): \Slim\App {
 
         $group->get('/frigo[/]', GetUserFrigo::class)->add(AuthnMiddleware::class);
         $group->put('/frigo[/]', ReplaceUserFrigo::class)->add(AuthnMiddleware::class);
+
+        $group->get('/producteurs[/]', GetProducteursUtilisateurList::class)->add(AuthnMiddleware::class);
         $group->post('/producteurs/{id}[/]', AbonnerUtilisateurAProducteur::class)->add(AuthnMiddleware::class);
         $group->delete('/producteurs/{id}[/]', DesabonnerUtilisateurAProducteur::class)->add(AuthnMiddleware::class);
     });

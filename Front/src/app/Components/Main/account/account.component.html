@@ -4,41 +4,10 @@
         <div class="account-info">
             <div>
                 <p><strong>Nom :</strong> {{ user.nom }}</p>
-                <p><strong>Rôle :</strong> {{ user.role }}</p>
             </div>
-            <mat-icon class="edit-icon" (click)="toggleForm()">create</mat-icon>
         </div>
-
-        <div *ngIf="showForm" class="form-container">
-            <h2 class="section-title">Modification des informations</h2>
-            <form (ngSubmit)="updateUser($event)">
-                <label>Nom</label>
-                <input type="text" [(ngModel)]="user.nom" name="nom" class="input-field" required />
-
-                <button type="submit" class="btn save-btn">Enregistrer</button>
-            </form>
-
-            <h2 class="section-title">Changement de mot de passe</h2>
-            <form (ngSubmit)="changePassword($event)">
-                <label>Ancien mot de passe</label>
-                <input type="password" [(ngModel)]="password.old" name="oldPassword" class="input-field" required />
-
-                <label>Nouveau mot de passe</label>
-                <input type="password" [(ngModel)]="password.new" name="newPassword" class="input-field" required />
-
-                <label>Confirmer le mot de passe</label>
-                <input type="password" [(ngModel)]="password.confirm" name="confirmPassword" class="input-field" required />
-
-                <button type="submit" class="btn change-password-btn">Modifier</button>
-            </form>
-        </div>
-
-        <h2 class="section-title">Mes Paniers</h2>
-        <a *ngif='isClient' rooterLink="/panier/user" class="link">Voir mes paniers</a>
-        <a *ngif='isProducteur' rooterLink="panier/liste" class="link">Voir mes panier</a>
     </section>
 
-    <!-- Chargement des préférences -->
     <div *ngIf="isLoading" class="loading-container">
         <p>Chargement des préférences...</p>
     </div>
@@ -49,27 +18,33 @@
                 <h2 class="section-title">Allergies</h2>
                 <form>
                     <label *ngFor="let allergie of allergies" class="checkbox-group">
-                        <input type="checkbox" [(ngModel)]="allergie.checked" name="{{ allergie.nom }}" />
-                        <span>{{ allergie.nom }}</span>
+                        <input (change)="changeAllergie(allergie)" type="checkbox" [(ngModel)]="allergie.check" name="{{ allergie.label }}" />
+                        <span>{{ allergie.label }}</span>
                     </label>
                 </form>
-                <button (click)="saveAllergies()" class="btn save-btn">Enregistrer les allergies</button>
             </div>
-
             <div class="preferences-column">
-                <h2 class="section-title">Ustensiles de cuisine</h2>
+                <h2 class="section-title">Ingrédients Détéstés</h2>
                 <form class="list-pref">
-                    <label *ngFor="let ustensile of ustensiles" class="checkbox-group">
-                        <input type="checkbox" [(ngModel)]="ustensile.checked" name="{{ ustensile.nom }}" />
-                        <span>{{ ustensile.nom }}</span>
-                    </label>
+                    <label *ngFor="let ingre of ingredients" class="checkbox-group">
+                <input (change)="changeIngredient(ingre)" type="checkbox" [(ngModel)]="ingre.check" name="{{ ingre.nom }}" />
+                <span>{{ ingre.nom }}</span>
+                <img src="{{ ingre.url_photo }}" width="40" height="40" style="border-radius: 50%">
+              </label>
                 </form>
-                <button (click)="saveUstensiles()" class="btn save-btn">Enregistrer les ustensiles</button>
             </div>
         </div>
     </section>
 
-    <!-- Popup de confirmation pour la déconnexion -->
+    <section id="producteurs" *ngIf="authStore.isAuthenticated()">
+        <h2 class="section-title">Producteurs</h2>
+        <div *ngFor="let prod of producteursUtilisateur">
+            <h3>{{ prod.nom_utilisateur }}</h3>
+            <button mat-flat-button (click)="desabonneProducteur(prod.id)">Se désabonner</button>
+            <button mat-flat-button [routerLink]="['/producteurs', prod.id,'ingredients']">Voir les ingrédients proposés</button>
+        </div>
+    </section>
+
     <div *ngIf="showLogoutPopup" class="popup-overlay">
         <div class="popup">
             <h3> Confirmation</h3>

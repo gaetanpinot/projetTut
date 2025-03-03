@@ -40,11 +40,6 @@
                         <li class="nav-item">
                             <mat-icon>person</mat-icon>
                             <a routerLink="/producteurs/liste">Liste des producteurs</a>
-                        </li>
-                        <li class="nav-item">
-                            <mat-icon>shopping_cart</mat-icon>
-                            <a routerLink="/panier/user">Mes paniers</a>
-                        </li>
                     </ng-container>
                 </ul>
             </li>
@@ -103,7 +98,6 @@
             <ng-container *ngIf="authStore.isClient()">
                 <li class="nav-item"><a routerLink="/Frigo">Frigo</a></li>
                 <li class="nav-item"><a routerLink="/producteurs/liste">Liste des producteurs</a></li>
-                <li class="nav-item"><a routerLink="/panier/user">Mes paniers</a></li>
             </ng-container>
         </ng-container>
     </ul>

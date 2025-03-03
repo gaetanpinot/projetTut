@@ -3,7 +3,8 @@ export interface Ingredient {
   nom: string,
   debut_saison: number,
   fin_saison: number,
-  url_photo: string
+  url_photo: string,
+  check: boolean
 }
 export interface IngredientQuantite {
   quantite: string,
@@ -24,7 +25,7 @@ export interface IngredientFrigo {
   nom: string,
   url_photo: string,
   quantite: string,
-  date_ajout: string,
+  date_ajout: string
 }
 export interface FrigoInput {
   frigo: IngredientFrigoInput[]
