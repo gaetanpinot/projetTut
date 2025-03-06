@@ -43,6 +43,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'; // Import Ma
 import { MatNativeDateModule } from '@angular/material/core';
 import { InputIngredientQuantiteComponent } from './Components/Main/input-ingredient-quantite/input-ingredient-quantite.component';
 import { ProductionComponent } from './Components/Main/production/production.component';
+import { DatePipe } from '@angular/common';
 
 // @ts-ignore
 @NgModule({
@@ -96,7 +97,8 @@ import { ProductionComponent } from './Components/Main/production/production.com
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
-    TestService
+    TestService,
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

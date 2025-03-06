@@ -4,14 +4,13 @@ import { FrigoComponent } from '../Components/Main/frigo/frigo.component';
 @Injectable()
 export class GardeNonSaveGuard implements CanDeactivate<FrigoComponent> {
   constructor() { }
-  canDeactivate(component: FrigoComponent,
+  async canDeactivate(component: FrigoComponent,
     currentRoute: ActivatedRouteSnapshot,
     currentState: RouterStateSnapshot,
-    nextState: RouterStateSnapshot): MaybeAsync<GuardResult> {
+    nextState: RouterStateSnapshot): Promise<GuardResult> {
     if (!component.isPanierModifiee) {
       return true;
     }
-    component.dialogFrigoNonSauvegardee();
-    return false;
+    return await component.dialogFrigoNonSauvegardee();
   }
 }

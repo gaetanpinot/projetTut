@@ -16,6 +16,8 @@ import {
 } from '@angular/material/dialog';
 import { MatButtonModule } from '@angular/material/button';
 import { inject } from '@angular/core/testing';
+import { DatePipe } from '@angular/common';
+import { firstValueFrom } from 'rxjs';
 @Component({
   selector: 'app-frigo',
   standalone: false,
@@ -29,7 +31,6 @@ export class FrigoComponent implements OnInit {
   public isPanierModifiee: boolean = false;
 
   get formdata(): FormGroup {
-    // Set default date to today in YYYY-MM-DD format
     const today = this.formatDateForInput(new Date());
 
     return this.fb.group({
@@ -39,17 +40,27 @@ export class FrigoComponent implements OnInit {
     });
   }
 
-  public dialogFrigoNonSauvegardee() {
-    this.dialog.open(DialogFrigoNonSauvegardee,
+  public async dialogFrigoNonSauvegardee(): Promise<boolean> {
+    const promise = firstValueFrom(this.dialog.open(DialogFrigoNonSauvegardee,
       {
         width: '20em',
       }
-    ).afterClosed().subscribe((result) => {
-      if (result === "save") {
-        this.enregistrerFrigo()
+    ).afterClosed())
+    let doExit: boolean = false;
+    await promise.then((result) => {
+      switch (result) {
+        case "dontexit":
+          break;
+        case "save":
+          this.enregistrerFrigo()
+          doExit = true;
+          break;
+        case "dontsave":
+          doExit = true;
+          break;
       }
     })
-
+    return doExit;
   }
 
   constructor(
@@ -58,6 +69,7 @@ export class FrigoComponent implements OnInit {
     private utilisateurService: UtilisateurService,
     private snackBar: MatSnackBar,
     private dialog: MatDialog,
+    private datePipe: DatePipe,
   ) {
     this.frigoForm = this.fb.group({
       ingredients: this.fb.array([
@@ -103,10 +115,8 @@ export class FrigoComponent implements OnInit {
 
   // Format date as YYYY-MM-DD for input field
   formatDateForInput(date: Date): string {
-    const year = date.getFullYear();
-    const month = (date.getMonth() + 1).toString().padStart(2, '0');
-    const day = date.getDate().toString().padStart(2, '0');
-    return `${year}-${month}-${day}`;
+    const transformedDate = this.datePipe.transform(date, 'yyyy-MM-ddTHH:mm')
+    return transformedDate ? transformedDate : '';
   }
 
   formatApiDateForInput(dateString: string): string {
@@ -115,8 +125,8 @@ export class FrigoComponent implements OnInit {
   }
 
   convertDateToTimestamp(dateString: string): number {
-    const date = new Date(dateString);
-    return Math.floor(date.getTime() / 1000);
+    const date = Date.parse(dateString);
+    return Math.floor(date / 1000);
   }
 
   loadFrigo(): void {
@@ -158,14 +168,17 @@ export class FrigoComponent implements OnInit {
       }
       console.log(acc[curr.id]);
       if (acc[curr.id].includes(curr.date_ajout)) {
-        throw new Error("L'ingredient: " + curr.id + " existe déjà avec la date d'ajout: " + curr.date_ajout);
+        const ing = this.ingredients.find(ingredient => ingredient.id === curr.id);
+        const nom = ing ? ing.nom : curr.id;
+        throw new Error("L'ingredient: " + nom + " existe déjà avec la date d'ajout: " + curr.date_ajout);
       }
       acc[curr.id].push(curr.date_ajout);
       return acc;
     }, {});
   };
 
-  enregistrerFrigo() {
+  async enregistrerFrigo() {
+    console.log("enregistrer frigo");
     try {
       this.checkDuplicateFrigoIngredient();
     } catch (e: any) {
@@ -187,27 +200,30 @@ export class FrigoComponent implements OnInit {
     const frigoInput: FrigoInput = { frigo: frigoData };
     console.log("frigo update:", frigoInput);
 
-    this.utilisateurService.remplacerFrigo(frigoInput).subscribe({
-      next: (data) => {
+    await firstValueFrom(this.utilisateurService.remplacerFrigo(frigoInput)).then(
+      (data) => {
         this.frigoUtilisateur = data;
         this.isPanierModifiee = false;
         this.snackBar.open('Frigo mis à jour avec succès', 'Fermer', {
           duration: 10000
         });
         console.log('Frigo mis à jour avec succès', data);
-      },
-      error: (err) => {
-        this.snackBar.open('Erreur lors de la mise à jour du frigo', 'Fermer', {
-          duration: 10000
-        });
-        console.error('Erreur lors de la mise à jour du frigo', err);
-      }
-    });
+      }).catch(
+        (err) => {
+          this.snackBar.open('Erreur lors de la mise à jour du frigo', 'Fermer', {
+            duration: 10000
+          });
+          console.error('Erreur lors de la mise à jour du frigo', err);
+        }
+      );
   }
+
   public changementFrigo() {
     console.log("changement frigo");
     this.isPanierModifiee = true;
   }
+
+
 }
 
 @Component({
@@ -218,9 +234,14 @@ export class FrigoComponent implements OnInit {
 Vous avez des modifications non sauvegardées dans votre frigo. Voulez vous sauvegarder avant de quitter la page?
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button mat-button mat-dialog-close (click)="nePasSauvegarder()">Non</button>
-  <button mat-button mat-dialog-close cdkFocusInitial (click)="sauvegarder()">Oui</button>
+  <button id="non" mat-button mat-dialog-close class="text-red-100" (click)="nePasSauvegarder()">Non</button>
+  <button id="oui" mat-button mat-dialog-close cdkFocusInitial (click)="sauvegarder()">Oui</button>
+  <button id="dontexit" mat-button mat-dialog-close cdkFocusInitial (click)="dontexit()">Ne pas quitter la page</button>
 </mat-dialog-actions>
+  `,
+  styles: `
+#non{color:red;}
+#oui{color:green;}
   `,
   changeDetection: ChangeDetectionStrategy.OnPush,
 })

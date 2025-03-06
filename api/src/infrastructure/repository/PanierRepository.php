@@ -51,6 +51,7 @@ class PanierRepository extends EntityRepository implements PanierRepositoryInter
 
         $date_panier = new DateIdType();
         /*$date_panier = $date_panier->getTimestamp();*/
+        /*echo $date_panier->format("Y-m-d H:i:s");*/
         $panier->setDate($date_panier);
 
         //get utilisateur abonné a producteur
