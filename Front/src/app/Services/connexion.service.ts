@@ -12,7 +12,7 @@ export class ConnexionService {
 
   private apiServerUrl = apiBaseUrl;
   constructor(private http: HttpClient) { }
-  
+
   signIn(body: SignInRequestBody): Observable<LogSignInResponse>{
     return this.http.post<LogSignInResponse>(this.apiServerUrl + '/inscription', body);
   }

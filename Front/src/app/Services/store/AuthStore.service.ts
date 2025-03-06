@@ -8,8 +8,10 @@ export class AuthStoreService {
   private tokenUser = new BehaviorSubject<string | null>(this.getTokenObservable());
   private roleUser = new BehaviorSubject<number | null>(this.getRoleObservable());
   private idUser = new BehaviorSubject<string | null>(this.getIdObservable());
+  private idName = new BehaviorSubject<string | null>(this.getNameObservable());
   public token$ = this.tokenUser.asObservable();
   public role$ = this.roleUser.asObservable();
+  public name$ = this.idName.asObservable();
 
   public setUser(token: string, role: number, id: string): void {
     localStorage.setItem('user_token', token);
@@ -28,6 +30,10 @@ export class AuthStoreService {
     return this.idUser.value;
   }
 
+  public getName(): string | null {
+    return this.idName.value;
+  }
+
   public isProducteur(): boolean {
     return Number(this.roleUser.value) === 1;
   }
@@ -40,9 +46,11 @@ export class AuthStoreService {
     localStorage.removeItem('user_token');
     localStorage.removeItem('user_role');
     localStorage.removeItem('user_id');
+    localStorage.removeItem('user_name');
     this.tokenUser.next(null);
     this.roleUser.next(null);
     this.idUser.next(null);
+    this.idName.next(null);
   }
 
   public isAuthenticated(): boolean {
@@ -61,8 +69,14 @@ export class AuthStoreService {
     const role = localStorage.getItem('user_role');
     return role !== null ? Number(role) : null;
   }
+
   private getIdObservable(): string | null {
     const id = localStorage.getItem('user_id');
     return id !== null ? id : null;
+  }
+
+  private getNameObservable(): string | null {
+    const name = localStorage.getItem('user_name');
+    return name !== null ? name : null;
   }
 }

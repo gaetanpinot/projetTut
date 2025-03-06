@@ -1,35 +1,38 @@
-
 <section>
-  <h2>Créer un panier</h2>
+    <h2>Créer un panier</h2>
+    <h3>Liste des ingrédients qui seront dans le panier</h3>
 
-<h3>Liste des ingredients qui seront dans le panier</h3>
+    <!-- Formulaire avec un identifiant unique -->
+    <form id="panierForm" class="create-panier" [formGroup]="panierForm" (ngSubmit)="creerPanier()">
+        <ng-container formArrayName="ingredients">
+            <ng-container *ngFor="let ingredientForm of ingredientsFormArrayControls; let i = index">
+                <div class="ingredient-form-field" [formGroup]="ingredientForm">
+                    <mat-form-field>
+                        <input matInput formControlName="quantite" type="text" placeholder="Quantité (ex : 10g)">
+                    </mat-form-field>
+                    <mat-form-field>
+                        <mat-select formControlName="id" placeholder="Ingredient">
+                            @for(ing of ingredients; track ing.id){
+                            <mat-option [value]="ing.id">{{ing.nom}}</mat-option>
+                            }
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-icon class="delete-btn" (click)="deleteIngredient(i)">
+                        delete_forever
+                    </mat-icon>
+                </div>
+            </ng-container>
+        </ng-container>
+    </form>
 
-<form class="create-panier" [formGroup]="panierForm" (ngSubmit)="creerPanier()">
-  <ng-container formArrayName="ingredients">
-    <ng-container *ngFor="let ingredientForm of ingredientsFormArrayControls; let i = index">
-      <div class="ingredient-form-field" [formGroup]="ingredientForm">
-        <mat-form-field>
-        <input matInput formControlName="quantite"
-            type="text" placeholder="quantite(ex:10g)">
-        </mat-form-field>
-        <mat-form-field>
-          <mat-select formControlName="id" placeholder="Ingredient">
-            @for(ing of ingredients; track ing.id){
-              <mat-option [value]="ing.id">{{ing.nom}}</mat-option>
-            }
-            </mat-select>
-        </mat-form-field>
-        <mat-icon class="delete-btn" (click)="deleteIngredient(i)">
-          delete_forever
-        </mat-icon>
-      </div>
-    </ng-container>
-  </ng-container>
-
-  <button type="button" mat-mini-fab (click)="addIngredient()">
-    <mat-icon class="add-ingredient-btn">add</mat-icon>
-  </button>
-  <br>
-  <button class="mt-2.5" mat-flat-button type="submit" [disabled]="!panierForm.valid" >Créer le panier</button>
-</form>
+    <!-- Boutons en dehors du formulaire -->
+    <div id="create-footer">
+        <button id="add" type="button" mat-mini-fab (click)="addIngredient()">
+            <mat-icon class="add-ingredient-btn">add</mat-icon>
+        </button>
+        <!-- Bouton de soumission lié au formulaire via l'attribut 'form' -->
+        <button class="mt-2.5" mat-flat-button type="submit" form="panierForm" [disabled]="!panierForm.valid">
+            Créer le panier
+        </button>
+    </div>
 </section>

@@ -19,7 +19,6 @@ import { HeaderComponent } from './Components/header/header.component';
 import { FooterComponent } from './Components/footer/footer.component';
 import { RecetteRechercheComponent } from './Components/Main/recette-recherche/recette-recherche.component';
 import { FrigoComponent } from './Components/Main/frigo/frigo.component';
-import { PanierComponent } from './Components/Main/panier/panier.component';
 import { ConnexionInscripComponent } from './Components/Main/connexion-inscrip/connexion-inscrip.component';
 import { TestHomeComponent } from './Components/TEST/test-home/test-home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
@@ -44,6 +43,7 @@ import { MatDatepickerModule } from '@angular/material/datepicker'; // Import Ma
 import { MatNativeDateModule } from '@angular/material/core';
 import { InputIngredientQuantiteComponent } from './Components/Main/input-ingredient-quantite/input-ingredient-quantite.component';
 import { ProductionComponent } from './Components/Main/production/production.component';
+import { DatePipe } from '@angular/common';
 
 // @ts-ignore
 @NgModule({
@@ -57,7 +57,6 @@ import { ProductionComponent } from './Components/Main/production/production.com
     FooterComponent,
     RecetteRechercheComponent,
     FrigoComponent,
-    PanierComponent,
     ConnexionInscripComponent,
     ConnexionComponent,
     InscriptionComponent,
@@ -98,7 +97,8 @@ import { ProductionComponent } from './Components/Main/production/production.com
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
-    TestService
+    TestService,
+    DatePipe,
   ],
   bootstrap: [AppComponent]
 })

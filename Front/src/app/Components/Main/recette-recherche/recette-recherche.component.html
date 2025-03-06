@@ -1,9 +1,7 @@
-<div id="filtre-list" class="text-center mt-4"
-  fxLayoutGap="16px"
-  fxLayoutAlign="start center">
+<div id="filtre-list" class="text-center mt-4" fxLayoutGap="16px" fxLayoutAlign="start center">
 
 
-  <span>
+    <span>
     <mat-form-field>
       <mat-label>Nom recette</mat-label>
       <input matInput
@@ -13,9 +11,8 @@
     </mat-form-field>
   </span>
 
-  <span class="selectandbutton" >
-    <span>
-    <mat-form-field appearance="fill">
+    <span class="selectandbutton">
+    <mat-form-field id="ingredient-select" appearance="fill">
       <mat-label>Choisir un  Ingrédient</mat-label>
       <mat-select [(value)]="selectedVegetableIds" (selectionChange)="loadRecettes()" multiple>
         <mat-option *ngFor="let vegetable of vegetables" [value]="vegetable.id">
@@ -23,13 +20,12 @@
         </mat-option>
       </mat-select>
     </mat-form-field>
-    </span>
     <span *ngIf="authStore.isAuthenticated()" id="appliquerIngredientFrigo">
       <button type="button" mat-flat-button (click)="appliquerFrigo()">Appliquer le frigo</button>
     </span>
-  </span>
+    </span>
 
-  <span class="selectandbutton" >
+    <span class="selectandbutton">
     <mat-form-field appearance="fill">
       <mat-label>Bannir un Ingrédient</mat-label>
       <mat-select [(value)]="bannedVegetableIds" (selectionChange)="loadRecettes()" multiple>
@@ -41,9 +37,9 @@
     <span *ngIf="authStore.isAuthenticated()" id="appliquerIngredientExclus">
       <button type="button" mat-flat-button (click)="appliquerIngredientsExclus()">Appliquer les préférences</button>
     </span>
-  </span>
+    </span>
 
-  <span class="selectandbutton" >
+    <span class="selectandbutton">
     <mat-form-field appearance="fill">
       <mat-label>Allergenes à exclure</mat-label>
       <mat-select [(value)]="allergenesId" (selectionChange)="loadRecettes()" multiple>
@@ -55,9 +51,9 @@
     <span *ngIf="authStore.isAuthenticated()" id="appliquerAllergenes">
       <button type="button" mat-flat-button (click)="appliquerAllergenes()">Appliquer les allergies</button>
     </span>
-  </span>
+    </span>
 
-  <span class="selectandbutton">
+    <span class="selectandbutton">
     <mat-form-field appearance="fill">
       <mat-label>Début Saison</mat-label>
       <mat-select [(value)]="startSaisonId" (selectionChange)="loadRecettes()">
@@ -69,9 +65,9 @@
     <span *ngIf="authStore.isAuthenticated()">
       <a [routerLink]="['/CreerRecette']"><button type="button" mat-flat-button>Créer une recette</button></a>
     </span>
-  </span>
+    </span>
 
-  <span>
+    <span>
     <mat-form-field appearance="fill">
       <mat-label>Fin Saison</mat-label>
       <mat-select [(value)]="endSaisonId" (selectionChange)="loadRecettes()">
@@ -85,78 +81,73 @@
 
 <div id="affichageFiltres">
 
-  <div class="selectIngredients" *ngIf="selectedVegetableIds.length">
-    <div class="flex gap-3 items-center">
-      <p>Ingrédients Choisis</p>
-      <div class="ingre" *ngFor="let vegetable of getSelectedVegetables()">
-        <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
-        <p>{{ vegetable.nom }}</p>
-      </div>
+    <div class="selectIngredients" *ngIf="selectedVegetableIds.length">
+        <div class="flex gap-3 items-center">
+            <p>Ingrédients Choisis</p>
+            <div class="ingre" *ngFor="let vegetable of getSelectedVegetables()">
+                <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
+                <p>{{ vegetable.nom }}</p>
+            </div>
+        </div>
     </div>
-  </div>
 
-  <div class="selectIngredients" *ngIf="bannedVegetableIds.length">
-    <div class="flex gap-3 items-center">
-      <p>Ingrédients Exclus</p>
-      <div class="ingre" *ngFor="let vegetable of getBannedVegetables()">
-        <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
-        <p>{{ vegetable.nom }}</p>
-      </div>
+    <div class="selectIngredients" *ngIf="bannedVegetableIds.length">
+        <div class="flex gap-3 items-center">
+            <p>Ingrédients Exclus</p>
+            <div class="ingre" *ngFor="let vegetable of getBannedVegetables()">
+                <img [src]="vegetable.url_photo" alt="{{ vegetable.nom }}" width="100">
+                <p>{{ vegetable.nom }}</p>
+            </div>
+        </div>
     </div>
-  </div>
 
 </div>
 
 <mat-table [dataSource]="dataSource" class="mt-2.5">
-  <ng-container matColumnDef="IMAGE">
-    <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <img src="{{element.url_photo}}"
-        style="width: 100px;">
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="IMAGE">
+        <mat-header-cell *matHeaderCellDef> Photo </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <img src="{{element.url_photo}}" style="width: 100px;">
+        </mat-cell>
+    </ng-container>
 
 
-  <ng-container matColumnDef="NOM">
-    <mat-header-cell *matHeaderCellDef> Recette </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <div class="flex flex-col gap-2">
-      <div>{{element.nom}}</div>
-      <div>
-        <mat-icon class="text-yellow-400" *ngFor="let i of [].constructor(element.note);">star</mat-icon>
-      </div>
-      </div>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="NOM">
+        <mat-header-cell *matHeaderCellDef> Recette </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <div class="flex flex-col gap-2">
+                <div>{{element.nom}}</div>
+                <div>
+                    <mat-icon class="text-yellow-400" *ngFor="let i of [].constructor(element.note);">star</mat-icon>
+                </div>
+            </div>
+        </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="DESCR">
-    <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
-    <mat-cell *matCellDef="let element"> {{element.description.slice(0, 100)}}{{element.description.length > 100 ? "..." : ""}} </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="DESCR">
+        <mat-header-cell *matHeaderCellDef> Description </mat-header-cell>
+        <mat-cell *matCellDef="let element"> {{element.description.slice(0, 100)}}{{element.description.length > 100 ? "..." : ""}} </mat-cell>
+    </ng-container>
 
-  <ng-container matColumnDef="CONFIRM">
-    <mat-header-cell *matHeaderCellDef> Visiter </mat-header-cell>
-    <mat-cell *matCellDef="let element">
-      <a [routerLink]="['/Recette', element.id]"><button mat-flat-button>Visiter</button></a>
-    </mat-cell>
-  </ng-container>
+    <ng-container matColumnDef="CONFIRM">
+        <mat-header-cell *matHeaderCellDef> Visiter </mat-header-cell>
+        <mat-cell *matCellDef="let element">
+            <a [routerLink]="['/Recette', element.id]"><button mat-flat-button>Visiter</button></a>
+        </mat-cell>
+    </ng-container>
 
-  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
-  <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
 </mat-table>
 
 <div class="pages">
-  <button (click)="setPage(-1)"
-    mat-mini-fab
-    aria-label="Example icon button with a menu icon">
+    <button (click)="setPage(-1)" mat-mini-fab aria-label="Example icon button with a menu icon">
     <mat-icon>keyboard_arrow_left</mat-icon>
   </button>
-  <span>
+    <span>
     Page: {{ currentPage }}
   </span>
-  <button (click)="setPage(1)"
-    mat-mini-fab
-    aria-label="Example icon button with a menu icon">
+    <button (click)="setPage(1)" mat-mini-fab aria-label="Example icon button with a menu icon">
     <mat-icon>keyboard_arrow_right</mat-icon>
   </button>
 </div>

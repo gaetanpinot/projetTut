@@ -74,12 +74,14 @@ class ServiceUtilisateur implements ServiceUtilisateurInterface
         $frigo = [];
 
         foreach($utilisateur->getFrigo() as $f) {
+            $date = \DateTime::createFromFormat('U',$f->getTimestampAjout());
+            /*echo $date->format("U"). " " . $date->format("Y-m-d H:i")."\n";*/
             $frigo[] = new FrigoDTO(
                 $f->getIngredient()->getId(),
                 $f->getIngredient()->getNom(),
                 $f->getIngredient()->getUrlPhoto(),
                 $f->getQuantite(),
-                \DateTime::createFromFormat('U',$f->getTimestampAjout()),
+$date,
             );
         }
 

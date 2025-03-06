@@ -1,33 +1,42 @@
 <div class="signup-container">
-    <form class="signup-form"
-          [formGroup]="inscripForm"
-          (ngSubmit)="onSubmit()">
+    <form class="signup-form" [formGroup]="inscripForm" (ngSubmit)="onSubmit()">
+
+        <!-- Champ Nom -->
         <mat-form-field class="signup-field">
             <mat-label>Nom</mat-label>
-            <input matInput
-                   type="text"
-                   formControlName="nom_utilisateur">
+            <input matInput type="text" formControlName="nom_utilisateur" required>
+            <mat-error *ngIf="inscripForm.get('nom_utilisateur')?.invalid && inscripForm.get('nom_utilisateur')?.touched">
+                Le nom est requis.
+            </mat-error>
         </mat-form-field>
 
+        <!-- Champ Mot de passe -->
         <mat-form-field class="signup-field">
             <mat-label>Mot de passe</mat-label>
-            <input matInput
-                   type="password"
-                   formControlName="mot_de_passe">
+            <input matInput type="password" formControlName="mot_de_passe" required>
+            <mat-error *ngIf="inscripForm.get('mot_de_passe')?.invalid && inscripForm.get('mot_de_passe')?.touched">
+                Le mot de passe doit contenir au moins 8 caractères.
+            </mat-error>
         </mat-form-field>
 
+        <!-- Champ Confirmation du mot de passe -->
         <mat-form-field class="signup-field">
             <mat-label>Confirmer mot de passe</mat-label>
-            <input matInput
-                   type="password"
-                   formControlName="mot_de_passe_confirm">
+            <input matInput type="password" formControlName="mot_de_passe_confirm" required>
+            <mat-error *ngIf="inscripForm.hasError('passwordMismatch') && inscripForm.get('mot_de_passe_confirm')?.touched">
+                Les mots de passe ne correspondent pas.
+            </mat-error>
         </mat-form-field>
 
-        <button mat-flat-button
-                color="primary"
-                class="signup-button"
-                [disabled]="inscripForm.invalid">Créer un compte</button>
+        <!-- Sélection du rôle -->
+        <mat-radio-group formControlName="role" class="signup-role">
+            <mat-radio-button value="0">Client</mat-radio-button>
+            <mat-radio-button value="1">Producteur</mat-radio-button>
+        </mat-radio-group>
+
+        <!-- Bouton d'inscription -->
+        <button mat-flat-button color="primary" class="signup-button" [disabled]="inscripForm.invalid">
+            Créer un compte
+        </button>
     </form>
-
-
 </div>

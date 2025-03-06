@@ -17,8 +17,10 @@ export class InscriptionComponent {
   inscripForm = new FormGroup({
     nom_utilisateur: new FormControl('', [Validators.required]),
     mot_de_passe: new FormControl('', [Validators.required]),
-    mot_de_passe_confirm: new FormControl('', [Validators.required])
+    mot_de_passe_confirm: new FormControl('', [Validators.required]),
+    role: new FormControl(0, [Validators.required])
   }, { validators: matchFieldsValidator('mot_de_passe', 'mot_de_passe_confirm') });
+
 
   loading: boolean = false;
   errorMessage: string | null = null;
@@ -37,7 +39,7 @@ export class InscriptionComponent {
     const body: SignInRequestBody = {
       nom_utilisateur: this.inscripForm.value.nom_utilisateur ?? '',
       mot_de_passe: this.inscripForm.value.mot_de_passe ?? '',
-      role: 0
+      role: Number(this.inscripForm.value.role),
     };
 
     this.connectServ.signIn(body).pipe(

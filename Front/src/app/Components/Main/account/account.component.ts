@@ -186,25 +186,18 @@ export class AccountComponent implements OnInit {
 
 
   /**
-   * Ouvre le popup de confirmation de déconnexion
+   * Popup de confirmation de déconnexion
    */
   openLogoutPopup(): void {
     this.showLogoutPopup = true;
   }
 
-  /**
-   * Ferme le popup de confirmation de déconnexion
-   */
   closeLogoutPopup(): void {
     this.showLogoutPopup = false;
   }
 
-  /**
-   * Déconnecte l'utilisateur après confirmation
-   */
   logout(): void {
-    this.showLogoutPopup = false;
-    this.authStore.clearUser(); // Suppression des données utilisateur
-    this.router.navigate(['/Home']); // Redirection via Angular Router
+    this.authStore.clearUser();
+    this.router.navigate(['/Home']);
   }
 }

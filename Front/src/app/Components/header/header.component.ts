@@ -21,7 +21,7 @@ export class HeaderComponent implements OnInit {
     this.isMenuOpen = !this.isMenuOpen;
   }
 
-  switchTheme(event: any): void {
-    // Ajoutez ici la logique pour changer le thème
-  }
+  switchTheme(event: any) {
+    switchTheme();
+   }
 }

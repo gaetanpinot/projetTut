@@ -1,49 +1,237 @@
-.selectandbutton {
-  display: flex;
-  flex-direction: column;
-}
+/* FILTRES PRINCIPAUX */
 
 #filtre-list {
-  display: flex;
-  flex-direction: row;
-
-  >span {
-    margin: 0.5em;
-  }
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 0;
+    padding: 15px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow-x: auto;
+    white-space: nowrap;
+    >span {
+        margin: 0;
+        display: flex;
+        align-items: center;
+        flex: 1 1 auto;
+        min-width: 180px;
+    }
+    mat-form-field {
+        width: 100%;
+        min-width: 180px;
+        margin: 0;
+    }
+    .selectandbutton {
+        display: flex;
+        flex-direction: column;
+        ;
+        align-items: center;
+        flex: 1 1 auto;
+        min-width: 220px;
+    }
+    button {
+        white-space: nowrap;
+        padding: 8px;
+        margin-left: 5px;
+    }
 }
+
+
+/* AFFICHAGE DES FILTRES */
 
 #affichageFiltres {
-  display: flex;
-  flex-direction: column;
-
-  >div {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-    align-items: center;
-    margin: 0.5em;
-  }
+    flex-direction: column;
+    padding: 10px;
+    background: #fff;
+    border-radius: 8px;
+    div {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px;
+        background: var(--white);
+        border-radius: 6px;
+        margin: 5px 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    }
 }
 
-.pages {
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  align-items: center;
-  padding: 12px;
+#ingredient-select {
+    width: 100%;
 }
 
 .selectIngredients {
-  padding: 12px;
-  text-align: center;
+    p {
+        font-weight: bold;
+        color: var(--text);
+    }
+    .ingre {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-right: 10px;
+        img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid var(--green);
+        }
+        p {
+            font-size: 12px;
+            color: var(--text);
+        }
+    }
 }
 
-.selectIngredients .ingre img {
-  border-radius: 50%;
-  height: 70px;
-  width: 70px;
+
+/* BOUTONS */
+
+button {
+    padding: 8px 12px;
+    font-size: 14px;
+    border-radius: 4px;
+    cursor: pointer;
+    &[mat-flat-button] {
+        background: var(--green);
+        color: var(--white);
+        border: none;
+        &:hover {
+            background: var(--light);
+        }
+    }
 }
 
-.selectIngredients .ingre p {
-  font-size: 12px;
+
+/* TABLEAU */
+
+mat-table {
+    width: 100%;
+    margin-top: 20px;
+    background: var(--white);
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    mat-header-cell {
+        font-weight: bold;
+        background: var(--green);
+        color: var(--white);
+        padding: 12px;
+    }
+    mat-cell {
+        padding: 12px;
+        color: var(--text);
+        img {
+            border-radius: 8px;
+        }
+    }
+}
+
+
+/* ÉTOILES */
+
+.text-yellow-400 mat-icon {
+    color: var(--light);
+}
+
+
+/* PAGINATION */
+
+.pages {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+    button {
+        background: var(--green);
+        color: var(--white);
+        &:hover {
+            background: var(--light);
+        }
+    }
+    span {
+        font-size: 16px;
+        font-weight: bold;
+        color: var(--text);
+    }
+}
+
+
+/* RESPONSIVE DESIGN */
+
+@media screen and (max-width: 1200px) {
+    #filtre-list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    mat-form-field {
+        width: 100%;
+    }
+    .selectandbutton {
+        flex-direction: column;
+        width: 100%;
+        align-items: stretch;
+    }
+}
+
+@media screen and (max-width: 1024px) {
+    #filtre-list {
+        flex-wrap: wrap;
+        justify-content: center;
+    }
+    span {
+        flex: 1 1 45%;
+        min-width: 180px;
+    }
+    .selectandbutton {
+        flex: 1 1 45%;
+        min-width: 220px;
+    }
+}
+
+@media screen and (max-width: 768px) {
+    #filtre-list {
+        flex-direction: column;
+        align-items: stretch;
+    }
+    span,
+    .selectandbutton {
+        flex: 1 1 auto;
+        width: 100%;
+        min-width: unset;
+    }
+    button {
+        width: 100%;
+        margin-left: 0;
+    }
+    #affichageFiltres {
+        padding: 10px;
+    }
+    .ingre img {
+        width: 60px;
+        height: 60px;
+    }
+    mat-table {
+        font-size: 14px;
+    }
+    mat-header-cell,
+    mat-cell {
+        padding: 8px;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    #filtre-list {
+        gap: 5px;
+    }
+    button {
+        width: 100%;
+    }
+    .pages {
+        flex-direction: column;
+    }
 }

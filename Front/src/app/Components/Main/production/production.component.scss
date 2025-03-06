@@ -1,32 +1,76 @@
-.list-pref {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  gap: 10px;
-}
-
-h2 {
-  font-size: 24px;
-  margin-bottom: 40px;
-}
+/* SECTION PRINCIPALE */
 
 section {
-  padding: 40px;
+    padding: 40px;
+    text-align: center;
+    h2 {
+        font-size: 24px;
+        margin-bottom: 40px;
+    }
 }
 
+
+/* LISTE DES PRÉFÉRENCES */
+
+.list-pref {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    justify-content: center;
+}
+
+
+/* CHECKBOX GROUP */
+
+.checkbox-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 10px;
+    border-radius: 8px;
+    background: var(--white);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease-in-out;
+    &:hover {
+        transform: scale(1.05);
+    }
+    input {
+        width: 18px;
+        height: 18px;
+        cursor: pointer;
+    }
+    span {
+        font-size: 14px;
+        font-weight: bold;
+        color: var(--text);
+    }
+    img {
+        width: 40px;
+        height: 40px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 2px solid var(--green);
+    }
+}
+
+
+/* RESPONSIVE DESIGN */
+
 @media (max-width: 1200px) {
-  .list-pref {
-    grid-template-columns: repeat(5, 1fr); /* Reduce to 5 columns */
-  }
+    .list-pref {
+        grid-template-columns: repeat(5, 1fr);
+    }
 }
 
 @media (max-width: 800px) {
-  .list-pref {
-    grid-template-columns: repeat(3, 1fr); /* Reduce to 3 columns */
-  }
+    .list-pref {
+        grid-template-columns: repeat(3, 1fr);
+    }
 }
 
 @media (max-width: 500px) {
-  .list-pref {
-    grid-template-columns: repeat(1, 1fr); /* Single column for small screens */
-  }
+    .list-pref {
+        grid-template-columns: repeat(1, 1fr);
+    }
 }
