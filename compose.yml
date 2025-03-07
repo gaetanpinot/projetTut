@@ -39,6 +39,7 @@ services:
     depends_on:
       amap.db:
         condition: service_healthy
+    restart: always
 
   adminer:
     image: adminer:latest
@@ -52,6 +53,7 @@ services:
     depends_on:
       amap.db:
         condition: service_healthy
+    restart: always
 
   amap.db:
     image: postgres:alpine
