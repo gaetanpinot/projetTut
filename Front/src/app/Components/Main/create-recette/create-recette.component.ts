@@ -4,6 +4,8 @@ import { IngredientsServicesService } from '../../../Services/ingredients.servic
 import { Ingredient, IngredientInput } from '../../../Interfaces/ingredient.interface';
 import { Recette, RecetteInput } from '../../../Interfaces/recette.interface';
 import { RecetteService } from '../../../Services/recette.service';
+import { Router } from '@angular/router';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-create-recette',
@@ -19,7 +21,12 @@ export class CreateRecetteComponent {
 
   recetteInput: RecetteInput = Object();
 
-  constructor(private fb: FormBuilder, private ingredientsService: IngredientsServicesService, private recetteService: RecetteService) {
+  constructor(private fb: FormBuilder,
+    private ingredientsService: IngredientsServicesService,
+    private recetteService: RecetteService,
+    private router: Router,
+    private snackBar: MatSnackBar
+  ) {
     this.recetteForm = this.fb.group({
       nom: ['', Validators.required],
       temps_preparation: [10, Validators.required],
@@ -83,6 +90,13 @@ export class CreateRecetteComponent {
     this.recetteInput.url_photo = this.recetteForm.get('url_photo')?.value;
     this.recetteInput.ingredients_recette = this.ingredientsInput;
 
-    this.recetteService.createRecette(this.recetteInput).subscribe({ next: () => { } })
+    this.recetteService.createRecette(this.recetteInput).subscribe({
+      next: () => {
+        this.snackBar.open('Recette créée avec succès', 'Fermer', {
+          duration: 10000
+        });
+        this.router.navigate(["/Recette"])
+      }
+    })
   }
 }
