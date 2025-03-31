@@ -7,6 +7,8 @@ import { Profile } from '../../../Interfaces/utilisateur.interface';
 import { AuthStoreService } from '../../../Services/store/AuthStore.service';
 import { Allergie } from '../../../Interfaces/allergies.interface';
 import { AllergiesService } from '../../../Services/allergies.service';
+import { MatDialog } from '@angular/material/dialog';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-recette-recherche',
@@ -34,6 +36,7 @@ export class RecetteRechercheComponent implements OnInit {
     private utilisateurService: UtilisateurService,
     public authStore: AuthStoreService,
     private allergieService: AllergiesService,
+    private snackBar: MatSnackBar,
   ) {
     this.saisons = [
       {
@@ -173,6 +176,10 @@ export class RecetteRechercheComponent implements OnInit {
       },
       error: (err) => {
         console.error(err);
+        this.snackBar.open(`Erreur lors du chargement du profile.\r\n
+        Veuillez vous reconnecter pour appliquer vos préférences.`, 'Fermer', {
+          duration: 10000
+        });
       }
     })
   }

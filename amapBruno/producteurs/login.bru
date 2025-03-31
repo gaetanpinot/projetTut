@@ -17,6 +17,11 @@ body:json {
   }
 }
 
+assert {
+  res.status: eq 201
+  res.body.token: isDefined
+}
+
 script:post-response {
   bru.setVar("access-token",res.body.token);
   
