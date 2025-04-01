@@ -38,7 +38,6 @@ export class ListeIngredientProduitComponent {
     this.utilisateurService.getProducteursUtilisateurConnectee().subscribe({
       next: (data) => {
         this.producteursUtilisateurConnectee = data.producteurs;
-        this.loadProducteursUtilisateurConnectee()
       },
       error: (err) => {
         console.error(err);

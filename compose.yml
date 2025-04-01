@@ -12,7 +12,7 @@ services:
       - ./Front/dist/amap/browser/:/www/web
     ports:
       - $PORT_FRONT:80
-    restart: always
+    restart: unless-stopped
 
   front-build:
     image: node:latest
@@ -38,7 +38,6 @@ services:
     depends_on:
       amap.db:
         condition: service_healthy
-    restart: always
 
   adminer:
     image: adminer:latest
@@ -51,7 +50,6 @@ services:
     depends_on:
       amap.db:
         condition: service_healthy
-    restart: always
 
   amap.db:
     image: postgres:alpine

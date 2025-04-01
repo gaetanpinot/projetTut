@@ -5,6 +5,7 @@ import { UtilisateurService } from '../../../Services/utilisateur.service';
 import { Allergie, Producteur } from '../../../Interfaces/utilisateur.interface';
 import { Ingredient } from '../../../Interfaces/ingredient.interface';
 import { IngredientsServicesService } from '../../../Services/ingredients.services.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 interface Preference {
   nom: string;
@@ -26,6 +27,7 @@ export class AccountComponent implements OnInit {
     public authStore: AuthStoreService,
     private router: Router,
     private utilisateurService: UtilisateurService,
+    private snackbar: MatSnackBar,
   ) { }
 
   // Données utilisateur
@@ -151,6 +153,10 @@ export class AccountComponent implements OnInit {
           }
         },
         error: (err) => {
+          this.snackbar.open("Erreur lors du chargement des préférences,\
+            Veuillez vous reconnecter", "Fermer", {
+            duration: 10000
+          });
           console.error(err);
         }
       })
