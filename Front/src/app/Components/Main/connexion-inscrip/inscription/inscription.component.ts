@@ -6,6 +6,7 @@ import { ConnexionService } from '../../../../Services/connexion.service';
 import { Router } from '@angular/router';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { AuthStoreService } from '../../../../Services/store/AuthStore.service';
 
 @Component({
   selector: 'app-inscription',
@@ -25,7 +26,11 @@ export class InscriptionComponent {
   loading: boolean = false;
   errorMessage: string | null = null;
 
-  constructor(private connectServ: ConnexionService, private router: Router) {}
+  constructor(
+    private connectServ: ConnexionService, 
+    private router: Router,
+    private authStore: AuthStoreService
+  ) {}
 
   onSubmit() {
     if (this.inscripForm.invalid) {
@@ -43,16 +48,15 @@ export class InscriptionComponent {
     };
 
     this.connectServ.signIn(body).pipe(
-      catchError(err => {
-        this.errorMessage = "Échec de l'inscription. Veuillez réessayer.";
-        this.loading = false;
-        return of(null);
-      })
+      // catchError(err => {
+      //   this.errorMessage = "Échec de l'inscription. Veuillez réessayer.";
+      //   this.loading = false;
+      //   return of(null);
+      // })
     ).subscribe(data => {
       if (data) {
-        console.log(data);
-        localStorage.setItem("token", data.token);
-        this.router.navigate(['/connexion']);
+        this.authStore.setUser(data.token, data.utilisateur.role, data.utilisateur.id);
+        this.router.navigate(['/Home']);
       }
       this.loading = false;
     });
