@@ -6,6 +6,7 @@ import { LogInRequestBody } from '../../../../Interfaces/connexion-user.interfac
 import { AuthStoreService } from '../../../../Services/store/AuthStore.service';
 import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-connexion',
@@ -26,7 +27,8 @@ export class ConnexionComponent implements OnInit {
   constructor(
     private connectServ: ConnexionService,
     private authStore: AuthStoreService,
-    private router: Router // Injection de Router
+    private router: Router,
+    private snackbar: MatSnackBar,
   ) {}
 
   ngOnInit(): void {}
@@ -49,8 +51,9 @@ export class ConnexionComponent implements OnInit {
 
     this.connectServ.logIn(body).pipe(
       catchError((err) => {
-        console.error("Erreur de connexion :", err);
-        this.errorMessage = "Échec de la connexion. Vérifiez vos identifiants.";
+        this.snackbar.open(err.error.message, 'x', {
+          duration: 5000,
+        });
         this.loading = false;
         return of(null); // Évite que l'observable crashe
       })

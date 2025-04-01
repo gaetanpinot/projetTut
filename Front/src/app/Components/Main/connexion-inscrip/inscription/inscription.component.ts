@@ -51,7 +51,6 @@ export class InscriptionComponent {
 
     this.connectServ.signIn(body).pipe(
       catchError(err => {
-        console.log(err);
         this.snackbar.open(err.error.message, 'x', {
           duration: 5000,
         });
