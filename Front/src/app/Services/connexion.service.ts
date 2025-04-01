@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { apiBaseUrl } from '../../environment';
-import { TestUserInterface } from '../Interfaces/test-user.interface';
 import { LogInRequestBody, LogSignInResponse, SignInRequestBody } from '../Interfaces/connexion-user.interface';
 
 @Injectable({

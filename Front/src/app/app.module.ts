@@ -7,10 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
-import { DialogComponent } from './Components/TEST/test-home/dialog/dialog.component';
 import { MatDialogModule } from '@angular/material/dialog';
-import { NextPageComponent } from './Components/TEST/test-home/next-page/next-page.component';
-import { TestService } from './Services/test.service';
 import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
@@ -20,7 +17,6 @@ import { FooterComponent } from './Components/footer/footer.component';
 import { RecetteRechercheComponent } from './Components/Main/recette-recherche/recette-recherche.component';
 import { FrigoComponent } from './Components/Main/frigo/frigo.component';
 import { ConnexionInscripComponent } from './Components/Main/connexion-inscrip/connexion-inscrip.component';
-import { TestHomeComponent } from './Components/TEST/test-home/test-home.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
@@ -45,14 +41,10 @@ import { InputIngredientQuantiteComponent } from './Components/Main/input-ingred
 import { ProductionComponent } from './Components/Main/production/production.component';
 import { DatePipe } from '@angular/common';
 
-// @ts-ignore
 @NgModule({
   declarations: [
     AppComponent,
     AccountComponent,
-    TestHomeComponent,
-    DialogComponent,
-    NextPageComponent,
     HeaderComponent,
     FooterComponent,
     RecetteRechercheComponent,
@@ -91,13 +83,12 @@ import { DatePipe } from '@angular/common';
     MatRadioModule,
     MatCheckboxModule,
     MatSlideToggleModule,
-    MatDatepickerModule, // Add this line
-    MatNativeDateModule // Add this line
+    MatDatepickerModule,
+    MatNativeDateModule,
   ],
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
-    TestService,
     DatePipe,
   ],
   bootstrap: [AppComponent]
