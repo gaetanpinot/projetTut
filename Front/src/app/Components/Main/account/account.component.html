@@ -8,57 +8,80 @@
         </div>
     </section>
 
-    <div *ngIf="isLoading" class="loading-container">
+    <div *ngIf="isLoading"
+         class="loading-container">
         <p>Chargement des préférences...</p>
     </div>
 
-    <section id="preference" *ngIf="!isLoading">
+    <section id="preference"
+             *ngIf="!isLoading">
         <div class="preferences-container">
             <div class="preferences-column">
                 <h2 class="section-title">Allergies</h2>
                 <form>
-                    <label *ngFor="let allergie of allergies" class="checkbox-group">
-                        <input (change)="changeAllergie(allergie)" type="checkbox" [(ngModel)]="allergie.check" name="{{ allergie.label }}" />
+                    <label *ngFor="let allergie of allergies"
+                           class="checkbox-group">
+                        <input (change)="changeAllergie(allergie)"
+                               type="checkbox"
+                               [(ngModel)]="allergie.check"
+                               name="{{ allergie.label }}" />
                         <span>{{ allergie.label }}</span>
                     </label>
                 </form>
             </div>
             <div class="preferences-column">
-                <h2 class="section-title">Ingrédients Détéstés</h2>
+                <h2 class="section-title">Ingrédients Détestés</h2>
                 <form class="list-pref">
-                    <label *ngFor="let ingre of ingredients" class="checkbox-group">
-                <input (change)="changeIngredient(ingre)" type="checkbox" [(ngModel)]="ingre.check" name="{{ ingre.nom }}" />
-                <span>{{ ingre.nom }}</span>
-                <img src="{{ ingre.url_photo }}" width="40" height="40" style="border-radius: 50%">
-              </label>
+                    <label *ngFor="let ingre of ingredients"
+                           class="checkbox-group">
+                        <input (change)="changeIngredient(ingre)"
+                               type="checkbox"
+                               [(ngModel)]="ingre.check"
+                               name="{{ ingre.nom }}" />
+                        <span>{{ ingre.nom }}</span>
+                        <img src="{{ ingre.url_photo }}"
+                             width="40"
+                             height="40"
+                             style="border-radius: 50%">
+                    </label>
                 </form>
             </div>
         </div>
     </section>
 
-    <section id="producteurs" *ngIf="authStore.isClient()">
+    <section id="producteurs"
+             *ngIf="authStore.isClient()">
         <h2 class="section-title">Producteurs</h2>
         <div *ngFor="let prod of producteursUtilisateur">
             <h3>{{ prod.nom_utilisateur }}</h3>
-            <button class="ingredients" mat-flat-button [routerLink]="['/producteurs', prod.id,'ingredients']">Voir les ingrédients proposés</button>
-            <button class="desabo" mat-flat-button (click)="desabonneProducteur(prod.id)">Se désabonner</button>
+            <button class="ingredients"
+                    mat-flat-button
+                    [routerLink]="['/producteurs', prod.id,'ingredients']">Voir les ingrédients proposés</button>
+            <button class="desabo"
+                    mat-flat-button
+                    (click)="desabonneProducteur(prod.id)">Se désabonner</button>
 
         </div>
     </section>
 
-    <div *ngIf="showLogoutPopup" class="popup-overlay">
+    <div *ngIf="showLogoutPopup"
+         class="popup-overlay">
         <div class="popup">
             <h3> Confirmation</h3>
             <p>Êtes-vous sûr de vouloir vous déconnecter ?</p>
             <div class="popup-buttons">
-                <button class="confirm" (click)="logout()">Oui, me déconnecter</button>
-                <button class="cancel" (click)="closeLogoutPopup()">Annuler</button>
+                <button class="confirm"
+                        (click)="logout()">Oui, me déconnecter</button>
+                <button class="cancel"
+                        (click)="closeLogoutPopup()">Annuler</button>
             </div>
         </div>
     </div>
 
     <!-- Bouton de déconnexion -->
-    <button id="Deconnexion" class="btn logout-btn" (click)="openLogoutPopup()">
-      Déconnexion
+    <button id="Deconnexion"
+            class="btn logout-btn"
+            (click)="openLogoutPopup()">
+        Déconnexion
     </button>
 </div>
