@@ -38,6 +38,7 @@ services:
     depends_on:
       amap.db:
         condition: service_healthy
+    restart: unless-stopped
 
   adminer:
     image: adminer:latest
@@ -64,4 +65,4 @@ services:
       interval: 2s
       retries: 5
       timeout: 10s
-    restart: always
+    restart: unless-stopped
