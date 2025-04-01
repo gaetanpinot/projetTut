@@ -8,7 +8,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialogModule } from '@angular/material/dialog';
-import { HTTP_INTERCEPTORS, HttpClientModule, provideHttpClient } from '@angular/common/http';
+import { provideHttpClient } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatTableModule } from "@angular/material/table";
 import { MatSelectModule } from '@angular/material/select';
@@ -40,7 +40,6 @@ import { MatNativeDateModule } from '@angular/material/core';
 import { InputIngredientQuantiteComponent } from './Components/Main/input-ingredient-quantite/input-ingredient-quantite.component';
 import { ProductionComponent } from './Components/Main/production/production.component';
 import { DatePipe } from '@angular/common';
-import { HttpErrorInterceptor } from './Services/interceptor/http-error.interceptor';
 
 @NgModule({
   declarations: [
@@ -86,17 +85,11 @@ import { HttpErrorInterceptor } from './Services/interceptor/http-error.intercep
     MatSlideToggleModule,
     MatDatepickerModule,
     MatNativeDateModule,
-    HttpClientModule
   ],
   providers: [
     provideAnimationsAsync(),
     provideHttpClient(),
     DatePipe,
-    {
-      provide: HTTP_INTERCEPTORS,
-      useClass: HttpErrorInterceptor,
-      multi: true
-    },
   ],
   bootstrap: [AppComponent]
 })
