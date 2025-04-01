@@ -103,8 +103,8 @@ class RecetteRepository extends EntityRepository implements RecetteRepositoryInt
         }
 
         if(isset($args['id_allergenes'])) {
-            $qb->leftJoin('i.ingredient', 'ing')
-            ->leftJoin('ing.allergenes', 'a')
+            $qb
+            ->leftJoin('i.allergenes', 'a')
             ->setParameter('id_allergene', $args['id_allergenes'], ArrayParameterType::INTEGER);
             // si il y a des allergenes dans la liste à exclure ça fait une somme plus grande que 0 et la recette est exclue
             $having[] = "SUM(CASE WHEN a.id IN (:id_allergene) THEN 1 ELSE 0 END) = 0";
