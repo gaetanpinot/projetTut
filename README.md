@@ -18,8 +18,7 @@ Adminer: <http://docketu.iutnc.univ-lorraine.fr:12201>
 
 ## TODO PRES:
 - [x] Démo
-- [ ] Présentation orale
-    - [ ] Powerpoint
+- [x] Présentation orale
 - [ ] Vidéo de présentation
     - [ ] Tuto utilisateur
     - [ ] Tuto producteur
@@ -81,7 +80,12 @@ Pour maintenir l'application il vous faut des conaissances
 techniques differentes en fonction de ce que vous voulez 
 modifier.  
 Je ne rentrerais pas dans les détails du fonctionnement
-de l'application, mais je vais donner les grandes lignes
+de l'application, mais je vais donner les grandes lignes.  
+Le site fonctionne avec un front-end en angular et une api
+en php, qui se connecte à une base de donnée postgresql.
+L'application front-end fait des requetes http à l'api 
+qui fait des requetes sql à la base de donnée
+pour récupéré les données afin de les afficher.
 
 ### Front end
 Le front end est fait avec angular, il est dans le dossier
@@ -185,6 +189,7 @@ Il est conseillé d'avoir des conaissances en SQL pour
 modifier la base de donnée. Cependant il est possible
 de modifier directement les table avec les outils d'adminer 
 sans ecrire de requête sql.  
+
 # Vidéo
 ## Tuto utilisateur
 - Presentation rapide de la problématique auxquel répond
