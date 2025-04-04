@@ -147,7 +147,7 @@ Pour la configuration tout est dans le dossier config, il contient
 le bootstrap et les déclaration de dépendence pour l'injection de 
 dépendances [Injection de dependence](https://php-di.org/doc/) 
 Il est important de noter que l'application suit (du mieux qu'elle peut)
-le principe d'architecture hexagonal(https://fr.wikipedia.org/wiki/Architecture_hexagonale)
+le principe d'[architecture hexagonal](https://fr.wikipedia.org/wiki/Architecture_hexagonale)
 , ce qui veut dire que les differentes parties de l'application sont isolée.  
 
 Donc le cotée applicatif, c'est là ou on reçoit la requette http et ou on renvoit le json.  
@@ -156,7 +156,7 @@ L'infrastructure c'est l'accès au services exterieurs, ici simplement la base d
 
 ```
 ├── api
-│   ├── config //fichiers de configuration
+│   ├── config //fichiers de configuration (bootstrap, routes, dependances)
 │   ├── src // fichier source
 │   │   ├── application //face publique de l'application
 │   │   │   └── action //les actions se charge de traiter la requette, et de retourner les bonnes données
