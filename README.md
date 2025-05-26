@@ -24,6 +24,8 @@ Adminer: <http://docketu.iutnc.univ-lorraine.fr:12201>
     - [ ] Tuto producteur
     - [ ] Vidéo techniques
 - [ ] CMS gestion (gantt+heure-homme)
+    - [x] Conclusion du projet
+
 
 
 ## Docu technique

@@ -110,6 +110,32 @@ identifiées pour enrichir la plateforme à l'avenir :
 - Faciliter la création de nouveaux paniers pour les producteurs en se basant sur des paniers existants.
 - Permettre de lier des recettes entre elles pour créer des "recettes dérivées".
 
+== Gestion du projet
+Pour se répartir le travail, nous avons découpé le projet en taches distinctes, qu'on à 
+renseigné sur un trello, avec plusieurs colonnes à faire, en cours et fait.
+Cela permet de savoir qui à fait quoi et de pouvoir commencer la tâche suivante sans 
+consulter l'ensemble du groupe.
+Nous n'avions pas noté d'estimation de temps, mais nous avons estimé le temps passé 
+sur chaque tâche pour chaque personne à la fin du projet.
+On peut estimer, en fonction du taux horaire de développeur, que le projet
+aurait pu couter entre 23K€ et 35K€ au client. Cependant, nous sommes des développeurs 
+assez peu expérimenté, si le projet avait été mené par des personnes avec plus 
+d'éxperience, il aurait certainement prit moins de temps, et donc couté moins cher.
+
+#figure(
+table(
+columns: (1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,1fr,),
+    inset: 10pt,
+    [Noms],[ Wireframe ],[ Figma ],[ Accés Données ],[ Fonctionnalités],[BD ],[Docker],[View (Angular)],[Css],[CMS], [Total],
+[ Gaëtan ],[1],[1],[20],[45],[14],[15],[25],[8],[1],[130],
+[ Mathis ],[2],[5],[16],[18],[11],[1],[35],[31],[1],[120],
+[ Sasha ],[4],[15],[0.5],[2],[10],[0],[27],[45],[1],[104.5],
+[ Yehor ],[1],[1],[12],[18],[16],[20],[31],[19],[1],[119],
+[ Total ],[8],[22],[48.5],[83],[51],[36],[118],[103],[4],[473.5],
+),
+caption: "Répartition des tâches et temps estimé en heures"
+)
+
 == Conclusion
 Selon nous, ce projet est réussit, nous avons obtenu un site qui fonctionne et qui répond
 à la problématique de base. 
